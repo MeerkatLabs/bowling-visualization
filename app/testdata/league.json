@@ -1,0 +1,43 @@
+{
+    "name": "PinSetter's League",
+    "playersPerTeam": 5,
+    "handicap": {
+        "percentage": 1.0,
+        "maximum": 200,
+        "rollingLength": null
+    },
+    "weekCount": 5,
+    "teams": [
+        {
+            "name": "This Team",
+            "rollers": [
+                {
+                    "name": "Robert R.",
+                    "handicap": null,
+                    "memberType": "regular"
+                },
+                {
+                    "name": "Erin G.",
+                    "handicap": null,
+                    "memberType": "regular"
+                },
+                {
+                    "name": "Steve C.",
+                    "handicap": null,
+                    "memberType": "regular"
+                },
+                {
+                    "name": "Polly P.",
+                    "handicap": null,
+                    "memberType": "regular"
+                },
+                {
+                    "name": "Dean S.",
+                    "handicap": null,
+                    "memberType": "regular"
+                }
+            ],
+            "visualize": true
+        }
+    ]
+}
