@@ -49,18 +49,43 @@
     };
 
     /**
-     * Configure the library to load the data from the specified paths.
+     * Initialize the bowling data model.
      * @param {Object} configuration
-     * @param {string} [configuration.root] root path that the league definition and the schedules will be loaded from.
+     * @param $q Angular JS promise implementation
+     * @returns angular promise.
      */
-    bowling.initialize = function(configuration) {
-        // This will need to load the league configuration data from the league.json file that is defined in the data
-        // root directory.
+    bowling.initialize = function(configuration, $q) {
 
         bowling.configuration = configuration || bowling.configuration;
-        var root = bowling.configuration.root;
 
-        $.getJSON(root+'/league.json').done(bowling._handleLeagueLoad);
+        var deferred = $q.defer();
+        var leagueLoader = new bowling.LeagueLoader(deferred);
+        leagueLoader.load();
+
+        return deferred.promise;
+    };
+
+    /**
+     * This is a loader that is responsible for loading all of the bowling data and then notifying the angular deferred
+     * object when completed.
+     * @param deferred deferred object.
+     * @constructor
+     */
+    bowling.LeagueLoader = function(deferred) {
+        this.deferred = deferred;
+    };
+
+    /**
+     * Load the league data from the configuration details.
+     */
+    bowling.LeagueLoader.prototype.load = function() {
+
+        var thisObject = this;
+
+        var root = bowling.configuration.root;
+        $.getJSON(root+'/league.json').done(function(data) {
+            thisObject._handleLeagueLoad(data);
+        });
     };
 
     /**
@@ -70,10 +95,55 @@
      * @param {int} data.weeks
      * @private
      */
-    bowling._handleLeagueLoad = function(data) {
+    bowling.LeagueLoader.prototype._handleLeagueLoad = function(data) {
         console.log('Loaded league data for: ' + data.name);
-
         bowling.currentLeague = new bowling.League(data);
+
+        if (bowling.currentLeague.weekCount > 0) {
+            this.loadWeek(1);
+        } else {
+            console.warn("League doesn't contain any week data");
+        }
+    };
+
+    /**
+     * Load the week data for the league.
+     * @param {int} weekNumber
+     */
+    bowling.LeagueLoader.prototype.loadWeek = function(weekNumber) {
+        console.log("Attempting to load week: " + weekNumber);
+        var thisObject = this;
+        $.getJSON(bowling.configuration.root+'/week'+weekNumber+'.json').done(function(data) {
+            thisObject._handleWeekLoad(weekNumber, data);
+        }).error(function() {
+            console.log("Couldn't find week data for: " + weekNumber);
+            thisObject.deferred.resolve(bowling.currentLeague);
+        });
+    };
+
+    /**
+     * Handle the loading of the week data.
+     * @param {int} weekNumber
+     * @param {Object} data
+     * @param {Array} data.scoresheet
+     * @param {string} data.date
+     * @private
+     */
+    bowling.LeagueLoader.prototype._handleWeekLoad = function(weekNumber, data) {
+        console.log("Loaded for week: " + weekNumber);
+        console.log(data);
+
+        // Need to create a unique series for each of the objects that defined, then associate all of the data with
+        // the appropriate team and/or player.
+        var week = new bowling.Week(data, weekNumber);
+        bowling.currentLeague.weeks.push(week);
+
+        if (weekNumber + 1 < bowling.currentLeague.weekCount) {
+            this.loadWeek(weekNumber + 1);
+        } else {
+            this.deferred.resolve(bowling.currentLeague);
+        }
+
     };
 
     /**
@@ -99,11 +169,6 @@
             this.addTeam(team);
         }, this);
 
-        if (this.weekCount > 0) {
-            this.loadWeek(1);
-        } else {
-            console.warn("League doesn't contain any week data");
-        }
     };
 
     /**
@@ -125,41 +190,13 @@
     };
 
     /**
-     * Load the week data for the league.
+     * Week object that contains all of the recorded matches for the week.
+     * @param {Object} weekConfiguration
+     * @param {string} weekConfiguration.date
+     * @param {Array} weekConfiguration.scoresheet
      * @param {int} weekNumber
+     * @constructor
      */
-    bowling.League.prototype.loadWeek = function(weekNumber) {
-        var thisObject = this;
-        $.getJSON(bowling.configuration.root+'/week'+weekNumber+'.json').done(function(data) {
-            thisObject._handleWeekLoad(weekNumber, data);
-        }).error(function() {
-            console.log("Couldn't find week data for: " + weekNumber);
-        });
-    };
-
-    /**
-     * Handle the loading of the week data.
-     * @param {int} weekNumber
-     * @param {Object} data
-     * @param {Array} data.scoresheet
-     * @param {string} data.date
-     * @private
-     */
-    bowling.League.prototype._handleWeekLoad = function(weekNumber, data) {
-        console.log("Loaded for week: " + weekNumber);
-        console.log(data);
-
-        // Need to create a unique series for each of the objects that defined, then associate all of the data with
-        // the appropriate team and/or player.
-        var week = new bowling.Week(data, weekNumber);
-        this.weeks.push(week);
-
-        if (weekNumber + 1 < this.weekCount) {
-            this.loadWeek(weekNumber + 1);
-        }
-
-    };
-
     bowling.Week = function(weekConfiguration, weekNumber) {
         this.date = weekConfiguration.date;
         this.weekNumber = weekNumber;
@@ -175,6 +212,11 @@
         }, this);
     };
 
+    /**
+     * Team Series is the collection of all of the player series for a team.
+     * @param {Object} seriesConfiguration
+     * @constructor
+     */
     bowling.TeamSeries = function(seriesConfiguration) {
         // Need to find the teams in the current league and create them if necessary.
         this.playerSeries = [];
@@ -210,11 +252,22 @@
 
     };
 
+    /**
+     * A player series contains the games that a roller has bowled for the series.
+     * @param {bowling.Player} player
+     * @param {bowling.Game[]} games
+     * @constructor
+     */
     bowling.PlayerSeries = function(player, games) {
         this.player = player;
         this.games = games;
     };
 
+    /**
+     * Match is the scores and teams that competed against each other.
+     * @param {Object} matchConfiguration
+     * @constructor
+     */
     bowling.Match = function(matchConfiguration) {
         this.teams = [];
         this.scores = [];

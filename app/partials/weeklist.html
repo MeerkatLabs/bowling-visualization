@@ -1,3 +1,20 @@
 <h1>Weeks</h1>
 
 <p>League: {{ league.name }}</p>
+
+<ul>
+    <li ng-repeat="team in league.teams | filter:{visualize: true}">
+        {{ team.name }}
+    </li>
+</ul>
+
+<ul>
+    <li ng-repeat="week in league.weeks">
+        {{ week.weekNumber }} - {{ week.date }}
+        <ul>
+            <li ng-repeat="match in week.matches">
+                {{ match.teams[0].name }} vs. {{ match.teams[1].name }}
+            </li>
+        </ul>
+    </li>
+</ul>
