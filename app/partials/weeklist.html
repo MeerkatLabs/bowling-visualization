@@ -7,7 +7,7 @@
         {{ team.name }}
         <ul>
             <li ng-repeat="roller in team.players">
-
+                {{ roller.name }}
             </li>
         </ul>
     </li>
@@ -15,10 +15,10 @@
 
 <ul>
     <li ng-repeat="week in league.weeks">
-        {{ week.weekNumber }} - {{ week.date }}
+        Week {{ week.weekNumber }}: {{ week.date }}
         <ul>
             <li ng-repeat="match in week.matches">
-                <a href="#/phones/">{{ match.teams[0].name }} vs. {{ match.teams[1].name }}</a>
+                <a href="#/matches/{{match.id}}">{{ match.teams[0].name }} vs. {{ match.teams[1].name }}</a>
             </li>
         </ul>
     </li>

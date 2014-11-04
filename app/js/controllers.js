@@ -25,7 +25,24 @@ phonecatControllers.factory("dataProvider", ['$q', function($q) {
             $scope.league = league;
         });
 
-    }
-]
-);
+       }
+    ]).controller('MatchController', ['$scope', '$routeParams', 'dataProvider',
+        function ($scope, $routeParams, dataProvider) {
+            dataProvider.getData().then(function(league) {
+                $scope.league = league;
+                $scope.matchId = $routeParams.matchId;
+
+                var foundMatch = null;
+                league.weeks.forEach(function(week) {
+                    if (foundMatch == null) {
+                        week.match.forEach(function (match) {
+                            if (foundMatch == null && match.id == $routeParams.matchId) {
+                                foundMatch = match;
+                            }
+                        });
+                    }
+                });
+                $scope.match = foundMatch;
+            });
+}]);
 

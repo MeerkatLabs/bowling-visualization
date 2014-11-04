@@ -10,6 +10,8 @@
     // Define the bowling namespace for the application
     var bowling = function() {};
 
+    bowling._matchCounter = 0;
+
     // Utiltities namespace.
     bowling.utils = function() {};
 
@@ -221,7 +223,7 @@
         // Need to find the teams in the current league and create them if necessary.
         this.playerSeries = [];
         this.team = bowling.utils.findInArray(bowling.currentLeague.teams, function(element) {
-           return element.name == seriesConfiguration.name;
+           return element.id == seriesConfiguration.id;
         });
 
         if (this.team == null) {
@@ -232,10 +234,10 @@
         // Now to update the scores for the score sheet.
         // Find the roller for the score.
         seriesConfiguration.rollers.forEach(function(element) {
-            var bowlingName = element.name;
+            var rollerId = element.id;
             var games = [];
             var roller = bowling.utils.findInArray(this.team.players, function(roller) {
-                return bowlingName == roller.name;
+                return rollerId == roller.id;
             });
 
             element.games.forEach(function(gameConfiguration) {
@@ -269,6 +271,7 @@
      * @constructor
      */
     bowling.Match = function(matchConfiguration) {
+        this.id = bowling._matchCounter++;
         this.teams = [];
         this.scores = [];
 
@@ -282,12 +285,14 @@
     /**
      * Team object that contains players for the league.
      * @param {Object} configuration
+     * @param {string} configuration.id
      * @param {string} configuration.name
      * @param {boolean} configuration.visualize
      * @param {Array} configuration.rollers
      * @constructor
      */
     bowling.Team = function(configuration) {
+        this.id = configuration.id;
         this.name = configuration.name || "Unnamed Team";
         this.visualize = configuration.visualize || false;
         this.players = [];
@@ -312,12 +317,14 @@
     /**
      * Player object for each of the teams.
      * @param {Object} configuration
+     * @param {string} configuration.id
      * @param {string} configuration.name
      * @param {string} configuration.memberType
      * @param {int} configuration.handicap
      * @constructor
      */
     bowling.Player = function(configuration) {
+        this.id = configuration.id;
         this.name = configuration.name || "Unnamed Player";
         this.handicap = configuration.handicap || null;
         this.type = configuration.memberType || "regular";

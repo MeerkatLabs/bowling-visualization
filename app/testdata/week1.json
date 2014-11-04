@@ -3,9 +3,11 @@
     "scoresheet": [
         [
             {
+            "id": "this_team",
             "name": "This Team",
             "rollers": [
                 {
+                    "id": "this_team_robert_r",
                     "name": "Robert R.",
                     "handicap": null,
                     "memberType": "regular",
@@ -58,6 +60,7 @@
                     ]
                 },
                 {
+                    "id": "this_team_erin_g",
                     "name": "Erin G.",
                     "handicap": null,
                     "memberType": "regular",
@@ -110,6 +113,7 @@
                     ]
                 },
                 {
+                    "id": "this_team_polly_p",
                     "name": "Polly P.",
                     "handicap": null,
                     "memberType": "regular",
@@ -162,6 +166,7 @@
                     ]
                 },
                 {
+                    "id": "this_team_steve_c",
                     "name": "Steve C.",
                     "handicap": null,
                     "memberType": "regular",
@@ -214,6 +219,7 @@
                     ]
                 },
                 {
+                    "id": "this_team_dean_s",
                     "name": "Dean S.",
                     "handicap": null,
                     "memberType": "regular",
@@ -268,9 +274,11 @@
             ]
         },
             {
-            "name":  "That Other Team",
+                    "id": "that_other_team",
+                    "name":  "That Other Team",
             "rollers": [
                 {
+                    "id": "that_other_team_john_smith",
                     "name": "John Smith",
                     "handicap": null,
                     "memberType": "regular",
@@ -323,6 +331,7 @@
                     ]
                 },
                 {
+                    "id": "that_other_team_maggie_smith",
                     "name": "Maggie Smith",
                     "handicap": null,
                     "memberType": "regular",
@@ -375,6 +384,7 @@
                     ]
                 },
                 {
+                    "id": "that_other_team_david_smith",
                     "name": "David Smith",
                     "handicap": null,
                     "memberType": "regular",
@@ -427,6 +437,7 @@
                     ]
                 },
                 {
+                    "id": "that_other_team_matt_smith",
                     "name": "Matt Smith",
                     "handicap": null,
                     "memberType": "regular",
@@ -479,6 +490,7 @@
                     ]
                 },
                 {
+                    "id": "that_other_team_rebecca_smith",
                     "name": "Rebecca Smith",
                     "handicap": null,
                     "memberType": "regular",

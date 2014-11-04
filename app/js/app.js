@@ -12,6 +12,10 @@ bowlingApp.config(['$routeProvider',
                 templateUrl: 'partials/weeklist.html',
                 controller: 'LeagueController'
             }).
+            when('/matches/:matchId', {
+               templateUrl: 'partials/matchdetail.html',
+                controller: 'MatchController'
+            }).
             otherwise({
                 redirectTo: '/weeks'
             });
