@@ -5,6 +5,11 @@
 <ul>
     <li ng-repeat="team in league.teams | filter:{visualize: true}">
         {{ team.name }}
+        <ul>
+            <li ng-repeat="roller in team.players">
+
+            </li>
+        </ul>
     </li>
 </ul>
 
@@ -13,7 +18,7 @@
         {{ week.weekNumber }} - {{ week.date }}
         <ul>
             <li ng-repeat="match in week.matches">
-                {{ match.teams[0].name }} vs. {{ match.teams[1].name }}
+                <a href="#/phones/">{{ match.teams[0].name }} vs. {{ match.teams[1].name }}</a>
             </li>
         </ul>
     </li>

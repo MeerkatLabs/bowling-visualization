@@ -1,8 +1,6 @@
 var phonecatControllers = angular.module('leaguecontrollers', []);
 
 phonecatControllers.factory("dataProvider", ['$q', function($q) {
-        console.log("Running dataProvider factory");
-
         var dataLoaded = false;
 
         return {
@@ -10,7 +8,6 @@ phonecatControllers.factory("dataProvider", ['$q', function($q) {
                 if (!dataLoaded) {
                     var result = bowling.initialize({"root": "testdata"}, $q);
                     return result.then(function (league) {
-                        console.log("Data loaded marking flag");
                         dataLoaded = true;
                         return league;
                     });
@@ -21,9 +18,8 @@ phonecatControllers.factory("dataProvider", ['$q', function($q) {
                 }
             }
         }
-    }]).controller('LeagueController', ['$scope', '$route', 'dataProvider',
-    function ($scope, $route, dataProvider) {
-        console.log("Loaded league data");
+    }]).controller('LeagueController', ['$scope', 'dataProvider',
+    function ($scope, dataProvider) {
 
         dataProvider.getData().then(function(league) {
             $scope.league = league;
