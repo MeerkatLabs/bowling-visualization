@@ -1,2 +1,3 @@
-<h1></h1>
+<h1>Match: {{ match.teams[0].name }} vs. {{ match.teams[1].name }}</h1>
         
+<div ng-repeat="index in [0,1]" ng-include="'partials/match/cumulativeScoreSheet.html'"></div>

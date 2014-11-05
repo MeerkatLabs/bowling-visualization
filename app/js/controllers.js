@@ -35,13 +35,14 @@ phonecatControllers.factory("dataProvider", ['$q', function($q) {
                 var foundMatch = null;
                 league.weeks.forEach(function(week) {
                     if (foundMatch == null) {
-                        week.match.forEach(function (match) {
+                        week.matches.forEach(function (match) {
                             if (foundMatch == null && match.id == $routeParams.matchId) {
                                 foundMatch = match;
                             }
                         });
                     }
                 });
+                console.log(foundMatch);
                 $scope.match = foundMatch;
             });
 }]);

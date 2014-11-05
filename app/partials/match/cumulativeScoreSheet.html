@@ -1,0 +1,21 @@
+    <h2>{{ match.teams[index].name }}</h2>
+    <table>
+        <tr>
+            <th>Average</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th>HDCP</th>
+            <th>1</th>
+            <th>2</th>
+            <th>3</th>
+            <th>Totals</th>
+        </tr>
+        <tr ng-repeat="series in match.scores[index].playerSeries">
+            <td></td>
+            <td>{{ series.player.name }}</td>
+            <td>{{ series.player.type }}</td>
+            <td></td>
+            <td ng-repeat="game in series.games">{{game.score}}</td>
+            <td></td>
+        </tr>
+    </table>
