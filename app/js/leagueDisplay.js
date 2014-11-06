@@ -257,12 +257,13 @@
         this.gameScratchTotal = [];
         this.gameTotal = [];
         this.seriesHandicap = 0;
+        this.scoresByGame = [];
 
         for (var gameIndex = 0; gameIndex < bowling.currentLeague.gamesPerSeries; ++gameIndex) {
             this.gameScratchTotal[gameIndex] = 0;
             this.gameTotal[gameIndex] = 0;
+            this.scoresByGame[gameIndex] = [];
         }
-
 
         this.team = bowling.utils.findInArray(bowling.currentLeague.teams, function(element) {
            return element.id == seriesConfiguration.id;
@@ -284,6 +285,7 @@
 
             element.games.forEach(function(gameConfiguration) {
                var game = new bowling.Game(gameConfiguration);
+               game.roller = roller;
                games[game.gameNumber] = game;
             }, this);
 
@@ -301,7 +303,11 @@
             for (var gameIndex = 0; gameIndex < bowling.currentLeague.gamesPerSeries; ++gameIndex) {
                 this.gameScratchTotal[gameIndex] += element.games[gameIndex].score;
                 this.seriesScratch += element.games[gameIndex].score;
+
+                this.scoresByGame[gameIndex].push(element.games[gameIndex]);
             }
+
+
 
         }, this);
 
@@ -360,6 +366,8 @@
             this.teams.push(series.team);
             this.scores.push(series);
         }, this);
+
+
     };
 
     /**
@@ -424,6 +432,8 @@
       this.score = configuration.score || null;
       this.frames = configuration.frames || null;
       this.gameNumber = configuration.gameNumber - 1;
+      this.frameScore = [10];
+      this.roller = null;
 
       // Always override the score value if the frames are defined.
       if (frames != null) {
@@ -440,29 +450,34 @@
             var firstBall = element[0];
             var secondBall = element[1];
 
+            var frameScore = 0;
+
             if (index != 9) {
                 if (firstBall == 10) {
                     // Strike, add this score plus the next two balls.
-                    this.score += 10;
+                    frameScore += 10;
                     if (frames[index+1][1] == null) {
-                        this.score += 10 + frames[index+2][0]
+                        frameScore += 10 + frames[index+2][0]
                     } else {
-                        this.score += frames[index+1][0] + frames[index+1][1];
+                        frameScore += frames[index+1][0] + frames[index+1][1];
                     }
                 } else if (firstBall + secondBall == 10) {
                     // Spare, add this score plus the next ball.
-                    this.score += 10 + frames[index+1][0];
+                    frameScore += 10 + frames[index+1][0];
                 } else {
                     // Just add the scores to the current score.
-                    this.score += element[0] + element[1];
+                    frameScore += element[0] + element[1];
                 }
             } else {
                 // Special rules for the 10th frame (i.e. just add the scores).
-                this.score += element[0] + element[1];
+                frameScore += element[0] + element[1];
                 if (element[2] != null) {
-                    this.score += element[2];
+                    frameScore += element[2];
                 }
             }
+
+            this.score += frameScore;
+            this.frameScore[index] = this.score;
         }, this);
     };
 
