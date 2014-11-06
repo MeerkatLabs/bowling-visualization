@@ -6,6 +6,7 @@
         "maximum": 200,
         "rollingLength": null
     },
+    "gamesPerSeries": 3,
     "weekCount": 5,
     "teams": [
         {

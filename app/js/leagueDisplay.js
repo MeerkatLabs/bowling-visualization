@@ -163,6 +163,13 @@
         this.teams = [];
         this.subs = [];
         this.weeks = [];
+        this.handicap = new bowling.HandicapRules(configuration.handicap || {});
+        this.gamesPerSeries = configuration.gamesPerSeries || 3;
+        this.gameLabels = [];
+
+        for (var index = 0; index < this.gamesPerSeries; ++index) {
+            this.gameLabels[index] = "" + (index+1);
+        }
 
         var localTeams = configuration.teams || [];
 
@@ -170,7 +177,6 @@
             var team = new bowling.Team(element);
             this.addTeam(team);
         }, this);
-
     };
 
     /**
@@ -188,6 +194,28 @@
         if (!found) {
             this.teams.push(team);
         }
+
+    };
+
+    /**
+     * The handicap rules for the league.
+     * @param {Object} configuration
+     * @param {double} configuration.percentage
+     * @param {int} configuration.maximum
+     * @param {int|null} configuration.rollingLength
+     * @constructor
+     */
+    bowling.HandicapRules = function(configuration) {
+        this.percentage = configuration.percentage || 0.9;
+        this.maxScore = configuration.maximum || 210;
+        this.rollingLength = configuration.rollingLength || null;
+    };
+
+    bowling.HandicapRules.prototype.calculateHandicapFromAverage = function(average) {
+        return Math.floor((this.maxScore - average) * this.percentage);
+    };
+
+    bowling.HandicapRules.prototype.calculateHandicapFromGames = function(games) {
 
     };
 
@@ -212,6 +240,8 @@
                team.series[this.weekNumber-1] = match.scores[iter];
             }, this);
         }, this);
+
+        // After the week has been defined, update the handicaps and averages of the players.
     };
 
     /**
@@ -222,6 +252,18 @@
     bowling.TeamSeries = function(seriesConfiguration) {
         // Need to find the teams in the current league and create them if necessary.
         this.playerSeries = [];
+        this.seriesTotal = 0;
+        this.seriesScratch = 0;
+        this.gameScratchTotal = [];
+        this.gameTotal = [];
+        this.seriesHandicap = 0;
+
+        for (var gameIndex = 0; gameIndex < bowling.currentLeague.gamesPerSeries; ++gameIndex) {
+            this.gameScratchTotal[gameIndex] = 0;
+            this.gameTotal[gameIndex] = 0;
+        }
+
+
         this.team = bowling.utils.findInArray(bowling.currentLeague.teams, function(element) {
            return element.id == seriesConfiguration.id;
         });
@@ -252,6 +294,24 @@
 
         }, this);
 
+        // Update the totals.
+        this.playerSeries.forEach(function(element) {
+            this.seriesHandicap += element.handicap;
+
+            for (var gameIndex = 0; gameIndex < bowling.currentLeague.gamesPerSeries; ++gameIndex) {
+                this.gameScratchTotal[gameIndex] += element.games[gameIndex].score;
+                this.seriesScratch += element.games[gameIndex].score;
+            }
+
+        }, this);
+
+        this.seriesTotal = this.seriesScratch + (this.seriesHandicap * bowling.currentLeague.gamesPerSeries);
+
+        for (gameIndex = 0; gameIndex < bowling.currentLeague.gamesPerSeries; ++gameIndex) {
+            this.gameTotal[gameIndex] = this.gameScratchTotal[gameIndex] + this.seriesHandicap;
+        }
+
+        console.log(this);
     };
 
     /**
@@ -263,6 +323,26 @@
     bowling.PlayerSeries = function(player, games) {
         this.player = player;
         this.games = games;
+        this.total = 0;
+
+        this.games.forEach(function (element) {
+           this.total += element.score;
+        }, this);
+
+        this.playerAverage = 0;
+        this.handicap = 0;
+
+        // Calculate the average from the games that are defined in this series
+        if (player.playerAverage == null) {
+            this.playerAverage = Math.floor(this.total / this.games.length);
+            this.player.playerAverage = this.playerAverage;
+        }
+
+        // Same thing with the handicap.
+        if (player.handicap == null) {
+            this.handicap = bowling.currentLeague.handicap.calculateHandicapFromAverage(this.playerAverage);
+            this.player.handicap = this.handicap;
+        }
     };
 
     /**
@@ -329,6 +409,7 @@
         this.handicap = configuration.handicap || null;
         this.type = configuration.memberType || "regular";
         this.bowledGames = [];
+        this.playerAverage = null;
     };
 
     /**

@@ -5,17 +5,39 @@
             <th>Name</th>
             <th>Type</th>
             <th>HDCP</th>
-            <th>1</th>
-            <th>2</th>
-            <th>3</th>
+            <th ng-repeat="label in league.gameLabels">{{label}}</th>
             <th>Totals</th>
         </tr>
         <tr ng-repeat="series in score.playerSeries">
-            <td></td>
+            <td>{{ series.playerAverage }}</td>
             <td>{{ series.player.name }}</td>
             <td>{{ series.player.type }}</td>
-            <td></td>
+            <td>{{ series.handicap }}</td>
             <td ng-repeat="game in series.games">{{game.score}}</td>
+            <td>{{ series.total }}</td>
+        </tr>
+        <tr>
             <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td ng-repeat="label in league.gameLabels">{{score.gameScratchTotal[$index]}}</td>
+            <td>{{ score.seriesScratch }}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td ng-repeat="label in league.gameLabels">{{ score.seriesHandicap }}</td>
+            <td>{{ score.seriesHandicap * league.gamesPerSeries}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td ng-repeat="label in league.gameLabels">{{ score.gameTotal[$index] }}</td>
+            <td>{{ score.seriesTotal }}</td>
         </tr>
     </table>
