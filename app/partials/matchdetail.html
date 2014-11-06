@@ -10,7 +10,7 @@
 
 <div class="row">
     <div ng-repeat="score in match.scores" class="col-md-6">
-        <div ng-repeat="game in score.scoresByGame" ng-init="gameIndex = $index" ng-include="'partials/match/frame.html'">
+        <div style="padding-bottom: 20px; float: left" ng-repeat="game in score.scoresByGame" ng-init="gameIndex = $index" ng-include="'partials/match/frame.html'">
 
         </div>
     </div>
