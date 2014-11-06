@@ -75,6 +75,7 @@ phonecatControllers.factory("dataProvider", ['$q', function($q) {
                                        .style("fill", function (d) { return d.color; });
             };
 
+            // Tell the scope to render the values when the circles have been updated.
             scope.$watch('circles', function(newVals, oldVals) {
                 return scope.render();
             }, true);
