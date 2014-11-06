@@ -7,7 +7,7 @@
         {{ team.name }}
         <ul>
             <li ng-repeat="roller in team.players">
-                {{ roller.name }}
+                <a href="#/team/{{team.id}}/players/{{roller.id}}">{{ roller.name }}</a>
             </li>
         </ul>
     </li>

@@ -11,6 +11,7 @@
     var bowling = function() {};
 
     bowling._matchCounter = 0;
+    bowling._playerCounter = 0;
 
     // Utiltities namespace.
     bowling.utils = function() {};
@@ -117,8 +118,9 @@
         var thisObject = this;
         $.getJSON(bowling.configuration.root+'/week'+weekNumber+'.json').done(function(data) {
             thisObject._handleWeekLoad(weekNumber, data);
-        }).error(function() {
+        }).error(function(error) {
             console.log("Couldn't find week data for: " + weekNumber);
+            console.log(error);
             thisObject.deferred.resolve(bowling.currentLeague);
         });
     };
@@ -132,9 +134,6 @@
      * @private
      */
     bowling.LeagueLoader.prototype._handleWeekLoad = function(weekNumber, data) {
-        console.log("Loaded for week: " + weekNumber);
-        console.log(data);
-
         // Need to create a unique series for each of the objects that defined, then associate all of the data with
         // the appropriate team and/or player.
         var week = new bowling.Week(data, weekNumber);
@@ -166,6 +165,7 @@
         this.handicap = new bowling.HandicapRules(configuration.handicap || {});
         this.gamesPerSeries = configuration.gamesPerSeries || 3;
         this.gameLabels = [];
+        this.subs = [];
 
         for (var index = 0; index < this.gamesPerSeries; ++index) {
             this.gameLabels[index] = "" + (index+1);
@@ -233,7 +233,7 @@
         this.matches = [];
 
         weekConfiguration.scoresheet.forEach(function(element, iter, array) {
-            var match = new bowling.Match(element);
+            var match = new bowling.Match(element, this);
             this.matches.push(match);
 
             match.teams.forEach(function(team, iter, teams) {
@@ -247,9 +247,10 @@
     /**
      * Team Series is the collection of all of the player series for a team.
      * @param {Object} seriesConfiguration
+     * @param {bowling.Week} week
      * @constructor
      */
-    bowling.TeamSeries = function(seriesConfiguration) {
+    bowling.TeamSeries = function(seriesConfiguration, week) {
         // Need to find the teams in the current league and create them if necessary.
         this.playerSeries = [];
         this.seriesTotal = 0;
@@ -258,6 +259,7 @@
         this.gameTotal = [];
         this.seriesHandicap = 0;
         this.scoresByGame = [];
+        this.week = week;
 
         for (var gameIndex = 0; gameIndex < bowling.currentLeague.gamesPerSeries; ++gameIndex) {
             this.gameScratchTotal[gameIndex] = 0;
@@ -283,16 +285,38 @@
                 return rollerId == roller.id;
             });
 
+            if (roller == null) {
+                // See if the roller is in the sub list:
+                roller = bowling.utils.findInArray(bowling.currentLeague.subs, function(roller) {
+                    return rollerId == roller.id;
+                });
+
+                if (roller == null) {
+                    // Now the roller has to be added to the league.
+                    roller = new bowling.Player(element);
+                    if (roller.type == 'substitute') {
+                        bowling.currentLeague.subs.push(roller);
+                    } else if (roller.type == 'regular') {
+                        this.team.addPlayer(roller);
+                    }
+                }
+            }
+
             element.games.forEach(function(gameConfiguration) {
                var game = new bowling.Game(gameConfiguration);
                game.roller = roller;
                games[game.gameNumber] = game;
             }, this);
 
-            var playerSeries = new bowling.PlayerSeries(roller, games);
+            var playerSeries = new bowling.PlayerSeries(roller, games, this.week);
             this.playerSeries.push(playerSeries);
 
+            // Add the games to the player's stats.
             roller.bowledGames = roller.bowledGames.concat(playerSeries.games);
+            roller.serieses.push(playerSeries);
+
+            // Now that the new games have been added, need to update the handicap and the average for the player
+            roller.updateStats();
 
         }, this);
 
@@ -317,19 +341,20 @@
             this.gameTotal[gameIndex] = this.gameScratchTotal[gameIndex] + this.seriesHandicap;
         }
 
-        console.log(this);
     };
 
     /**
      * A player series contains the games that a roller has bowled for the series.
      * @param {bowling.Player} player
      * @param {bowling.Game[]} games
+     * @param {bowling.Week} week
      * @constructor
      */
-    bowling.PlayerSeries = function(player, games) {
+    bowling.PlayerSeries = function(player, games, week) {
         this.player = player;
         this.games = games;
         this.total = 0;
+        this.week = week;
 
         this.games.forEach(function (element) {
            this.total += element.score;
@@ -337,36 +362,42 @@
 
         this.playerAverage = 0;
         this.handicap = 0;
+        this.seriesAverage = Math.floor(this.total / this.games.length);
 
         // Calculate the average from the games that are defined in this series
         if (player.playerAverage == null) {
             this.playerAverage = Math.floor(this.total / this.games.length);
             this.player.playerAverage = this.playerAverage;
+        } else {
+            this.playerAverage = this.player.playerAverage;
         }
 
         // Same thing with the handicap.
         if (player.handicap == null) {
             this.handicap = bowling.currentLeague.handicap.calculateHandicapFromAverage(this.playerAverage);
             this.player.handicap = this.handicap;
+        } else {
+            this.handicap = this.player.handicap;
         }
     };
 
     /**
      * Match is the scores and teams that competed against each other.
      * @param {Object} matchConfiguration
+     * @param {bowling.Week} week
      * @constructor
      */
-    bowling.Match = function(matchConfiguration) {
+    bowling.Match = function(matchConfiguration, week) {
         this.id = bowling._matchCounter++;
         this.teams = [];
         this.scores = [];
+        this.week = week;
 
         matchConfiguration.forEach(function (element) {
-            var series = new bowling.TeamSeries(element);
+            var series = new bowling.TeamSeries(element, week);
             this.teams.push(series.team);
             this.scores.push(series);
         }, this);
-
 
     };
 
@@ -412,12 +443,24 @@
      * @constructor
      */
     bowling.Player = function(configuration) {
-        this.id = configuration.id;
+        this.id = configuration.id || "" + bowling._playerCounter++;
+        configuration.id = this.id;
         this.name = configuration.name || "Unnamed Player";
         this.handicap = configuration.handicap || null;
         this.type = configuration.memberType || "regular";
         this.bowledGames = [];
+        this.serieses = [];
         this.playerAverage = null;
+    };
+
+    bowling.Player.prototype.updateStats = function() {
+        var total = 0;
+        this.bowledGames.forEach(function (element) {
+            total += element.score;
+        });
+
+        this.playerAverage = Math.floor(total / this.bowledGames.length);
+        this.handicap = bowling.currentLeague.handicap.calculateHandicapFromAverage(this.playerAverage);
     };
 
     /**
@@ -436,7 +479,7 @@
       this.roller = null;
 
       // Always override the score value if the frames are defined.
-      if (frames != null) {
+      if (this.frames != null) {
           this.calculateScore();
       }
     };
