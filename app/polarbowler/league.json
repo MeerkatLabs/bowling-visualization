@@ -11,35 +11,35 @@
     "teams": [
         {
             "id": "trex_arms",
-            "name": "T-Rex Arms"
+            "name": "T-Rex Arms",
             "rollers": [
                 {
-                    "id": "no_beer_no_gear_mitch",
-                    "name": "Mitch",
+                    "id": "trex_arms_robert",
+                    "name": "Robert",
                     "handicap": null,
                     "memberType": "regular"
                 },
                 {
-                    "id": "no_beer_no_gear_polly",
+                    "id": "trex_arms_polly",
                     "name": "Polly",
                     "handicap": null,
                     "memberType": "regular"
                 },
                 {
-                    "id": "no_beer_no_gear_erin",
+                    "id": "trex_arms_erin",
                     "name": "Erin",
                     "handicap": null,
                     "memberType": "regular"
                 },
                 {
-                    "id": "no_beer_no_gear_aaron",
-                    "name": "Aaron",
+                    "id": "trex_arms_steve",
+                    "name": "Steve",
                     "handicap": null,
                     "memberType": "regular"
                 },
                 {
-                    "id": "no_beer_no_gear_robert",
-                    "name": "Robert",
+                    "id": "trex_arms_dean",
+                    "name": "Dean",
                     "handicap": null,
                     "memberType": "regular"
                 }
