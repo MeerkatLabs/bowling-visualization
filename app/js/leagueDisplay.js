@@ -5,16 +5,19 @@
 // Need to have something that will load up the league definition file and then start processing the week data and
 // display the results for the page.
 
-;(function(undefined) {
+;
+(function (undefined) {
 
     // Define the bowling namespace for the application
-    var bowling = function() {};
+    var bowling = function () {
+    };
 
     bowling._matchCounter = 0;
     bowling._playerCounter = 0;
 
     // Utiltities namespace.
-    bowling.utils = function() {};
+    bowling.utils = function () {
+    };
 
     /**
      * Find an element in an array based on the callback provided.
@@ -22,11 +25,11 @@
      * @param {function} callback
      * @returns {*}
      */
-    bowling.utils.findInArray = function(array, callback) {
+    bowling.utils.findInArray = function (array, callback) {
 
         var result = null;
         var skip = false;
-        array.forEach(function(element) {
+        array.forEach(function (element) {
             if (!skip && callback(element)) {
                 result = element;
                 skip = true;
@@ -57,7 +60,7 @@
      * @param $q Angular JS promise implementation
      * @returns angular promise.
      */
-    bowling.initialize = function(configuration, $q) {
+    bowling.initialize = function (configuration, $q) {
 
         bowling.configuration = configuration || bowling.configuration;
 
@@ -74,21 +77,21 @@
      * @param deferred deferred object.
      * @constructor
      */
-    bowling.LeagueLoader = function(deferred) {
+    bowling.LeagueLoader = function (deferred) {
         this.deferred = deferred;
     };
 
     /**
      * Load the league data from the configuration details.
      */
-    bowling.LeagueLoader.prototype.load = function() {
+    bowling.LeagueLoader.prototype.load = function () {
 
         var thisObject = this;
 
         var root = bowling.configuration.root;
-        $.getJSON(root+'/league.json').done(function(data) {
+        $.getJSON(root + '/league.json').done(function (data) {
             thisObject._handleLeagueLoad(data);
-        }).error(function(error) {
+        }).error(function (error) {
             if (error.status == 200) {
                 console.error("File found, but not parsable.");
             } else {
@@ -104,7 +107,7 @@
      * @param {int} data.weeks
      * @private
      */
-    bowling.LeagueLoader.prototype._handleLeagueLoad = function(data) {
+    bowling.LeagueLoader.prototype._handleLeagueLoad = function (data) {
         console.log('Loaded league data for: ' + data.name);
         bowling.currentLeague = new bowling.League(data);
 
@@ -119,12 +122,12 @@
      * Load the week data for the league.
      * @param {int} weekNumber
      */
-    bowling.LeagueLoader.prototype.loadWeek = function(weekNumber) {
+    bowling.LeagueLoader.prototype.loadWeek = function (weekNumber) {
         console.log("Attempting to load week: " + weekNumber);
         var thisObject = this;
-        $.getJSON(bowling.configuration.root+'/week'+weekNumber+'.json').done(function(data) {
+        $.getJSON(bowling.configuration.root + '/week' + weekNumber + '.json').done(function (data) {
             thisObject._handleWeekLoad(weekNumber, data);
-        }).error(function(error) {
+        }).error(function (error) {
             if (error.status == 200) {
                 console.log("File found, but not parsable.");
             } else {
@@ -143,7 +146,7 @@
      * @param {string} data.date
      * @private
      */
-    bowling.LeagueLoader.prototype._handleWeekLoad = function(weekNumber, data) {
+    bowling.LeagueLoader.prototype._handleWeekLoad = function (weekNumber, data) {
         // Need to create a unique series for each of the objects that defined, then associate all of the data with
         // the appropriate team and/or player.
         var week = new bowling.Week(data, weekNumber);
@@ -166,7 +169,7 @@
      * @param {Array} configuration.teams
      * @constructor
      */
-    bowling.League = function(configuration) {
+    bowling.League = function (configuration) {
         this.name = configuration.name || "Unnamed League";
         this.weekCount = configuration.weekCount || 0;
         this.teams = [];
@@ -178,12 +181,12 @@
         this.subs = [];
 
         for (var index = 0; index < this.gamesPerSeries; ++index) {
-            this.gameLabels[index] = "" + (index+1);
+            this.gameLabels[index] = "" + (index + 1);
         }
 
         var localTeams = configuration.teams || [];
 
-        localTeams.forEach(function(element) {
+        localTeams.forEach(function (element) {
             var team = new bowling.Team(element);
             this.addTeam(team);
         }, this);
@@ -193,9 +196,9 @@
      * Add a team to the league.  Will only add the team if the name is not already used by another team.
      * @param {bowling.Team} team
      */
-    bowling.League.prototype.addTeam = function(team) {
+    bowling.League.prototype.addTeam = function (team) {
         var found = false;
-        this.teams.forEach(function(element) {
+        this.teams.forEach(function (element) {
             if (element.name == team.name) {
                 found = true;
             }
@@ -215,17 +218,17 @@
      * @param {int|null} configuration.rollingLength
      * @constructor
      */
-    bowling.HandicapRules = function(configuration) {
+    bowling.HandicapRules = function (configuration) {
         this.percentage = configuration.percentage || 0.9;
         this.maxScore = configuration.maximum || 210;
         this.rollingLength = configuration.rollingLength || null;
     };
 
-    bowling.HandicapRules.prototype.calculateHandicapFromAverage = function(average) {
+    bowling.HandicapRules.prototype.calculateHandicapFromAverage = function (average) {
         return Math.floor((this.maxScore - average) * this.percentage);
     };
 
-    bowling.HandicapRules.prototype.calculateHandicapFromGames = function(games) {
+    bowling.HandicapRules.prototype.calculateHandicapFromGames = function (games) {
 
     };
 
@@ -237,17 +240,17 @@
      * @param {int} weekNumber
      * @constructor
      */
-    bowling.Week = function(weekConfiguration, weekNumber) {
+    bowling.Week = function (weekConfiguration, weekNumber) {
         this.date = weekConfiguration.date;
         this.weekNumber = weekNumber;
         this.matches = [];
 
-        weekConfiguration.scoresheet.forEach(function(element, iter, array) {
+        weekConfiguration.scoresheet.forEach(function (element, iter, array) {
             var match = new bowling.Match(element, this);
             this.matches.push(match);
 
-            match.teams.forEach(function(team, iter, teams) {
-               team.series[this.weekNumber-1] = match.scores[iter];
+            match.teams.forEach(function (team, iter, teams) {
+                team.series[this.weekNumber - 1] = match.scores[iter];
             }, this);
         }, this);
 
@@ -260,7 +263,7 @@
      * @param {bowling.Week} week
      * @constructor
      */
-    bowling.TeamSeries = function(seriesConfiguration, week) {
+    bowling.TeamSeries = function (seriesConfiguration, week) {
         // Need to find the teams in the current league and create them if necessary.
         this.playerSeries = [];
         this.seriesTotal = 0;
@@ -277,8 +280,8 @@
             this.scoresByGame[gameIndex] = [];
         }
 
-        this.team = bowling.utils.findInArray(bowling.currentLeague.teams, function(element) {
-           return element.id == seriesConfiguration.id;
+        this.team = bowling.utils.findInArray(bowling.currentLeague.teams, function (element) {
+            return element.id == seriesConfiguration.id;
         });
 
         if (this.team == null) {
@@ -288,16 +291,16 @@
 
         // Now to update the scores for the score sheet.
         // Find the roller for the score.
-        seriesConfiguration.rollers.forEach(function(element) {
+        seriesConfiguration.rollers.forEach(function (element) {
             var rollerId = element.id;
             var games = [];
-            var roller = bowling.utils.findInArray(this.team.players, function(roller) {
+            var roller = bowling.utils.findInArray(this.team.players, function (roller) {
                 return rollerId == roller.id;
             });
 
             if (roller == null) {
                 // See if the roller is in the sub list:
-                roller = bowling.utils.findInArray(bowling.currentLeague.subs, function(roller) {
+                roller = bowling.utils.findInArray(bowling.currentLeague.subs, function (roller) {
                     return rollerId == roller.id;
                 });
 
@@ -312,10 +315,10 @@
                 }
             }
 
-            element.games.forEach(function(gameConfiguration) {
-               var game = new bowling.Game(gameConfiguration);
-               game.roller = roller;
-               games[game.gameNumber] = game;
+            element.games.forEach(function (gameConfiguration) {
+                var game = new bowling.Game(gameConfiguration);
+                game.roller = roller;
+                games[game.gameNumber] = game;
             }, this);
 
             var playerSeries = new bowling.PlayerSeries(roller, games, this.week);
@@ -331,7 +334,7 @@
         }, this);
 
         // Update the totals.
-        this.playerSeries.forEach(function(element) {
+        this.playerSeries.forEach(function (element) {
             this.seriesHandicap += element.handicap;
 
             for (var gameIndex = 0; gameIndex < bowling.currentLeague.gamesPerSeries; ++gameIndex) {
@@ -340,7 +343,6 @@
 
                 this.scoresByGame[gameIndex].push(element.games[gameIndex]);
             }
-
 
 
         }, this);
@@ -360,14 +362,14 @@
      * @param {bowling.Week} week
      * @constructor
      */
-    bowling.PlayerSeries = function(player, games, week) {
+    bowling.PlayerSeries = function (player, games, week) {
         this.player = player;
         this.games = games;
         this.total = 0;
         this.week = week;
 
         this.games.forEach(function (element) {
-           this.total += element.score;
+            this.total += element.score;
         }, this);
 
         this.playerAverage = 0;
@@ -397,7 +399,7 @@
      * @param {bowling.Week} week
      * @constructor
      */
-    bowling.Match = function(matchConfiguration, week) {
+    bowling.Match = function (matchConfiguration, week) {
         this.id = bowling._matchCounter++;
         this.teams = [];
         this.scores = [];
@@ -420,7 +422,7 @@
      * @param {Array} configuration.rollers
      * @constructor
      */
-    bowling.Team = function(configuration) {
+    bowling.Team = function (configuration) {
         this.id = configuration.id;
         this.name = configuration.name || "Unnamed Team";
         this.visualize = configuration.visualize || false;
@@ -429,7 +431,7 @@
 
         var localPlayers = configuration.rollers || [];
 
-        localPlayers.forEach(function(element){
+        localPlayers.forEach(function (element) {
             var player = new bowling.Player(element);
 
             if (player.type == "substitute") {
@@ -444,7 +446,7 @@
      * Add a player to the team.
      * @param {bowling.Player} player
      */
-    bowling.Team.prototype.addPlayer = function(player) {
+    bowling.Team.prototype.addPlayer = function (player) {
         this.players.push(player);
     };
 
@@ -457,7 +459,7 @@
      * @param {int} configuration.handicap
      * @constructor
      */
-    bowling.Player = function(configuration) {
+    bowling.Player = function (configuration) {
         this.id = configuration.id || "" + bowling._playerCounter++;
         configuration.id = this.id;
         this.name = configuration.name || "Unnamed Player";
@@ -468,7 +470,7 @@
         this.playerAverage = null;
     };
 
-    bowling.Player.prototype.updateStats = function() {
+    bowling.Player.prototype.updateStats = function () {
         var total = 0;
         this.bowledGames.forEach(function (element) {
             total += element.score;
@@ -486,25 +488,28 @@
      * @param {Array} configuration.frames
      * @constructor
      */
-    bowling.Game = function(configuration) {
-      this.score = configuration.score || null;
-      this.frames = configuration.frames || null;
-      this.gameNumber = configuration.gameNumber - 1;
-      this.frameScore = [10];
-      this.roller = null;
+    bowling.Game = function (configuration) {
+        this.score = configuration.score || null;
+        if (configuration.score === 0) {
+            this.score = 0;
+        }
+        this.frames = configuration.frames || null;
+        this.gameNumber = configuration.gameNumber - 1;
+        this.frameScore = [10];
+        this.roller = null;
 
-      // Always override the score value if the frames are defined.
-      if (this.frames != null) {
-          this.calculateScore();
-      }
+        // Always override the score value if the frames are defined.
+        if (this.frames != null) {
+            this.calculateScore();
+        }
     };
 
     /**)
      * Calculate the score for all of the frames.
      */
-    bowling.Game.prototype.calculateScore = function() {
+    bowling.Game.prototype.calculateScore = function () {
         this.score = 0;
-        this.frames.forEach(function(element, index, frames) {
+        this.frames.forEach(function (element, index, frames) {
             var firstBall = element[0];
             var secondBall = element[1];
 
@@ -514,14 +519,14 @@
                 if (firstBall == 10) {
                     // Strike, add this score plus the next two balls.
                     frameScore += 10;
-                    if (frames[index+1][1] == null) {
-                        frameScore += 10 + frames[index+2][0]
+                    if (frames[index + 1][1] == null) {
+                        frameScore += 10 + frames[index + 2][0]
                     } else {
-                        frameScore += frames[index+1][0] + frames[index+1][1];
+                        frameScore += frames[index + 1][0] + frames[index + 1][1];
                     }
                 } else if (firstBall + secondBall == 10) {
                     // Spare, add this score plus the next ball.
-                    frameScore += 10 + frames[index+1][0];
+                    frameScore += 10 + frames[index + 1][0];
                 } else {
                     // Just add the scores to the current score.
                     frameScore += element[0] + element[1];
