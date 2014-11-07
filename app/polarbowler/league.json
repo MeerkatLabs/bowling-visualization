@@ -1,0 +1,50 @@
+{
+    "name": "Polar Bowler 2014-2015",
+    "playersPerTeam": 5,
+    "handicap": {
+        "percentage": 1.0,
+        "maximum": 200,
+        "rollingLength": null
+    },
+    "gamesPerSeries": 3,
+    "weekCount": 18,
+    "teams": [
+        {
+            "id": "trex_arms",
+            "name": "T-Rex Arms"
+            "rollers": [
+                {
+                    "id": "no_beer_no_gear_mitch",
+                    "name": "Mitch",
+                    "handicap": null,
+                    "memberType": "regular"
+                },
+                {
+                    "id": "no_beer_no_gear_polly",
+                    "name": "Polly",
+                    "handicap": null,
+                    "memberType": "regular"
+                },
+                {
+                    "id": "no_beer_no_gear_erin",
+                    "name": "Erin",
+                    "handicap": null,
+                    "memberType": "regular"
+                },
+                {
+                    "id": "no_beer_no_gear_aaron",
+                    "name": "Aaron",
+                    "handicap": null,
+                    "memberType": "regular"
+                },
+                {
+                    "id": "no_beer_no_gear_robert",
+                    "name": "Robert",
+                    "handicap": null,
+                    "memberType": "regular"
+                }
+            ],
+            "visualize": true
+        }
+    ]
+}
