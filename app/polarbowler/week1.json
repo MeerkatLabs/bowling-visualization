@@ -4,6 +4,7 @@
         [
             {
                 "name": "Ebowla",
+                "lane": 7,
                 "rollers": [
                     {
                         "name": "Gordon",
@@ -259,6 +260,7 @@
             },
             {
                 "id": "trex_arms",
+                "lane": 8,
                 "rollers": [
                     {
                         "id": "trex_arms_robert",
