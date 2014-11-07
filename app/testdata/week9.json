@@ -135,12 +135,13 @@
                         ]
                     },{
                         "name": "Brian Schwartz",
-                        "handicap": 68
+                        "handicap": 68,
                         "memberType": "regular",
                         "games": [
                             {
                                 "gameNumber": 1,
                                 "score": 143
+                            },
                             {
                                 "gameNumber": 2,
                                 "score": 178
@@ -152,7 +153,7 @@
                         ]
                     },{
                         "name": "Nicole Irons",
-                        "handicap": 75
+                        "handicap": 75,
                         "memberType": "regular",
                         "games": [
                             {

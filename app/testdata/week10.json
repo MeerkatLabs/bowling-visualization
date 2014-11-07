@@ -41,7 +41,7 @@
                     },
                     {
                         "id": "league_sub_nori_hughes",
-			"handicap": 0,
+			            "handicap": 0,
                         "games": [
                             {
                                 "gameNumber": 1,
@@ -135,7 +135,7 @@
                         ]
                     },{
                         "name": "James Aber",
-                        "handicap": 102
+                        "handicap": 102,
                         "memberType": "regular",
                         "games": [
                             {
