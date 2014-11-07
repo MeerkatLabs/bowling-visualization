@@ -10,15 +10,15 @@
                         "games": [
                             {
                                 "gameNumber": 1,
-                                "score": 182
+                                "score": 155
                             },
                             {
                                 "gameNumber": 2,
-                                "score": 152
+                                "score": 194
                             },
                             {
                                 "gameNumber": 3,
-                                "score": 173
+                                "score": 172
                             }
                         ]
                     },
@@ -27,15 +27,15 @@
                         "games": [
                             {
                                 "gameNumber": 1,
-                                "score": 108
+                                "score": 116
                             },
                             {
                                 "gameNumber": 2,
-                                "score": 132
+                                "score": 120
                             },
                             {
                                 "gameNumber": 3,
-                                "score": 154
+                                "score": 155
                             }
                         ]
                     },
@@ -44,32 +44,35 @@
                         "games": [
                             {
                                 "gameNumber": 1,
-                                "score": 103
+                                "score": 143
                             },
                             {
                                 "gameNumber": 2,
-                                "score": 109
+                                "score": 128
                             },
                             {
                                 "gameNumber": 3,
-                                "score": 119
+                                "score": 106
                             }
                         ]
                     },
                     {
-                        "id": "no_beer_no_gear_aaron",
+                        "id": "league_sub_matthew",
+                        "name": "Matthew",
+                        "handicap": 81,
+			"memberType": "substitute",
                         "games": [
                             {
                                 "gameNumber": 1,
-                                "score": 116
+                                "score": 119
                             },
                             {
                                 "gameNumber": 2,
-                                "score": 140
+                                "score": 94
                             },
                             {
                                 "gameNumber": 3,
-                                "score": 94
+                                "score": 114
                             }
                         ]
                     },
@@ -78,46 +81,27 @@
                         "games": [
                             {
                                 "gameNumber": 1,
-                                "score": 164
+                                "score": 143
                             },
                             {
                                 "gameNumber": 2,
-                                "score": 128
+                                "score": 175
                             },
                             {
                                 "gameNumber": 3,
-                                "score": 126
+                                "score": 133
                             }
                         ]
                     }
                 ]
             },
             {
-                "id": "apex_predators",
-                "name": "Apex Predators",
+                "id": "team_week_8",
+                "name": "Week 8",
                 "rollers": [
                     {
-                        "name": "Steven Forsman",
-                        "handicap": 60,
-                        "memberType": "regular",
-                        "games": [
-                            {
-                                "gameNumber": 1,
-                                "score": 104
-                            },
-                            {
-                                "gameNumber": 2,
-                                "score": 139
-                            },
-                            {
-                                "gameNumber": 3,
-                                "score": 147
-                            }
-                        ]
-                    },
-                    {
-                        "name": "Louis Wilhoite",
-                        "handicap": 77,
+                        "name": "Jordan Reuer",
+                        "handicap": 54,
                         "memberType": "regular",
                         "games": [
                             {
@@ -126,65 +110,85 @@
                             },
                             {
                                 "gameNumber": 2,
-                                "score": 119
+                                "score": 166
                             },
                             {
                                 "gameNumber": 3,
-                                "score": 102
+                                "score": 154
                             }
                         ]
-                    },{
-                        "name": "Laura Wilhoite",
-                        "handicap": 98,
+                    },
+                    {
+                        "name": "Steve Connolly",
+                        "handicap": 45,
                         "memberType": "regular",
                         "games": [
                             {
                                 "gameNumber": 1,
-                                "score": 111
+                                "score": 154
                             },
                             {
                                 "gameNumber": 2,
-                                "score": 111
+                                "score": 178
                             },
                             {
                                 "gameNumber": 3,
-                                "score": 114
+                                "score": 108
                             }
                         ]
                     },{
-                        "name": "Robie Yoder",
-                        "handicap": 99,
+                        "name": "Jason Foster",
+                        "handicap": 68,
                         "memberType": "regular",
                         "games": [
                             {
                                 "gameNumber": 1,
-                                "score": 117
+                                "score": 186
                             },
                             {
                                 "gameNumber": 2,
-                                "score": 115
+                                "score": 139
                             },
                             {
                                 "gameNumber": 3,
-                                "score": 72
+                                "score": 135
                             }
                         ]
                     },{
-                        "name": "Doug Vils",
-                        "handicap": 85,
+                        "name": "Tony Riccardelli",
+                        "handicap": 31,
                         "memberType": "regular",
                         "games": [
                             {
                                 "gameNumber": 1,
-                                "score": 103
+                                "score": 136
                             },
                             {
                                 "gameNumber": 2,
-                                "score": 120
+                                "score": 233
                             },
                             {
                                 "gameNumber": 3,
-                                "score": 92
+                                "score": 160
+                            }
+                        ]
+                    },{
+                        "name": "Nori Hughes",
+                        "id": "league_sub_nori_hughes",
+                        "handicap": 10,
+                        "memberType": "substitute",
+                        "games": [
+                            {
+                                "gameNumber": 1,
+                                "score": 183
+                            },
+                            {
+                                "gameNumber": 2,
+                                "score": 179
+                            },
+                            {
+                                "gameNumber": 3,
+                                "score": 217
                             }
                         ]
                     }
