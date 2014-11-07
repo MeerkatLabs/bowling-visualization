@@ -88,6 +88,12 @@
         var root = bowling.configuration.root;
         $.getJSON(root+'/league.json').done(function(data) {
             thisObject._handleLeagueLoad(data);
+        }).error(function(error) {
+            if (error.status == 200) {
+                console.error("File found, but not parsable.");
+            } else {
+                console.error("Couldn't find week data for: " + weekNumber);
+            }
         });
     };
 
