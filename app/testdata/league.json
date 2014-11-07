@@ -1,45 +1,45 @@
 {
-    "name": "PinSetter's League",
+    "name": "Bowling 2013",
     "playersPerTeam": 5,
     "handicap": {
-        "percentage": 1.0,
-        "maximum": 200,
+        "percentage": 0.9,
+        "maximum": 210,
         "rollingLength": null
     },
     "gamesPerSeries": 3,
-    "weekCount": 5,
+    "weekCount": 18,
     "teams": [
         {
-            "id": "this_team",
-            "name": "This Team",
+            "id": "no_beer_no_gear",
+            "name": "No Beer, No Gear",
             "rollers": [
                 {
-                    "id": "this_team_robert_r",
-                    "name": "Robert R.",
+                    "id": "no_beer_no_gear_mitch",
+                    "name": "Mitch",
                     "handicap": null,
                     "memberType": "regular"
                 },
                 {
-                    "id": "this_team_erin_g",
-                    "name": "Erin G.",
+                    "id": "no_beer_no_gear_polly",
+                    "name": "Polly",
                     "handicap": null,
                     "memberType": "regular"
                 },
                 {
-                    "id": "this_team_steve_c",
-                    "name": "Steve C.",
+                    "id": "no_beer_no_gear_erin",
+                    "name": "Erin",
                     "handicap": null,
                     "memberType": "regular"
                 },
                 {
-                    "id": "this_team_polly_p",
-                    "name": "Polly P.",
+                    "id": "no_beer_no_gear_aaron",
+                    "name": "Aaron",
                     "handicap": null,
                     "memberType": "regular"
                 },
                 {
-                    "id": "this_team_dean_s",
-                    "name": "Dean S.",
+                    "id": "no_beer_no_gear_robert",
+                    "name": "Robert",
                     "handicap": null,
                     "memberType": "regular"
                 }
