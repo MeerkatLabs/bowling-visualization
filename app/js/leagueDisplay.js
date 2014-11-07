@@ -119,7 +119,11 @@
         $.getJSON(bowling.configuration.root+'/week'+weekNumber+'.json').done(function(data) {
             thisObject._handleWeekLoad(weekNumber, data);
         }).error(function(error) {
-            console.log("Couldn't find week data for: " + weekNumber);
+            if (error.status == 200) {
+                console.log("File found, but not parsable.");
+            } else {
+                console.log("Couldn't find week data for: " + weekNumber);
+            }
             console.log(error);
             thisObject.deferred.resolve(bowling.currentLeague);
         });
@@ -139,7 +143,7 @@
         var week = new bowling.Week(data, weekNumber);
         bowling.currentLeague.weeks.push(week);
 
-        if (weekNumber + 1 < bowling.currentLeague.weekCount) {
+        if (weekNumber + 1 <= bowling.currentLeague.weekCount) {
             this.loadWeek(weekNumber + 1);
         } else {
             this.deferred.resolve(bowling.currentLeague);
@@ -421,7 +425,12 @@
 
         localPlayers.forEach(function(element){
             var player = new bowling.Player(element);
-            this.addPlayer(player);
+
+            if (player.type == "substitute") {
+                bowling.currentLeague.subs.push(player);
+            } else {
+                this.addPlayer(player);
+            }
         }, this);
     };
 
