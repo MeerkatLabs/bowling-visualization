@@ -1,13 +1,13 @@
-<table style="border: 1px solid;">
-    <tr>
-        <th>Week Number</th>
-        <th>Date</th>
-        <th>Incoming Average</th>
-        <th ng-repeat="label in league.gameLabels">{{label}}</th>
-        <th>Series Average</th>
-        <th>Difference</th>
+<table class="table table-striped">
+    <tr class="text-center">
+        <th class="text-center">Week Number</th>
+        <th class="text-center">Date</th>
+        <th class="text-center">Incoming Average</th>
+        <th class="text-center" ng-repeat="label in league.gameLabels">{{label}}</th>
+        <th class="text-center">Series Average</th>
+        <th class="text-center">Difference</th>
     </tr>
-    <tr ng-repeat="series in roller.serieses">
+    <tr ng-repeat="series in roller.serieses" class="text-center">
         <td style="padding: 4px;">{{series.week.weekNumber}}</td>
         <td style="padding: 4px;">{{series.week.date}}</td>
         <td style="padding: 4px;">{{series.playerAverage}}</td>
