@@ -18,6 +18,7 @@ bowlingApp.factory('TeamDetailService', ['$q', 'dataProvider',
                 team.players.forEach(function (roller) {
 
                     var rollerData = {
+                        id: roller.id,
                         name: roller.name,
                         handicap: roller.handicap,
                         games: null,
