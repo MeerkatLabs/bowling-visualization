@@ -15,7 +15,7 @@
 
         body {
             /* Margin bottom by footer height */
-            margin-bottom: 60px;
+            margin-bottom: 30px;
         }
 
         .footer {
@@ -23,7 +23,7 @@
             bottom: 0;
             width: 100%;
             /* Set the fixed height of the footer here */
-            height: 60px;
+            height: 30px;
             background-color: #f5f5f5;
         }
     </style>
@@ -31,25 +31,7 @@
 </head>
 <body>
     <!-- Place header here -->
-    <nav class="navbar navbar-default" role="navigation">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#/main">Bowling Statistics</a>
-            </div>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li><a href="#/weeks">Weeks</a></li>
-                </ul>
-
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">About</a></li>
-                </ul>
-            </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
-    </nav>
+    <ng-include src="'core/partials/navbar.html'" ng-controller="NavBarController"></ng-include>
 
     <!-- Main content page -->
     <div class="container" ng-view></div>
@@ -101,6 +83,7 @@
 <!-- Application Specific javascript -->
 <script language="JavaScript" src="core/app.js"></script>
 <script language="JavaScript" src="core/main.js"></script>
+<script language="JavaScript" src="core/NavBarController.js"></script>
 <script language="JavaScript" src="match/configuration.js"></script>
 <script language="JavaScript" src="match/MatchController.js"></script>
 <script language="JavaScript" src="player/configuration.js"></script>
