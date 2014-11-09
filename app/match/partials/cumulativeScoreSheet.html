@@ -1,11 +1,11 @@
     <h2>{{ team.name }}</h2>
-    <table>
+    <table class="table table-striped">
         <tr>
             <th>Average</th>
             <th>Name</th>
             <th>Type</th>
             <th>HDCP</th>
-            <th ng-repeat="label in league.gameLabels">{{label}}</th>
+            <th class="text-center" ng-repeat="label in league.gameLabels">{{label}}</th>
             <th>Totals</th>
         </tr>
         <tr ng-repeat="series in score.playerSeries">
@@ -13,31 +13,22 @@
             <td>{{ series.player.name }}</td>
             <td>{{ series.player.type }}</td>
             <td>{{ series.handicap }}</td>
-            <td ng-repeat="game in series.games">{{game.score}}</td>
-            <td>{{ series.total }}</td>
+            <td class="text-center" ng-repeat="game in series.games">{{game.score}}</td>
+            <td class="text-center">{{ series.total }}</td>
         </tr>
         <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td ng-repeat="label in league.gameLabels">{{score.gameScratchTotal[$index]}}</td>
-            <td>{{ score.seriesScratch }}</td>
+            <td colspan="4" style="background: lightgray"></td>
+            <td class="text-center" ng-repeat="label in league.gameLabels">{{score.gameScratchTotal[$index]}}</td>
+            <td class="text-center">{{ score.seriesScratch }}</td>
         </tr>
         <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td ng-repeat="label in league.gameLabels">{{ score.seriesHandicap }}</td>
-            <td>{{ score.seriesHandicap * league.gamesPerSeries}}</td>
+            <td colspan="4" style="background: lightgray"></td>
+            <td class="text-center" ng-repeat="label in league.gameLabels">{{ score.seriesHandicap }}</td>
+            <td class="text-center">{{ score.seriesHandicap * league.gamesPerSeries}}</td>
         </tr>
         <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td ng-repeat="label in league.gameLabels">{{ score.gameTotal[$index] }}</td>
-            <td>{{ score.seriesTotal }}</td>
+            <td colspan="4" style="background: lightgray"></td>
+            <td class="text-center" ng-repeat="label in league.gameLabels">{{ score.gameTotal[$index] }}</td>
+            <td class="text-center">{{ score.seriesTotal }}</td>
         </tr>
     </table>
