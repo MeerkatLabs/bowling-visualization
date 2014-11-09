@@ -7,19 +7,74 @@
 
     <!-- Bootstrap -->
     <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        html {
+            position: relative;
+            min-height: 100%;
+        }
+
+        body {
+            /* Margin bottom by footer height */
+            margin-bottom: 60px;
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            /* Set the fixed height of the footer here */
+            height: 60px;
+            background-color: #f5f5f5;
+        }
+    </style>
 
 </head>
 <body>
     <!-- Place header here -->
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#/main">Bowling Statistics</a>
+            </div>
 
-    <h1>Constant Header</h1>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="#/weeks">Weeks</a></li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">About</a></li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
 
     <!-- Main content page -->
-    <div class="container-fluid" ng-view></div>
+    <div class="container" ng-view></div>
 
     <!-- Place footer here -->
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <p class="text-muted">&copy; 2004 <a href="https://meerkatlabsllc.com/">Meerkat Labs</a></p>
 
-    <h1>Constant footer</h1>
+                </div>
+                <div class="col-md-4">
+                    <p class="text-muted text-center"><a href="http://choosealicense.com/licenses/mit/">MIT Licensed</a></p>
+                </div>
+                <div class="col-md-4">
+                    <p class="text-muted text-right">Built using <a href="http://www.angularjs.org/">AngularJS</a>,
+                        <a href="https://jquery.com/">JQuery</a>,
+                        <a href="http:/http://getbootstrap.com/">Bootstrap</a>, and
+                        <a href="http://d3js.org/">d3</a>.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </body>
 
 <!-- Can be replaced by CDN -->
