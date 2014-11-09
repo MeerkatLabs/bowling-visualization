@@ -1,16 +1,25 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="bowling">
 <head>
+
     <meta charset="UTF-8">
     <title>Team Information page</title>
+
     <!-- Bootstrap -->
     <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
 </head>
 <body>
+    <!-- Place header here -->
 
+    <h1>Constant Header</h1>
+
+    <!-- Main content page -->
     <div class="container-fluid" ng-view></div>
 
+    <!-- Place footer here -->
+
+    <h1>Constant footer</h1>
 </body>
 
 <!-- Can be replaced by CDN -->
@@ -20,9 +29,28 @@
 <script language="JavaScript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script language="JavaScript" src="bower_components/d3/d3.min.js"></script>
 
+<!-- Data model javascript -->
+<script language="JavaScript" src="model/bowling.js"></script>
+<script language="JavaScript" src="model/game.js"></script>
+<script language="JavaScript" src="model/handicap.js"></script>
+<script language="JavaScript" src="model/league.js"></script>
+<script language="JavaScript" src="model/loader.js"></script>
+<script language="JavaScript" src="model/match.js"></script>
+<script language="JavaScript" src="model/player.js"></script>
+<script language="JavaScript" src="model/playerseries.js"></script>
+<script language="JavaScript" src="model/team.js"></script>
+<script language="JavaScript" src="model/teamseries.js"></script>
+<script language="JavaScript" src="model/utils.js"></script>
+<script language="JavaScript" src="model/week.js"></script>
+
 <!-- Application Specific javascript -->
-<script language="JavaScript" src="js/leagueDisplay.js"></script>
-<script language="JavaScript" src="js/app.js"></script>
-<script language="JavaScript" src="js/controllers.js"></script>
+<script language="JavaScript" src="core/app.js"></script>
+<script language="JavaScript" src="core/main.js"></script>
+<script language="JavaScript" src="match/configuration.js"></script>
+<script language="JavaScript" src="match/MatchController.js"></script>
+<script language="JavaScript" src="player/configuration.js"></script>
+<script language="JavaScript" src="player/PlayerDetailController.js"></script>
+<script language="JavaScript" src="weeks/configuration.js"></script>
+<script language="JavaScript" src="weeks/WeekController.js"></script>
 
 </html>
