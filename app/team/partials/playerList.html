@@ -1,0 +1,24 @@
+<table class="table table-striped">
+    <tr>
+        <th>Name</th>
+        <th>Handicap</th>
+        <th>Games</th>
+        <th>Pins</th>
+        <th>Average</th>
+        <th><span title="High Handicap Game">HHG</span></th>
+        <th><span title="High Handicap Series">HHS</span></th>
+        <th><span title="High Scratch Game">HSG</span></th>
+        <th><span title="High Scratch Series">HSS</span></th>
+    </tr>
+    <tr ng-repeat="roller in members">
+        <td><a href="#/team/{{team.id}}/players/{{roller.id}}">{{ roller.name }}</a></td>
+        <td>{{roller.handicap}}</td>
+        <td>{{roller.games}}</td>
+        <td>{{roller.pins}}</td>
+        <td>{{roller.average}}</td>
+        <td>{{roller.hhg}}</td>
+        <td>{{roller.hhs}}</td>
+        <td>{{roller.hsg}}</td>
+        <td>{{roller.hss}}</td>
+    </tr>
+</table>

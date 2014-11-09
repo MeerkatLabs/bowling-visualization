@@ -1,7 +1,11 @@
-<h1>{{ team.name }}</h1>
+<div class="page-header">
+    <h1>{{ team.name }}</h1>
+</div>
 
-<ul>
-    <li ng-repeat="roller in team.players | orderBy:'-playerAverage'">
-        <a href="#/team/{{team.id}}/players/{{roller.id}}">{{ roller.name }}</a>
-    </li>
-</ul>
+<ng-include src="'team/partials/playerList.html'"></ng-include>
+
+<div class="page-header">
+    <h2>Matches</h2>
+</div>
+
+<ng-include src="'team/partials/matchList.html'"></ng-include>

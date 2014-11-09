@@ -1,0 +1,22 @@
+<table class="table table-striped">
+    <tr>
+        <th class="text-center">Week</th>
+        <th class="text-center">Date</th>
+        <th class="text-center">Opponent</th>
+        <th class="text-center">Points For</th>
+        <th class="text-center">Points Against</th>
+    </tr>
+    <tr ng-repeat="match in matches">
+        <td class="text-center"><a href="#/matches/{{match.matchId}}">{{match.weekNumber}}</a></td>
+        <td class="text-center"><a href="#/matches/{{match.matchId}}">{{match.date}}</a></td>
+        <td class="text-center">{{match.opponent}}</td>
+        <td class="text-center">{{match.pointsFor}}</td>
+        <td class="text-center">{{match.pointsAgainst}}</td>
+    </tr>
+    <tr>
+        <th colspan="2"></th>
+        <th class="text-center">Total</th>
+        <th class="text-center">{{totalPointsFor}}</th>
+        <th class="text-center">{{totalPointsAgainst}}</th>
+    </tr>
+</table>

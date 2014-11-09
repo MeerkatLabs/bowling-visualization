@@ -23,6 +23,7 @@
         this.gamesPerSeries = configuration.gamesPerSeries || 3;
         this.gameLabels = [];
         this.subs = [];
+        this.pointsPerGame = 2;
 
         for (var index = 0; index < this.gamesPerSeries; ++index) {
             this.gameLabels[index] = "" + (index + 1);
