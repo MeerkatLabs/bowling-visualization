@@ -1,7 +1,7 @@
 <h1>{{ team.name }}</h1>
 
 <ul>
-    <li ng-repeat="roller in team.players">
+    <li ng-repeat="roller in team.players | orderBy:'-playerAverage'">
         <a href="#/team/{{team.id}}/players/{{roller.id}}">{{ roller.name }}</a>
     </li>
 </ul>
