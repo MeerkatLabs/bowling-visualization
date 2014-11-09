@@ -101,7 +101,44 @@ phonecatControllers.factory("dataProvider", ['$q', function ($q) {
 
             });
 
+            var y = d3.scale.linear().domain([0, 300])
+                .range([500, 0]);
+
+            var incomingAverageLine = d3.svg.line()
+                .x(function (d) {
+                    return d.weekNumber * 30;
+                })
+                .y(function (d) {
+                    return y(d.data.incomingAverage);
+                })
+                .interpolate("basis");
+
+            var gameLine = d3.svg.line()
+                .x(function (d) {
+                    return d.weekNumber * 30;
+                }).y(function (d) {
+                    return y(d.data.games[0])
+                })
+                .interpolate("cardinal");
+
+            var gameLine1 = d3.svg.line()
+                .x(function (d) {
+                    return d.weekNumber * 30;
+                }).y(function (d) {
+                    return y(d.data.games[0])
+                })
+                .interpolate("linear");
+
+            var gameLine2 = d3.svg.line()
+                .x(function (d) {
+                    return d.weekNumber * 30;
+                }).y(function (d) {
+                    return y(d.data.games[0])
+                })
+                .interpolate("step");
+
             $scope.data = data;
+            $scope.lines = [incomingAverageLine, gameLine];
 
             console.log(data);
 
@@ -115,44 +152,24 @@ phonecatControllers.factory("dataProvider", ['$q', function ($q) {
                 return;
             }
 
-            var barHeight = 20;
-
             var svg = d3.select(element[0])
                 .append("svg")
                 .style('width', '100%')
                 .style('height', '500');
 
-            var y = d3.scale.linear().domain([0, 300])
-                .range([500, 0]);
+            console.log( svg.style('width'));
+            console.log( parseInt(svg.style('width')));
 
-            var incomingAverageLine = d3.svg.line()
-                .x(function (d) {
-                    return d.weekNumber * 30;
-                })
-                .y(function (d) {
-                    return y(d.data.incomingAverage);
-                })
-                .interpolate("linear");
+            scope.lines.forEach(function (element) {
+                svg.append("path")
+                    .attr("d", element(scope.data))
+                    .attr("stroke", "blue")
+                    .attr("stroke-width", 2)
+                    .attr("fill", "none");
 
-            var gameLine = d3.svg.line()
-                .x(function (d) {
-                    return d.weekNumber * 30;
-                }).y(function (d) {
-                    return y(d.data.games[0])
-                })
-                .interpolate("linear");
+                console.log("Robert", element.interpolate());
+            });
 
-            var bar = svg.append("path")
-                .attr("d", incomingAverageLine(scope.data))
-                .attr("stroke", "blue")
-                .attr("stroke-width", 2)
-                .attr("fill", "none");
-
-            var bar = svg.append("path")
-                .attr("d", gameLine(scope.data))
-                .attr("stroke", "red")
-                .attr("stroke-width", 2)
-                .attr("fill", "none");
         };
 
         scope.$watch('data', function (newVals, oldVals) {
@@ -164,7 +181,8 @@ phonecatControllers.factory("dataProvider", ['$q', function ($q) {
     return {
         link: link,
         scope: {
-            data: '=data'
+            data: '=',
+            lines: '='
         }
     }
 }).directive('differencegraph', function() {
@@ -199,11 +217,11 @@ phonecatControllers.factory("dataProvider", ['$q', function ($q) {
                 .attr("width", function(d) { return Math.abs(d.data.averageDifference); })
                 .attr("height", barHeight - 1);
 
-            bar.append("text")
-                .attr("x", function(d) { return x(d) - 3; })
-                .attr("y", barHeight / 2)
-                .attr("dy", ".35em")
-                .text(function(d) { return d.data.averageDifference; });
+//            bar.append("text")
+//                .attr("x", function(d) { return x(d) - 3; })
+//                .attr("y", barHeight / 2)
+//                .attr("dy", ".35em")
+//                .text(function(d) { return d.data.averageDifference; });
         };
 
         scope.$watch('data', function (newVals, oldVals) {
