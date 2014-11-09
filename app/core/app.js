@@ -18,7 +18,7 @@ bowlingApp.factory("dataProvider", ['$q', function ($q) {
 
             if (currentPromise == null) {
                 if (!dataLoaded) {
-                    var result = bowling.initialize({"root": "polarbowler"}, $q);
+                    var result = bowling.initialize({"root": "testdata"}, $q);
                     currentPromise = result.then(function (league) {
                         dataLoaded = true;
                         currentPromise = null;
