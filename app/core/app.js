@@ -11,20 +11,27 @@ bowlingApp.config(['$routeProvider',
 
 bowlingApp.factory("dataProvider", ['$q', function ($q) {
     var dataLoaded = false;
+    var currentPromise = null;
 
     return {
         getData: function () {
-            if (!dataLoaded) {
-                var result = bowling.initialize({"root": "testdata"}, $q);
-                return result.then(function (league) {
-                    dataLoaded = true;
-                    return league;
-                });
-            } else {
-                return $q(function (resolve, reject) {
-                    resolve(bowling.currentLeague);
-                });
+
+            if (currentPromise == null) {
+                if (!dataLoaded) {
+                    var result = bowling.initialize({"root": "polarbowler"}, $q);
+                    currentPromise = result.then(function (league) {
+                        dataLoaded = true;
+                        currentPromise = null;
+                        return league;
+                    });
+                } else {
+                    return $q(function (resolve, reject) {
+                        resolve(bowling.currentLeague);
+                    });
+                }
             }
+
+            return currentPromise;
         }
     }
 }]);
