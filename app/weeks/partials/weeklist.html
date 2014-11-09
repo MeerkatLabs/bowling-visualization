@@ -4,12 +4,7 @@
 
 <ul>
     <li ng-repeat="team in league.teams | filter:{visualize: true}">
-        {{ team.name }}
-        <ul>
-            <li ng-repeat="roller in team.players">
-                <a href="#/team/{{team.id}}/players/{{roller.id}}">{{ roller.name }}</a>
-            </li>
-        </ul>
+        <a href="#/team/{{team.id}}">{{ team.name }}</a>
     </li>
 </ul>
 
