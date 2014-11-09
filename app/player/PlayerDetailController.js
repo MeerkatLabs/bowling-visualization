@@ -26,6 +26,7 @@ bowlingApp.controller('PlayerDetailController', ['$scope', '$routeParams', 'data
                 return;
             }
 
+            $scope.team = foundTeam;
             $scope.roller = foundPlayer;
             $scope.league = league;
 
