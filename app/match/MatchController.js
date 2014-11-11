@@ -22,6 +22,25 @@ bowlingApp.controller('MatchController', ['$scope', '$routeParams', 'dataProvide
             });
             console.log(foundMatch);
             $scope.match = foundMatch;
+            $scope.hasScores = false;
+
+            foundMatch.scores.forEach(function(teamSeries) {
+               if (!$scope.hasScores) {
+                   teamSeries.playerSeries.forEach(function(playerSeries) {
+                      if (!$scope.hasScores) {
+                          playerSeries.games.forEach(function(game) {
+                             if (!$scope.hasScores) {
+                                 if (Array.isArray(game.frames) && game.frames.length == 10) {
+                                     $scope.hasScores = true;
+                                 }
+                             }
+                          });
+                      }
+                   });
+               }
+            });
+
+            console.log($scope);
 
         });
     }]);
