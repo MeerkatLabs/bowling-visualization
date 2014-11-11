@@ -1,0 +1,78 @@
+$frameHeight: 50px;
+$frameWidth: 40px;
+$tenthFrameWidth: 60px;
+$frameLabelHeight: 20px;
+
+.scoresheet {
+  clear: both;
+
+  .gameHeader {
+    text-align: center;
+    font-weight: bold;
+  }
+
+  .playerColumn {
+    float: left;
+
+    .playerColumnGap {
+      height: $frameLabelHeight;
+    }
+
+    .playerLabel {
+      height: $frameHeight;
+    }
+
+  }
+
+  .frameColumn {
+    float: left;
+    border: 1px solid;
+
+    .frameLabel {
+      height: $frameLabelHeight;
+      border-bottom: 1px solid;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .frame {
+      height: $frameHeight;
+      width: $frameWidth;
+      border-top: 1px solid;
+
+      .firstBall {
+        float: left;
+        width: 20px;
+        text-align: center;
+      }
+
+      .secondBall {
+        @extend .firstBall;
+        border-left: 1px solid;
+        border-bottom: 1px solid;
+      }
+
+      .totalScore {
+        clear: both;
+        text-align: center;
+      }
+    }
+
+    .tenthFrame {
+      @extend .frame;
+      width: $tenthFrameWidth;
+
+      .thirdBall {
+        @extend .secondBall;
+      }
+    }
+  }
+
+
+}
+
+
+
+
+
+

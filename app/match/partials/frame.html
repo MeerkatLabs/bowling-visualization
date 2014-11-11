@@ -1,80 +1,80 @@
 <!-- for each game -->
-<div style="clear: both">
+<div class="scoresheet">
 
-    <p style="text-align: center"> Game: {{ gameIndex + 1 }}</p>
+    <p class="gameHeader"> Game: {{ gameIndex + 1 }}</p>
 
-    <div style="float: left">
-        <div>&nbsp;</div>
+    <div class="playerColumn">
+        <div class="playerColumnGap">&nbsp;</div>
 
         <!-- for each player -->
-        <div ng-repeat="individualGame in game" style="height: 50px;">{{individualGame.roller.name}}</div>
+        <div ng-repeat="individualGame in game" class="playerLabel">{{individualGame.roller.name}}</div>
     </div>
 
     <!-- for each frame -->
-    <div ng-repeat="frame in [0, 1, 2, 3, 4, 5, 6, 7, 8]" style="float: left; border: 1px solid">
-        <div style="border-bottom: 1px solid"><b>{{frame+1}}</b></div>
+    <div ng-repeat="frame in [0, 1, 2, 3, 4, 5, 6, 7, 8]" class="frameColumn">
+        <div class="frameLabel">{{frame+1}}</div>
         <!-- for each player -->
-        <div ng-repeat="individualGame in game" style="height: 50px; width: 40px; border-top: 1px solid">
+        <div ng-repeat="individualGame in game" class="frame">
 
             <!-- Strike -->
             <div ng-if="individualGame.frames[frame][0] == 10">
-                <div style="float: left; width: 20px; text-align: center">&nbsp;</div>
-                <div style="float: left; width: 20px; border-left: 1px solid; border-bottom: 1px solid; text-align: center">X</div>
+                <div class="firstBall">&nbsp;</div>
+                <div class="secondBall">X</div>
             </div>
 
             <!-- Spare -->
             <div ng-if="individualGame.frames[frame][1] != null && individualGame.frames[frame][0] + individualGame.frames[frame][1] == 10">
-                <div style="float: left; width: 20px; text-align: center">{{individualGame.frames[frame][0]}}</div>
-                <div style="float: left; width: 20px; border-left: 1px solid; border-bottom: 1px solid; text-align: center">/</div>
+                <div class="firstBall">{{individualGame.frames[frame][0]}}</div>
+                <div class="secondBall">/</div>
             </div>
 
             <!-- Open Frame -->
             <div ng-if="individualGame.frames[frame][0] + individualGame.frames[frame][1] != 10">
-                <div style="float: left; width: 20px; text-align: center">{{individualGame.frames[frame][0]}}</div>
-                <div style="float: left; width: 20px; border-left: 1px solid; border-bottom: 1px solid; text-align: center">{{individualGame.frames[frame][1]}}</div>
+                <div class="firstBall">{{individualGame.frames[frame][0]}}</div>
+                <div class="secondBall">{{individualGame.frames[frame][1]}}</div>
             </div>
 
-            <div style="clear: both; text-align: center">{{individualGame.frameScore[frame]}}</div>
+            <div class="totalScore">{{individualGame.frameScore[frame]}}</div>
         </div>
     </div>
     <!-- for each frame -->
-    <div ng-repeat="frame in [9]" style="float: left; border: 1px solid">
-        <div style="border-bottom: 1px solid"><b>{{frame+1}}</b></div>
+    <div ng-repeat="frame in [9]" class="frameColumn">
+        <div class="frameLabel">{{frame+1}}</div>
         <!-- for each player -->
-        <div ng-repeat="individualGame in game" style="height: 50px; width: 60px; border-top: 1px solid">
+        <div ng-repeat="individualGame in game" class="tenthFrame">
 
             <div ng-if="individualGame.frames[frame][0] == 10 && individualGame.frames[frame][1] == 10 && individualGame.frames[frame][2] == 10">
-                <div style="float: left; width: 20px; text-align: center">X</div>
-                <div style="float: left; width: 20px; border-left: 1px solid; border-bottom: 1px solid; text-align: center">X</div>
-                <div style="float: left; width: 20px; border-left: 1px solid; border-bottom: 1px solid; text-align: center">X</div>
+                <div class="firstBall">X</div>
+                <div class="secondBall">X</div>
+                <div class="thirdBall">X</div>
             </div>
 
             <div ng-if="individualGame.frames[frame][0] != 10 && individualGame.frames[frame][0] + individualGame.frames[frame][1] == 10">
-                <div style="float: left; width: 20px; text-align: center">{{individualGame.frames[frame][0]}}</div>
-                <div style="float: left; width: 20px; border-left: 1px solid; border-bottom: 1px solid; text-align: center">/</div>
-                <div style="float: left; width: 20px; border-left: 1px solid; border-bottom: 1px solid; text-align: center" ng-if="individualGame.frames[frame][2] == 10">X</div>
-                <div style="float: left; width: 20px; border-left: 1px solid; border-bottom: 1px solid; text-align: center" ng-if="individualGame.frames[frame][2] != 10">{{individualGame.frames[frame][2]}}</div>
+                <div class="firstBall">{{individualGame.frames[frame][0]}}</div>
+                <div class="secondBall">/</div>
+                <div class="thirdBall" ng-if="individualGame.frames[frame][2] == 10">X</div>
+                <div class="thirdBall" ng-if="individualGame.frames[frame][2] != 10">{{individualGame.frames[frame][2]}}</div>
             </div>
 
             <div ng-if="individualGame.frames[frame][0] == 10 && individualGame.frames[frame][1] != 10 && individualGame.frames[frame][1] + individualGame.frames[frame][2] == 10">
-                <div style="float: left; width: 20px; text-align: center">X</div>
-                <div style="float: left; width: 20px; border-left: 1px solid; border-bottom: 1px solid; text-align: center">{{individualGame.frames[frame][1]}}</div>
-                <div style="float: left; width: 20px; border-left: 1px solid; border-bottom: 1px solid; text-align: center">/</div>
+                <div class="firstBall">X</div>
+                <div class="secondBall">{{individualGame.frames[frame][1]}}</div>
+                <div class="thirdBall">/</div>
             </div>
 
             <div ng-if="individualGame.frames[frame][0] == 10 && individualGame.frames[frame][1] != 10 && individualGame.frames[frame][1] + individualGame.frames[frame][2] != 10">
-                <div style="float: left; width: 20px; text-align: center">X</div>
-                <div style="float: left; width: 20px; border-left: 1px solid; border-bottom: 1px solid; text-align: center">{{individualGame.frames[frame][1]}}</div>
-                <div style="float: left; width: 20px; border-left: 1px solid; border-bottom: 1px solid; text-align: center">{{individualGame.frames[frame][2]}}</div>
+                <div class="firstBall">X</div>
+                <div class="secondBall">{{individualGame.frames[frame][1]}}</div>
+                <div class="thirdBall">{{individualGame.frames[frame][2]}}</div>
             </div>
 
             <div ng-if="individualGame.frames[frame][0] != 10 && individualGame.frames[frame][0] + individualGame.frames[frame][1] != 10">
-                <div style="float: left; width: 20px; text-align: center">{{individualGame.frames[frame][0]}}</div>
-                <div style="float: left; width: 20px; border-left: 1px solid; border-bottom: 1px solid; text-align: center">{{individualGame.frames[frame][1]}}</div>
-                <div style="float: left; width: 20px; border-left: 1px solid; border-bottom: 1px solid; text-align: center">&nbsp;</div>
+                <div class="firstBall">{{individualGame.frames[frame][0]}}</div>
+                <div class="secondBall">{{individualGame.frames[frame][1]}}</div>
+                <div class="thirdBall">&nbsp;</div>
             </div>
 
-            <div style="clear: both; text-align: center">{{individualGame.frameScore[frame]}}</div>
+            <div class="totalScore">{{individualGame.frameScore[frame]}}</div>
         </div>
     </div>
 </div>
