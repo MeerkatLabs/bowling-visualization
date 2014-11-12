@@ -101,6 +101,6 @@ d3Module.directive('differencegraph', ['d3Service', function(d3Service) {
             data: '=data',
             margin: '='
         }
-    }
+    };
 
 }]);

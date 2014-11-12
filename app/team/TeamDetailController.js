@@ -12,7 +12,7 @@ bowlingApp.controller('TeamDetailController', ['$scope', '$routeParams', 'dataPr
                 return $routeParams.teamId == element.id;
             });
 
-            if (foundTeam == null) {
+            if (foundTeam === null) {
                 console.error("Couldn't find team: " + $routeParams.teamId);
                 return;
             }

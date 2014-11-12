@@ -1,5 +1,3 @@
-'use strict';
-
 var bowlingApp = angular.module('bowling', ['ngRoute', 'd3']);
 
 bowlingApp.config(['$routeProvider',
@@ -16,7 +14,7 @@ bowlingApp.factory("dataProvider", ['$q', function ($q) {
     return {
         getData: function () {
 
-            if (currentPromise == null) {
+            if (currentPromise === null) {
                 if (!dataLoaded) {
                     var result = bowling.initialize({"root": "testdata"}, $q);
                     currentPromise = result.then(function (league) {
@@ -33,5 +31,5 @@ bowlingApp.factory("dataProvider", ['$q', function ($q) {
 
             return currentPromise;
         }
-    }
+    };
 }]);

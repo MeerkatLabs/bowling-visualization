@@ -91,7 +91,7 @@ bowlingApp.factory('TeamDetailService', ['$q', 'dataProvider',
                            }
                         });
 
-                        if (teamSeries != null) {
+                        if (teamSeries !== null) {
 
                             matchData.opponent = otherTeamSeries.team.name;
 

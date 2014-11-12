@@ -35,7 +35,7 @@
             return element.id == seriesConfiguration.id;
         });
 
-        if (this.team == null) {
+        if (this.team === null) {
             this.team = new bowling.Team(seriesConfiguration);
             bowling.currentLeague.addTeam(this.team);
         }
@@ -49,13 +49,13 @@
                 return rollerId == roller.id;
             });
 
-            if (roller == null) {
+            if (roller === null) {
                 // See if the roller is in the sub list:
                 roller = bowling.utils.findInArray(bowling.currentLeague.subs, function (roller) {
                     return rollerId == roller.id;
                 });
 
-                if (roller == null) {
+                if (roller === null) {
                     // Now the roller has to be added to the league.
                     roller = new bowling.Player(element);
                     if (roller.type == 'substitute') {

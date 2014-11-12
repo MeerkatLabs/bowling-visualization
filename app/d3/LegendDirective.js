@@ -45,6 +45,6 @@ d3Module.directive('legend',  ['d3Service', function(d3Service) {
         scope: {
             lines: '='
         }
-    }
+    };
 
 }]);

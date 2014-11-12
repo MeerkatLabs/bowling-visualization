@@ -27,7 +27,7 @@
         this.roller = null;
 
         // Always override the score value if the frames are defined.
-        if (this.frames != null) {
+        if (this.frames !== null) {
             this.calculateScore();
         }
     };
@@ -47,8 +47,8 @@
                 if (firstBall == 10) {
                     // Strike, add this score plus the next two balls.
                     frameScore += 10;
-                    if (frames[index + 1][1] == null) {
-                        frameScore += 10 + frames[index + 2][0]
+                    if (frames[index + 1][1] === null) {
+                        frameScore += 10 + frames[index + 2][0];
                     } else {
                         frameScore += frames[index + 1][0] + frames[index + 1][1];
                     }
@@ -62,7 +62,7 @@
             } else {
                 // Special rules for the 10th frame (i.e. just add the scores).
                 frameScore += element[0] + element[1];
-                if (element[2] != null) {
+                if (element[2] !== null) {
                     frameScore += element[2];
                 }
             }

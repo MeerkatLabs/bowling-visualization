@@ -117,5 +117,5 @@ d3Module.directive('linegraph', ['d3Service', function(d3Service) {
             xdomain: '=',
             margin: '='
         }
-    }
+    };
 }]);

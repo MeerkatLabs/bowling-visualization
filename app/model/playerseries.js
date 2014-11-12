@@ -30,7 +30,7 @@
         this.seriesAverage = Math.floor(this.total / this.games.length);
 
         // Calculate the average from the games that are defined in this series
-        if (player.playerAverage == null) {
+        if (player.playerAverage === null) {
             this.playerAverage = Math.floor(this.total / this.games.length);
             this.player.playerAverage = this.playerAverage;
         } else {
@@ -38,7 +38,7 @@
         }
 
         // Same thing with the handicap.
-        if (player.handicap == null) {
+        if (player.handicap === null) {
             this.handicap = bowling.currentLeague.handicap.calculateHandicapFromAverage(this.playerAverage);
             this.player.handicap = this.handicap;
         } else {
