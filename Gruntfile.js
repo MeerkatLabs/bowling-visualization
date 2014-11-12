@@ -48,6 +48,13 @@ module.exports = function(grunt) {
                     module: true
                 }
             }
+        },
+        sass: {
+            dist: {
+                files: {
+                    'app/css/bowling1.css': 'app/sass/bowling.scss'
+                }
+            }
         }
     });
 
@@ -57,9 +64,10 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-qunit');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-sass');
 
 
     // Default task(s).
-    grunt.registerTask('default', ['jshint','concat','uglify']);
+    grunt.registerTask('default', ['jshint','concat','uglify', 'sass']);
 
 };
