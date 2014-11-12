@@ -3,3 +3,5 @@
 /node_modules
 *.iml
 /app/css/
+/app/build/
+/app/dist/
