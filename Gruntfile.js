@@ -52,7 +52,7 @@ module.exports = function(grunt) {
         sass: {
             dist: {
                 files: {
-                    'app/css/bowling1.css': 'app/sass/bowling.scss'
+                    'app/css/bowling.css': 'app/sass/bowling.scss'
                 }
             }
         }
