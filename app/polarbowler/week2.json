@@ -3,6 +3,7 @@
     "scoresheet": [
         [
             {
+                "id": "team_8",
                 "name": "Team 8",
                 "lane": 11,
                 "rollers": [

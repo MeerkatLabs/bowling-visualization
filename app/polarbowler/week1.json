@@ -3,6 +3,7 @@
     "scoresheet": [
         [
             {
+                "id": "ebowla",
                 "name": "Ebowla",
                 "lane": 7,
                 "rollers": [
