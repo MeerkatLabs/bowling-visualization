@@ -3,17 +3,19 @@
 </div>
 
 
-<div ng-include="'player/partials/scoreDetails.html'"></div>
-
-
 <div class="row">
+    <div ng-include="'player/partials/scoreDetails.html'" class="col-md-6"></div>
+
     <div id="mainGraph"  class="col-md-6" style="padding: 0px">
         <div>
-            <svg style="float: left" linegraph data="data" lines="lines" width="75%" height="500" ydomain="[0,300]" margin="50">
+            <svg style="float: left" linegraph data="data" lines="lines" width="75%" height="300" ydomain="[0,300]" margin="50">
             </svg>
             <div style="float: left" legend lines="lines" data="data"></div>
         </div>
-    </div>
 
-    <div differencegraph data="data"  class="col-md-6" style="border: 1px solid"></div>
+
+        <div>
+            <svg differencegraph data="data" width="100%" height="300" margin="50"></svg>
+        </div>
+    </div>
 </div>

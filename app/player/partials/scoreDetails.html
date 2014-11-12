@@ -1,11 +1,11 @@
 <table class="table table-striped">
     <tr class="text-center">
-        <th class="text-center">Week Number</th>
+        <th class="text-center">Week</th>
         <th class="text-center">Date</th>
-        <th class="text-center">Incoming Average</th>
+        <th class="text-center">Incoming Avg</th>
         <th class="text-center" ng-repeat="label in league.gameLabels">{{label}}</th>
-        <th class="text-center">Series Average</th>
-        <th class="text-center">Difference</th>
+        <th class="text-center">Series Avg</th>
+        <th class="text-center">Diff</th>
     </tr>
     <tr ng-repeat="series in roller.serieses" class="text-center">
         <td style="padding: 4px;">{{series.week.weekNumber}}</td>
