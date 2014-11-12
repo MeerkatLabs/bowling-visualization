@@ -1,6 +1,6 @@
 'use strict';
 
-var bowlingApp = angular.module('bowling', ['ngRoute']);
+var bowlingApp = angular.module('bowling', ['ngRoute', 'd3']);
 
 bowlingApp.config(['$routeProvider',
     function($routeProvider) {

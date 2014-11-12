@@ -4,8 +4,8 @@
 
 var bowlingApp = bowlingApp || angular.module('bowling');
 
-bowlingApp.controller('PlayerDetailController', ['$scope', '$routeParams', 'dataProvider',
-    function ($scope, $routeParams, dataProvider) {
+bowlingApp.controller('PlayerDetailController', ['$scope', '$routeParams', 'dataProvider', 'd3Service',
+    function ($scope, $routeParams, dataProvider, d3Service) {
 
         dataProvider.getData().then(function (league) {
             var foundTeam = bowling.utils.findInArray(league.teams, function (element) {
@@ -54,140 +54,77 @@ bowlingApp.controller('PlayerDetailController', ['$scope', '$routeParams', 'data
 
             });
 
-            var y = d3.scale.linear().domain([0, 300])
-                .range([500, 0]);
+            d3Service.get().then(function (d3) {
 
-            var incomingAverageLine = d3.svg.line()
-                .x(function (d) {
-                    return d.weekNumber * 30;
-                })
-                .y(function (d) {
-                    return y(d.data.incomingAverage);
-                })
-                .interpolate("basis");
+                var incomingAverageLine = d3.svg.line()
+                    .x(function (d) {
+                        return d.weekNumber;
+                    })
+                    .y(function (d) {
+                        return d.data.incomingAverage;
+                    })
+                    .interpolate("linear");
 
-            var gameLine = d3.svg.line()
-                .x(function (d) {
-                    return d.weekNumber * 30;
-                }).y(function (d) {
-                    return y(d.data.games[0])
-                })
-                .interpolate("cardinal");
+                var gameLine = d3.svg.line()
+                    .x(function (d) {
+                        return d.weekNumber;
+                    }).y(function (d) {
+                        return d.data.games[0];
+                    })
+                    .interpolate("linear");
 
-            var gameLine1 = d3.svg.line()
-                .x(function (d) {
-                    return d.weekNumber * 30;
-                }).y(function (d) {
-                    return y(d.data.games[0])
-                })
-                .interpolate("linear");
+                var gameLine1 = d3.svg.line()
+                    .x(function (d) {
+                        return d.weekNumber;
+                    }).y(function (d) {
+                        return d.data.games[1];
+                    })
+                    .interpolate("linear");
 
-            var gameLine2 = d3.svg.line()
-                .x(function (d) {
-                    return d.weekNumber * 30;
-                }).y(function (d) {
-                    return y(d.data.games[0])
-                })
-                .interpolate("step");
+                var gameLine2 = d3.svg.line()
+                    .x(function (d) {
+                        return d.weekNumber;
+                    }).y(function (d) {
+                        return d.data.games[2];
+                    })
+                    .interpolate("linear");
+
+                var average = d3.svg.line()
+                    .x(function (d) {
+                        return d.weekNumber;
+                    }).y(function (d) {
+                        return d.data.average;
+                    })
+                    .interpolate("linear");
+
+                $scope.lines = [
+                    {
+                        line: gameLine,
+                        label: 'Game 1'
+                    },
+                    {
+                        line: gameLine1,
+                        label: 'Game 2'
+                    },
+                    {
+                        line: gameLine2,
+                        label: 'Game 3'
+                    },
+                    {
+                        line: incomingAverageLine,
+                        label: 'Incoming Average'
+
+                    },
+                    {
+                        line: average,
+                        label: 'Series Average'
+                    }
+                ];
+            });
 
             $scope.data = data;
-            $scope.lines = [incomingAverageLine, gameLine];
 
             console.log(data);
 
         });
-    }]).directive('linegraph', function() {
-
-    function link(scope, element, attrs) {
-
-        scope.render = function (data) {
-            if (!scope.data) {
-                return;
-            }
-
-            var svg = d3.select(element[0])
-                .append("svg")
-                .style('width', '100%')
-                .style('height', '500');
-
-            console.log( svg.style('width'));
-            console.log( parseInt(svg.style('width')));
-
-            scope.lines.forEach(function (element) {
-                svg.append("path")
-                    .attr("d", element(scope.data))
-                    .attr("stroke", "blue")
-                    .attr("stroke-width", 2)
-                    .attr("fill", "none");
-
-                console.log("Robert", element.interpolate());
-            });
-
-        };
-
-        scope.$watch('data', function (newVals, oldVals) {
-            return scope.render(newVals);
-        }, true);
-
-    }
-
-    return {
-        link: link,
-        scope: {
-            data: '=',
-            lines: '='
-        }
-    }
-}).directive('differencegraph', function() {
-    function link(scope, element, attrs) {
-
-        scope.render = function (data) {
-            if (!scope.data) {
-                return;
-            }
-
-            var width = 420,
-                barHeight = 20;
-
-            var chart = d3.select(element[0])
-                .append("svg")
-                .style('width', '100%')
-                .style('height', '500');
-
-            var bar = chart.selectAll("g")
-                .data(scope.data)
-                .enter().append("g")
-                .attr("transform", function(d, i) {
-                    var height = i * barHeight;
-                    var location = width / 2;
-                    if (d.data.averageDifference < 0) {
-                        location += d.data.averageDifference;
-                    }
-                    return "translate(" + location + "," + height + ")";
-                });
-
-            bar.append("rect")
-                .attr("width", function(d) { return Math.abs(d.data.averageDifference); })
-                .attr("height", barHeight - 1);
-
-//            bar.append("text")
-//                .attr("x", function(d) { return x(d) - 3; })
-//                .attr("y", barHeight / 2)
-//                .attr("dy", ".35em")
-//                .text(function(d) { return d.data.averageDifference; });
-        };
-
-        scope.$watch('data', function (newVals, oldVals) {
-            return scope.render(newVals);
-        }, true);
-
-    }
-
-    return {
-        link: link,
-        scope: {
-            data: '=data'
-        }
-    }
-
-});
+    }]);
