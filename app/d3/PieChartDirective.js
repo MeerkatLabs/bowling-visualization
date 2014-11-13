@@ -86,6 +86,6 @@ d3Module.directive('piechart', ['d3Service','$window', function(d3Service, $wind
         scope: {
             data: '='
         }
-    }
+    };
 
 }]);
