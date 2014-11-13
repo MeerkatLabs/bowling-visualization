@@ -4,9 +4,9 @@
 
 var bowlingApp = bowlingApp || angular.module('bowling');
 
-bowlingApp.controller('MatchController', ['$scope', '$routeParams', 'dataProvider',
-    function ($scope, $routeParams, dataProvider) {
-        dataProvider.getData().then(function (league) {
+bowlingApp.controller('MatchController', ['$scope', '$routeParams', 'dataService',
+    function ($scope, $routeParams, dataService) {
+        dataService.getData().then(function (league) {
             $scope.league = league;
             $scope.matchId = $routeParams.matchId;
 

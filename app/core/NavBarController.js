@@ -4,10 +4,10 @@
 
 var bowlingApp = bowlingApp || angular.module('bowling');
 
-bowlingApp.controller('NavBarController', ['$scope', 'dataProvider',
-    function ($scope, dataProvider) {
+bowlingApp.controller('NavBarController', ['$scope', 'dataService',
+    function ($scope, dataService) {
 
-        dataProvider.getData().then(function (league) {
+        dataService.getData().then(function (league) {
             $scope.teams = league.teams;
             $scope.name = league.name;
         });

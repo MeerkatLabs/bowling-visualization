@@ -4,12 +4,12 @@
 
 var bowlingApp = bowlingApp || angular.module('bowling');
 
-bowlingApp.controller('LeagueController', ['$scope', 'dataProvider',
-        function ($scope, dataProvider) {
+bowlingApp.controller('LeagueController', ['$scope', 'dataService',
+        function ($scope, dataService) {
 
             var splitSize = 3;
 
-            dataProvider.getData().then(function (league) {
+            dataService.getData().then(function (league) {
                 $scope.league = league;
 
                 var leagueWeeks = league.weeks.concat();

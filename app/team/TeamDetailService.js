@@ -4,14 +4,14 @@
 
 var bowlingApp = bowlingApp || angular.module('bowling');
 
-bowlingApp.factory('TeamDetailService', ['$q', 'dataProvider',
-    function($q, dataProvider) {
+bowlingApp.factory('TeamDetailService', ['$q', 'dataService',
+    function($q, dataService) {
 
         var getTeamList = function(team) {
 
             var deferred = $q.defer();
 
-            dataProvider.getData().then(function(league) {
+            dataService.getData().then(function(league) {
 
                 var data = [];
 
@@ -64,7 +64,7 @@ bowlingApp.factory('TeamDetailService', ['$q', 'dataProvider',
 
             var deferred = $q.defer();
 
-            dataProvider.getData().then(function(league) {
+            dataService.getData().then(function(league) {
 
                 var data = [];
 

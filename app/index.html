@@ -64,4 +64,15 @@
 <script language="JavaScript" src="weeks/configuration.js"></script>
 <script language="JavaScript" src="weeks/WeekController.js"></script>
 
+<script language="JavaScript">
+    var bowlingApp = bowlingApp || angular.module('bowling');
+    bowlingApp.config(['dataServiceProvider', function(dataServiceProvider) {
+        dataServiceProvider.configure(
+                {
+                    root: 'testdata'
+                }
+        );
+    }]);
+</script>
+
 </html>

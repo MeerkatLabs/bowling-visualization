@@ -4,10 +4,10 @@
 
 var bowlingApp = bowlingApp || angular.module('bowling');
 
-bowlingApp.controller('TeamDetailController', ['$scope', '$routeParams', 'dataProvider', 'TeamDetailService',
-    function ($scope, $routeParams, dataProvider, teamDetailService) {
+bowlingApp.controller('TeamDetailController', ['$scope', '$routeParams', 'dataService', 'TeamDetailService',
+    function ($scope, $routeParams, dataService, teamDetailService) {
 
-        dataProvider.getData().then(function (league) {
+        dataService.getData().then(function (league) {
             var foundTeam = bowling.utils.findInArray(league.teams, function (element) {
                 return $routeParams.teamId == element.id;
             });
