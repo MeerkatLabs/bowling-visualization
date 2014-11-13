@@ -38,7 +38,7 @@ d3Module.directive('piechart', ['d3Service','$window', function(d3Service, $wind
                 var pie = d3.layout.pie()
                     .value(function(d) { return d.value; })
                     .sort(null)
-                    .endAngle(-3.14 * 2);
+                    .endAngle(Math.PI * -2);
 
                 var arc = d3.svg.arc()
                     .outerRadius(radius * 0.8)
