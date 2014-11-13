@@ -27,7 +27,6 @@ bowlingApp.config(['$routeProvider',
  * @constructor
  */
 function DataService(configuration, $q) {
-    var dataLoaded = false;
     var promise = null;
     var myConfiguration = configuration;
 
@@ -39,11 +38,7 @@ function DataService(configuration, $q) {
         getData: function () {
 
             if (promise === null) {
-                var result = bowling.initialize(myConfiguration, $q);
-                promise = result.then(function (league) {
-                    dataLoaded = true;
-                    return league;
-                });
+                promise = bowling.initialize(myConfiguration, $q);
             }
 
             return promise;
