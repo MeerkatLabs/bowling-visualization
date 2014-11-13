@@ -9,8 +9,8 @@
 
 var bowlingApp = bowlingApp || angular.module('bowling');
 
-bowlingApp.controller('TeamDetailController', ['$scope', '$routeParams', 'dataService', 'TeamDetailService',
-    function ($scope, $routeParams, dataService, teamDetailService) {
+bowlingApp.controller('TeamDetailController', ['$scope', '$routeParams', 'dataService',
+    function ($scope, $routeParams, dataService) {
 
         dataService.getData().then(function (league) {
             var foundTeam = bowling.utils.findInArray(league.teams, function (element) {
@@ -22,25 +22,9 @@ bowlingApp.controller('TeamDetailController', ['$scope', '$routeParams', 'dataSe
                 return;
             }
 
-            teamDetailService.getTeamList(foundTeam).then(function (data) {
-               $scope.members = data;
-            });
-
-            teamDetailService.getMatchList(foundTeam).then(function (data) {
-               $scope.matches = data;
-
-               var pointsFor = 0;
-               var pointsAgainst = 0;
-               data.forEach(function(match) {
-                    pointsFor += match.pointsFor;
-                   pointsAgainst += match.pointsAgainst;
-               });
-
-                $scope.totalPointsFor = pointsFor;
-                $scope.totalPointsAgainst = pointsAgainst;
-            });
-
             $scope.team = foundTeam;
+
+            $scope.$broadcast('foundTeam', foundTeam);
         });
 
     }]);

@@ -2,10 +2,10 @@
     <h1>{{ team.name }}</h1>
 </div>
 
-<ng-include src="'team/partials/playerList.html'"></ng-include>
+<ng-include src="'team/partials/playerList.html'" ng-controller="TeamMembersController"></ng-include>
 
 <div class="page-header">
     <h2>Matches</h2>
 </div>
 
-<ng-include src="'team/partials/matchList.html'"></ng-include>
+<ng-include src="'team/partials/matchList.html'" ng-controller="TeamMatchListController"></ng-include>
