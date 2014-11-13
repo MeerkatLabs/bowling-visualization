@@ -47,7 +47,7 @@
                 if (firstBall == 10) {
                     // Strike, add this score plus the next two balls.
                     frameScore += 10;
-                    if (frames[index + 1][1] === null) {
+                    if (frames[index+1].length == 1 || frames[index + 1][1] === null) {
                         frameScore += 10 + frames[index + 2][0];
                     } else {
                         frameScore += frames[index + 1][0] + frames[index + 1][1];
@@ -62,7 +62,7 @@
             } else {
                 // Special rules for the 10th frame (i.e. just add the scores).
                 frameScore += element[0] + element[1];
-                if (element[2] !== null) {
+                if (element.length > 2 && element[2] !== null) {
                     frameScore += element[2];
                 }
             }
