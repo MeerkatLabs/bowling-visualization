@@ -101,6 +101,12 @@ d3Module.directive('linegraph', ['d3Service', function(d3Service) {
 
         };
 
+        scope.$watch(function() {
+            return element[0].offsetWidth;
+        }, function() {
+            scope.render(scope.data);
+        });
+
         scope.$watch('lines', function (newVals, oldVals) {
             console.log("lines has been updated", newVals);
             return scope.render(newVals);

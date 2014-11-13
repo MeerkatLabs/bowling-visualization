@@ -88,6 +88,11 @@ d3Module.directive('differencegraph', ['d3Service', function(d3Service) {
             });
         };
 
+        scope.$watch(function() {
+            return element[0].offsetWidth;
+        }, function() {
+            scope.render(scope.data);
+        });
 
         scope.$watch('data', function (newVals, oldVals) {
             return scope.render(newVals);
