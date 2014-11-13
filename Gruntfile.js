@@ -37,7 +37,10 @@ module.exports = function(grunt) {
                         '   <%= pkg.name %> <%= pkg.version %> \n' +
                         '   (c) 2014 Meerkat Labs <%= pkg.repository %>\n' +
                         '   License: <%= pkg.license %>\n' +
-                        '*/\n'
+                        '*/\n',
+                compress: {
+                    drop_console: true
+                }
             },
             build_d3: {
                 src: 'app/dist/d3_components.js',
