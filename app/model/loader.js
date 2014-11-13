@@ -1,7 +1,15 @@
+/*
+ * bowling-webapp
+ * https://github.com/MeerkatLabs/bowling-visualization
+ *
+ * Copyright (c) 2014 Meerkat Labs
+ * http://www.meerkatlabsllc.com/
+ * Licensed under the MIT License
+ */
+
 /**
  * Loader that will use a promise to create the data model for the objects.
  */
-
 ; (function(undefined) {
 
     if (typeof bowling === 'undefined') {

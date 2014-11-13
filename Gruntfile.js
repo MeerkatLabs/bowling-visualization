@@ -1,3 +1,12 @@
+/*
+ * bowling-webapp
+ * https://github.com/MeerkatLabs/bowling-visualization
+ *
+ * Copyright (c) 2014 Meerkat Labs
+ * http://www.meerkatlabsllc.com/
+ * Licensed under the MIT License
+ */
+
 module.exports = function(grunt) {
 
     // Project configuration.
@@ -24,7 +33,11 @@ module.exports = function(grunt) {
         },
         uglify: {
             options: {
-                banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+                banner: '/* \n' +
+                        '   <%= pkg.name %> <%= pkg.version %> \n' +
+                        '   (c) 2014 Meerkat Labs <%= pkg.repository %>\n' +
+                        '   License: <%= pkg.license %>\n' +
+                        '*/\n'
             },
             build_d3: {
                 src: 'app/dist/d3_components.js',

@@ -1,9 +1,9 @@
 {
-  "version": "1.0.0",
+  "version": "0.5.0",
   "private": true,
   "name": "bowling-webapp",
   "description": "Bowling Scoresheet and Statistics viewer",
-  "repository": "https://github.com/angular/angular-phonecat",
+  "repository": "https://github.com/MeerkatLabs/bowling-visualization",
   "license": "MIT",
   "devDependencies": {
     "karma": "^0.12.16",
