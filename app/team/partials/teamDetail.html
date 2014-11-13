@@ -9,3 +9,10 @@
 </div>
 
 <ng-include src="'team/partials/matchList.html'" ng-controller="TeamMatchListController"></ng-include>
+
+<div class="page-header">
+    <h2>Player Contribution</h2>
+</div>
+<div class="col-md-12" ng-controller="TeamTotalPinsCtrl">
+    <svg width="100%" bargraph data="data"></svg>
+</div>

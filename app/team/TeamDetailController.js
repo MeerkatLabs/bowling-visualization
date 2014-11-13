@@ -24,7 +24,7 @@ bowlingApp.controller('TeamDetailController', ['$scope', '$routeParams', 'dataSe
 
             $scope.team = foundTeam;
 
-            $scope.$broadcast('foundTeam', foundTeam);
+            $scope.$broadcast(bowling.events.team.found, foundTeam);
         });
 
     }]);

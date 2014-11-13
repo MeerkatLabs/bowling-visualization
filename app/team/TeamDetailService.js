@@ -15,131 +15,199 @@ var bowlingApp = bowlingApp || angular.module('bowling');
 bowlingApp.factory('TeamDetailService', ['$q', 'dataService',
     function($q, dataService) {
 
-        var getTeamList = function(team) {
+        /**
+         * Promise listener that will notify will build the team member table, and then notify the correct promise
+         * when completed.
+         * @param {bowling.League} league
+         * @param {bowling.Team} team
+         * @param {promise} deferred
+         */
+        var buildTeamList = function(league, team, deferred) {
+            var data = [];
 
-            var deferred = $q.defer();
+            team.players.forEach(function (roller) {
 
-            dataService.getData().then(function(league) {
+                var rollerData = {
+                    id: roller.id,
+                    roller: roller,
+                    name: roller.name,
+                    handicap: roller.handicap,
+                    games: null,
+                    pins: null,
+                    average: roller.playerAverage,
+                    hhg: null,
+                    hhs: null,
+                    hsg: null,
+                    hss: null
+                };
 
-                var data = [];
+                if (roller.serieses.length > 0) {
+                    rollerData.games = rollerData.pins = rollerData.hhg = rollerData.hhs = rollerData.hsg = rollerData.hss = 0;
+                }
 
-                team.players.forEach(function (roller) {
+                roller.serieses.forEach(function (series) {
 
-                    var rollerData = {
-                        id: roller.id,
-                        name: roller.name,
-                        handicap: roller.handicap,
-                        games: null,
-                        pins: null,
-                        average: roller.playerAverage,
-                        hhg: null,
-                        hhs: null,
-                        hsg: null,
-                        hss: null
-                    };
+                    rollerData.games += series.games.length;
 
-                    if (roller.serieses.length > 0) {
-                        rollerData.games = rollerData.pins = rollerData.hhg = rollerData.hhs = rollerData.hsg = rollerData.hss = 0;
-                    }
-
-                    roller.serieses.forEach(function (series) {
-
-                        rollerData.games += series.games.length;
-
-                        series.games.forEach(function (game) {
-                           rollerData.pins += game.score;
-                           rollerData.hhg = Math.max(rollerData.hhg, game.score + series.handicap);
-                           rollerData.hsg = Math.max(rollerData.hsg, game.score);
-                        });
-
-                        rollerData.hhs = Math.max(rollerData.hhs, series.total + (series.handicap * series.games.length));
-                        rollerData.hss = Math.max(rollerData.hss, series.total);
+                    series.games.forEach(function (game) {
+                        rollerData.pins += game.score;
+                        rollerData.hhg = Math.max(rollerData.hhg, game.score + series.handicap);
+                        rollerData.hsg = Math.max(rollerData.hsg, game.score);
                     });
 
-                    data.push(rollerData);
-
+                    rollerData.hhs = Math.max(rollerData.hhs, series.total + (series.handicap * series.games.length));
+                    rollerData.hss = Math.max(rollerData.hss, series.total);
                 });
 
-                deferred.resolve(data);
+                data.push(rollerData);
 
             });
 
-            return deferred.promise;
-
+            deferred.resolve(data);
         };
 
-        var getMatchList = function(team) {
+        /**
+         * Promise listener that will notify when the data for the team's matches has been compiled.
+         * @param {bowling.League} league
+         * @param {bowling.Team} team
+         * @param {promise} deferred
+         */
+        var buildMatchData = function(league, team, deferred) {
 
-            var deferred = $q.defer();
+            var data = [];
 
-            dataService.getData().then(function(league) {
+            league.weeks.forEach(function(week) {
 
-                var data = [];
+                week.matches.forEach(function(match) {
 
-                league.weeks.forEach(function(week) {
+                    var matchData = {
+                        weekNumber: week.weekNumber,
+                        date: week.date,
+                        opponent: "",
+                        pointsFor: 0,
+                        pointsAgainst: 0,
+                        matchId: match.id
+                    };
 
-                    week.matches.forEach(function(match) {
+                    var teamSeries = null;
+                    var otherTeamSeries = null;
+                    match.scores.forEach(function (search) {
+                       if (search.team.id === team.id) {
+                           teamSeries = search;
+                       } else {
+                           otherTeamSeries = search;
+                       }
+                    });
 
-                        var matchData = {
-                            weekNumber: week.weekNumber,
-                            date: week.date,
-                            opponent: "",
-                            pointsFor: 0,
-                            pointsAgainst: 0,
-                            matchId: match.id
-                        };
+                    if (teamSeries !== null) {
 
-                        var teamSeries = null;
-                        var otherTeamSeries = null;
-                        match.scores.forEach(function (search) {
-                           if (search.team.id === team.id) {
-                               teamSeries = search;
-                           } else {
-                               otherTeamSeries = search;
-                           }
-                        });
+                        matchData.opponent = otherTeamSeries.team.name;
 
-                        if (teamSeries !== null) {
-
-                            matchData.opponent = otherTeamSeries.team.name;
-
-                            for (var index = 0; index < league.gamesPerSeries; ++index) {
-                                if (teamSeries.gameTotal[index] > otherTeamSeries.gameTotal[index]) {
-                                    matchData.pointsFor += league.pointsPerGame;
-                                } else if (teamSeries.gameTotal[index] < otherTeamSeries.gameTotal[index]) {
-                                    matchData.pointsAgainst += league.pointsPerGame;
-                                } else {
-                                    matchData.pointsFor += (league.pointsPerGame / 2);
-                                    matchData.pointsAgainst += (league.pointsPerGame / 2);
-                                }
-                            }
-
-                            if (teamSeries.seriesTotal > otherTeamSeries.seriesTotal) {
+                        for (var index = 0; index < league.gamesPerSeries; ++index) {
+                            if (teamSeries.gameTotal[index] > otherTeamSeries.gameTotal[index]) {
                                 matchData.pointsFor += league.pointsPerGame;
-                            } else if (teamSeries.seriesTotal < otherTeamSeries.seriesTotal) {
+                            } else if (teamSeries.gameTotal[index] < otherTeamSeries.gameTotal[index]) {
                                 matchData.pointsAgainst += league.pointsPerGame;
                             } else {
                                 matchData.pointsFor += (league.pointsPerGame / 2);
                                 matchData.pointsAgainst += (league.pointsPerGame / 2);
                             }
-
-                            data.push(matchData);
                         }
 
-                    });
+                        if (teamSeries.seriesTotal > otherTeamSeries.seriesTotal) {
+                            matchData.pointsFor += league.pointsPerGame;
+                        } else if (teamSeries.seriesTotal < otherTeamSeries.seriesTotal) {
+                            matchData.pointsAgainst += league.pointsPerGame;
+                        } else {
+                            matchData.pointsFor += (league.pointsPerGame / 2);
+                            matchData.pointsAgainst += (league.pointsPerGame / 2);
+                        }
+
+                        data.push(matchData);
+                    }
 
                 });
 
-                deferred.resolve(data);
-
             });
 
-            return deferred.promise;
+            deferred.resolve(data);
+
         };
 
         return {
-            getTeamList: getTeamList,
-            getMatchList: getMatchList
+            /**
+             * Will asynchronously fetch the members of a team, and their statistics for the league.
+             *
+             * Data contains:
+             *   id: roller.id,
+             *   name: roller.name,
+             *   handicap: roller.handicap,
+             *   games: null,
+             *   pins: null,
+             *   average: roller.playerAverage,
+             *   hhg: null,
+             *   hhs: null,
+             *   hsg: null,
+             *   hss: null
+             *
+             * @param {bowling.Team} team
+             * @returns {Array}
+             */
+            getTeamList: function(team) {
+
+                var deferred = $q.defer();
+
+                dataService.getData().then(function(league) {
+                    buildTeamList(league, team, deferred);
+                });
+
+                return deferred.promise;
+
+            },
+
+            /**
+             * Will asynchronously fetch the matches and statistics for the matches that this team has participated in.
+             *
+             * Data Contains:
+             *   weekNumber: week.weekNumber,
+             *   date: week.date,
+             *   opponent: "",
+             *   pointsFor: 0,
+             *   pointsAgainst: 0,
+             *   matchId: match.id
+             * @param {bowling.Team} team
+             * @returns {Array}
+             */
+            getMatchList: function(team) {
+                var deferred = $q.defer();
+
+                dataService.getData().then(function(league) {
+                    buildMatchData(league, team, deferred);
+                });
+
+                return deferred.promise;
+            },
+
+            getPinData: function(team) {
+                var deferred = $q.defer();
+
+                dataService.getData().then(function(league) {
+                    buildTeamList(league, team, deferred);
+                });
+
+                return deferred.promise.then(function(playerData) {
+                    var data = [];
+                    playerData.forEach(function(element) {
+
+                        data.push({
+                            label: element.roller.name,
+                            value: element.pins
+                        });
+
+                    });
+                    return data;
+                });
+            }
         };
 
     }]);

@@ -15,7 +15,7 @@ var bowlingApp = bowlingApp || angular.module('bowling');
 bowlingApp.controller('TeamMatchListController', ['$scope', 'dataService', 'TeamDetailService',
     function($scope, dataService, teamDetailService) {
 
-        $scope.$on('foundTeam', function(event, data) {
+        $scope.$on(bowling.events.team.found, function(event, data) {
             teamDetailService.getMatchList(data).then(function (data) {
                 $scope.matches = data;
 

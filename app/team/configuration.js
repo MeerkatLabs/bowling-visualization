@@ -16,3 +16,11 @@ bowlingApp.config(['$routeProvider',
             controller: 'TeamDetailController'
         });
     }]);
+
+bowling.events = bowling.events || {};
+
+bowling.events.team = {
+
+    found: "team::found"
+
+};
