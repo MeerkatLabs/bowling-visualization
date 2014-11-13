@@ -40,6 +40,34 @@ bowlingApp.controller('MatchController', ['$scope', '$routeParams', 'dataProvide
                }
             });
 
+            var gameCharts = [];
+            for (var gameIndex = 0; gameIndex < league.gamesPerSeries; ++gameIndex) {
+                var data = [];
+                foundMatch.scores.forEach(function (teamSeries, i) {
+
+                    data.push({
+                        label: teamSeries.team.name,
+                        value: teamSeries.gameTotal[gameIndex]
+                    });
+
+                });
+
+                gameCharts.push(data);
+            }
+
+            var totalData = [];
+            foundMatch.scores.forEach(function (teamSeries, i) {
+
+                totalData.push({
+                    label: teamSeries.team.name,
+                    value: teamSeries.seriesTotal
+                });
+
+            });
+
+            $scope.gameCharts = gameCharts;
+            $scope.totalData = totalData;
+
             console.log($scope);
 
         });
