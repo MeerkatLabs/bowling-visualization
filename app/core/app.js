@@ -28,7 +28,7 @@ bowlingApp.config(['$routeProvider',
  */
 function DataService(configuration, $q) {
     var dataLoaded = false;
-    var currentPromise = null;
+    var promise = null;
     var myConfiguration = configuration;
 
     return {
@@ -38,22 +38,15 @@ function DataService(configuration, $q) {
          */
         getData: function () {
 
-            if (currentPromise === null) {
-                if (!dataLoaded) {
-                    var result = bowling.initialize(myConfiguration, $q);
-                    currentPromise = result.then(function (league) {
-                        dataLoaded = true;
-                        currentPromise = null;
-                        return league;
-                    });
-                } else {
-                    return $q(function (resolve, reject) {
-                        resolve(bowling.currentLeague);
-                    });
-                }
+            if (promise === null) {
+                var result = bowling.initialize(myConfiguration, $q);
+                promise = result.then(function (league) {
+                    dataLoaded = true;
+                    return league;
+                });
             }
 
-            return currentPromise;
+            return promise;
         }
     };
 }
