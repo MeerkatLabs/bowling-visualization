@@ -67,6 +67,9 @@ module.exports = function(grunt) {
         },
         sass: {
             dist: {
+                options: {
+                    style: 'compressed'
+                },
                 files: {
                     'app/css/bowling.css': 'app/sass/bowling.scss'
                 }

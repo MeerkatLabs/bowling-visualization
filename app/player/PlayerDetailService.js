@@ -133,11 +133,34 @@ bowlingApp.factory('PlayerDetailService', ['$q', 'd3Service', 'dataService', fun
         });
     };
 
+    /**
+     *
+     * @param {bowling.Player} player
+     * @returns {*}
+     */
+    var handicapOverTime = function(player) {
+        return $q(function(resolve, reject) {
+
+            var data = [];
+
+            player.serieses.forEach(function(series) {
+                data.push({
+                    label: series.week.weekNumber,
+                    value: series.total
+                })
+            });
+
+            resolve(data);
+
+        });
+    };
+
     return {
         buildDataTable: buildDataTable,
         findPlayer: findPlayer,
         getScoreSheets: getScoreSheets,
-        minMaxScores: minMaxScores
+        minMaxScores: minMaxScores,
+        handicapOverTime: handicapOverTime
     }
 
 }]);

@@ -134,7 +134,35 @@ bowlingApp.factory('TeamDetailService', ['$q', 'dataService',
 
         };
 
+        /**
+         *
+         * @param {bowling.League} league
+         * @param {bowling.Team} team
+         * @returns {*}
+         */
+        var buildHandicapData = function(league, team) {
+
+            return $q(function (resolve, reject) {
+                var data = [];
+
+                team.series.forEach(function (series) {
+
+                    data.push({
+                        label: series.week.weekNumber,
+                        value: series.seriesHandicap
+                    });
+
+                });
+
+                resolve(data);
+            });
+
+        };
+
         return {
+
+            getHandicapPerWeek: buildHandicapData,
+
             /**
              * Will asynchronously fetch the members of a team, and their statistics for the league.
              *

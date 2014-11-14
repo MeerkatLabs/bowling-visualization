@@ -7,9 +7,13 @@
  * Licensed under the MIT License
  */
 
+/**
+ * Created by rerobins on 11/14/14.
+ */
+
 var d3Module = d3Module || angular.module('d3');
 
-d3Module.directive('bargraph', ['d3Service', function(d3Service) {
+d3Module.directive('horizbargraph', ['d3Service', function(d3Service) {
 
     var link = function(scope, element, attrs) {
 
@@ -23,12 +27,12 @@ d3Module.directive('bargraph', ['d3Service', function(d3Service) {
                 var height = parseInt(svg.style('height')),
                     width = parseInt(svg.style('width'));
 
-                var barHeight = height / scope.data.length;
+                var barWidth = width / scope.data.length;
 
-                var xScale = d3.scale.linear()
+                var yScale = d3.scale.linear()
                     .domain([0, d3.max(scope.data, function(d) {
                         return d.value;
-                    })]).range([0, width]);
+                    })]).range([0, height]);
 
                 var colors = d3.scale.category10();
 
@@ -36,30 +40,20 @@ d3Module.directive('bargraph', ['d3Service', function(d3Service) {
                     .data(scope.data)
                     .enter().append("g")
                     .attr("transform", function(d, i) {
-                        var height = (i * barHeight);
-                        var location = 0;
-                        return "translate(" + location + "," + height + ")";
+                        var location = (i * barWidth);
+                        return "translate(" + location + "," + (height-yScale(d.value)) + ")";
                     });
 
                 bar.append("rect")
-                    .attr("width", function(d) {
-                        return xScale(d.value);
+                    .attr("width", barWidth - 1)
+                    .attr("height", function(d) {
+                        return yScale(d.value);
                     })
-                    .attr("height", barHeight - 1)
                     .style("fill", function(d,i) {
                         return colors(i);
                     });
 
-                bar.append("text")
-                    .attr("x", function(d) { return xScale(d.value) - 3; })
-                    .attr("y", barHeight / 2)
-                    .attr("dy", ".35em")
-                    .attr("text-anchor", "end")
-                    .attr("fill", "white")
-                    .text(function(d) { return d.label + " (" + d.value + ")"; });
-
             });
-
         };
 
         scope.$watch(function() {
@@ -71,14 +65,12 @@ d3Module.directive('bargraph', ['d3Service', function(d3Service) {
         scope.$watch('data', function (newVals, oldVals) {
             return scope.render(newVals);
         }, true);
-
     };
 
     return {
         link: link,
-        scope: {
+        watch: {
             data: '='
         }
     }
-
 }]);

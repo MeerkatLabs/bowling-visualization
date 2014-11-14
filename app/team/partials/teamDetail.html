@@ -13,6 +13,17 @@
 <div class="page-header">
     <h2>Player Contribution</h2>
 </div>
-<div class="col-md-12" ng-controller="TeamTotalPinsCtrl">
-    <svg width="100%" bargraph data="data"></svg>
+<div class="row">
+    <div class="col-md-12" ng-controller="TeamTotalPinsCtrl">
+        <svg width="100%" bargraph data="data"></svg>
+    </div>
+</div>
+
+<div class="page-header">
+    <h2>Team Handicap Over Time</h2>
+</div>
+<div class="row">
+    <div class="col-md-12" ng-controller="TeamHandicapCtrl">
+        <svg width="100%" horizbargraph data="data"></svg>
+    </div>
 </div>
