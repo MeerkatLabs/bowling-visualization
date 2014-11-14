@@ -21,8 +21,8 @@ module.exports = function(grunt) {
                         'app/core/_*.js', 'app/core/*.js',
                         'app/match/_*.js', 'app/match/*.js',
                         'app/player/_*.js', 'app/player/*.js',
-                        'app/team/_*.js', 'app/team/_*.js',
-                        'app/weeks/_*.js', 'app/weeks/_*.js'
+                        'app/team/_*.js', 'app/team/*.js',
+                        'app/weeks/_*.js', 'app/weeks/*.js'
                         ]
                 }
             }
@@ -73,11 +73,11 @@ module.exports = function(grunt) {
         },
         watch: {
             scripts: {
-                files: ['app/**/*.js', '!app/bower_components/**.js', '!app/dist/*.js', '!app/build/*.js'],
+                files: ['Gruntfile.js', 'app/**/*.js', '!app/bower_components/**.js', '!app/dist/*.js', '!app/build/*.js'],
                 tasks: ['jshint', 'concat']
             },
             sass: {
-                files: ['app/**/*.scss'],
+                files: ['Gruntfile.js', 'app/**/*.scss'],
                 tasks: ['sass']
             }
 
