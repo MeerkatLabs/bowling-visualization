@@ -3,11 +3,11 @@
 </div>
 
 
-<div class="row">
+<div class="row" ng-controller="PlayerMatchDataCtrl">
     <div ng-include="'player/partials/scoreDetails.html'" class="col-md-6"></div>
 
     <div id="mainGraph"  class="col-md-6" style="padding: 0">
-        <div>
+        <div ng-controller="PlayerMatchLineGraphCtrl">
             <svg style="float: left" linegraph data="data" lines="lines" width="75%" height="300" ydomain="[0,300]" margin="50">
             </svg>
             <div style="float: left" legend lines="lines" data="data"></div>
@@ -17,5 +17,12 @@
         <div>
             <svg differencegraph data="data" width="100%" height="300" margin="50"></svg>
         </div>
+    </div>
+</div>
+
+<div class="row" ng-controller="PlayerScoreSheetsCtrl" ng-if="!hasMatches">
+    <div style="padding-bottom: 20px;" ng-repeat="match in matches"
+         ng-init="label=match.label;game=match.games"
+         ng-include="'match/partials/frame.html'">
     </div>
 </div>
