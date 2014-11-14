@@ -72,5 +72,5 @@ d3Module.directive('horizbargraph', ['d3Service', function(d3Service) {
         watch: {
             data: '='
         }
-    }
+    };
 }]);

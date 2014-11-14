@@ -79,6 +79,6 @@ d3Module.directive('bargraph', ['d3Service', function(d3Service) {
         scope: {
             data: '='
         }
-    }
+    };
 
 }]);

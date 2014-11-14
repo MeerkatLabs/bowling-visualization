@@ -32,7 +32,7 @@ bowlingApp.controller('PlayerMatchLineGraphCtrl', ['$scope', 'd3Service', functi
                 lines.push({
                     line: gameLine,
                     label: "Game " + element
-                })
+                });
             });
 
             var incomingAverageLine = d3.svg.line()

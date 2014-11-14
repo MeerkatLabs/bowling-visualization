@@ -15,19 +15,15 @@ module.exports = function(grunt) {
         concat: {
             d3_and_bowling: {
                 files: {
-                    "app/dist/d3_components.js": ['app/d3/configuration.js',
-                        'app/d3/D3Service.js',
-                        'app/d3/DifferenceGraph.js',
-                        'app/d3/LegendDirective.js',
-                        'app/d3/LineGraphDirective.js'],
-                    "app/dist/bowling_components.js": ['app/model/*.js',
-                        'app/core/app.js',
-                        'app/core/main.js',
-                        'app/core/NavBarController.js',
-                        'app/match/*.js',
-                        'app/player/*.js',
-                        'app/team/*.js',
-                        'app/weeks/*.js']
+                    "app/build/d3_components.js": ['app/d3/_*.js', 'app/d3/*.js'],
+                    "app/build/bowling_components.js": [
+                        'app/model/_*.js', 'app/model/*.js',
+                        'app/core/_*.js', 'app/core/*.js',
+                        'app/match/_*.js', 'app/match/*.js',
+                        'app/player/_*.js', 'app/player/*.js',
+                        'app/team/_*.js', 'app/team/_*.js',
+                        'app/weeks/_*.js', 'app/weeks/_*.js'
+                        ]
                 }
             }
         },
@@ -43,12 +39,12 @@ module.exports = function(grunt) {
                 }
             },
             build_d3: {
-                src: 'app/dist/d3_components.js',
-                dest: 'app/build/d3_components.min.js'
+                src: 'app/build/d3_components.js',
+                dest: 'app/dist/d3_components.min.js'
             },
             build_bowling: {
-                src: 'app/dist/bowling_components.js',
-                dest: 'app/build/bowling_components.min.js'
+                src: 'app/build/bowling_components.js',
+                dest: 'app/dist/bowling_components.min.js'
             }
         },
         jshint: {
@@ -74,6 +70,17 @@ module.exports = function(grunt) {
                     'app/css/bowling.css': 'app/sass/bowling.scss'
                 }
             }
+        },
+        watch: {
+            scripts: {
+                files: ['app/**/*.js', '!app/bower_components/**.js', '!app/dist/*.js', '!app/build/*.js'],
+                tasks: ['jshint', 'concat']
+            },
+            sass: {
+                files: ['app/**/*.scss'],
+                tasks: ['sass']
+            }
+
         }
     });
 

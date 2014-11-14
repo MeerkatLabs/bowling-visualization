@@ -32,7 +32,7 @@ bowlingApp.factory('TeamFindService', ['$q', 'dataService', function($q, dataSer
             deferred.resolve({
                 league: league,
                 team: foundTeam
-            })
+            });
         });
 
         return deferred.promise;
@@ -40,6 +40,6 @@ bowlingApp.factory('TeamFindService', ['$q', 'dataService', function($q, dataSer
 
     return {
         findTeam: findTeam
-    }
+    };
 
 }]);

@@ -41,8 +41,7 @@ d3Module.directive('numberrange', ['d3Service', function (d3Service) {
 
                 var maxValue = parseInt(attrs.maxvalue),
                     margin = parseInt(attrs.margin) || 20,
-                    axisLocation = attrs.axis
-
+                    axisLocation = attrs.axis;
 
                 var gameScale = d3.scale.linear()
                     .domain([0, maxValue])

@@ -147,7 +147,7 @@ bowlingApp.factory('PlayerDetailService', ['$q', 'd3Service', 'dataService', fun
                 data.push({
                     label: series.week.weekNumber,
                     value: series.total
-                })
+                });
             });
 
             resolve(data);
@@ -161,6 +161,6 @@ bowlingApp.factory('PlayerDetailService', ['$q', 'd3Service', 'dataService', fun
         getScoreSheets: getScoreSheets,
         minMaxScores: minMaxScores,
         handicapOverTime: handicapOverTime
-    }
+    };
 
 }]);
