@@ -23,6 +23,6 @@
 <div class="row" ng-controller="PlayerScoreSheetsCtrl" ng-if="!hasMatches">
     <div style="padding-bottom: 20px;" ng-repeat="match in matches"
          ng-init="label=match.label;game=match.games"
-         ng-include="'match/partials/frame.html'">
+         ng-include="'common/partials/frame.html'">
     </div>
 </div>

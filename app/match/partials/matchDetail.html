@@ -19,7 +19,7 @@
     <div ng-repeat="score in match.scores" class="col-md-6">
         <div style="padding-bottom: 20px; float: left" ng-repeat="game in score.scoresByGame"
              ng-init="label = 'Game ' + ($index + 1)"
-             ng-include="'match/partials/frame.html'">
+             ng-include="'common/partials/frame.html'">
         </div>
     </div>
 </div>
