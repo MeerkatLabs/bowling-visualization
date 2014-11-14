@@ -49,6 +49,7 @@
 <script language="JavaScript" src="d3/LegendDirective.js"></script>
 <script language="JavaScript" src="d3/PieChartDirective.js"></script>
 <script language="JavaScript" src="d3/BarGraphDirective.js"></script>
+<script language="JavaScript" src="d3/NumberRangeDirective.js"></script>
 
 <!-- Data model javascript -->
 <script language="JavaScript" src="model/bowling.js"></script>
@@ -75,6 +76,7 @@
 <script language="JavaScript" src="player/PlayerMatchDataCtrl.js"></script>
 <script language="JavaScript" src="player/PlayerMatchLineGraphCtrl.js"></script>
 <script language="JavaScript" src="player/PlayerScoreSheetsCtrl.js"></script>
+<script language="JavaScript" src="player/PlayerGameSeriesRangeCtrl.js"></script>
 <script language="JavaScript" src="team/configuration.js"></script>
 <script language="JavaScript" src="team/TeamDetailController.js"></script>
 <script language="JavaScript" src="team/TeamMatchListCtrl.js"></script>
@@ -90,7 +92,7 @@
     bowlingApp.config(['dataServiceProvider', function(dataServiceProvider) {
         dataServiceProvider.configure(
                 {
-                    root: 'polarbowler'
+                    root: 'testdata'
                 }
         );
     }]);

@@ -113,7 +113,6 @@ d3Module.directive('linegraph', ['d3Service', function(d3Service) {
         });
 
         scope.$watch('lines', function (newVals, oldVals) {
-            console.log("lines has been updated", newVals);
             return scope.render(newVals);
         }, true);
 

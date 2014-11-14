@@ -104,10 +104,40 @@ bowlingApp.factory('PlayerDetailService', ['$q', 'd3Service', 'dataService', fun
         });
     };
 
+    var minMaxScores = function(player) {
+        return $q(function(resolve, reject) {
+            var data = {
+                gameMinimum: Number.MAX_SAFE_INTEGER,
+                gameMaximum: -Number.MAX_SAFE_INTEGER,
+                seriesMinimum: Number.MAX_SAFE_INTEGER,
+                seriesMaximum: -Number.MAX_SAFE_INTEGER
+            };
+
+            // Need to go through all of the scores in the game Series and fetch the min and max values for the games
+            // and the series values.
+
+            player.serieses.forEach(function(series) {
+
+                series.games.forEach(function(game) {
+                    data.gameMinimum = Math.min(game.score, data.gameMinimum);
+                    data.gameMaximum = Math.max(game.score, data.gameMaximum);
+                });
+
+                data.seriesMinimum = Math.min(series.total, data.seriesMinimum);
+                data.seriesMaximum = Math.max(series.total, data.seriesMaximum);
+
+            });
+
+            resolve(data);
+
+        });
+    };
+
     return {
         buildDataTable: buildDataTable,
         findPlayer: findPlayer,
-        getScoreSheets: getScoreSheets
+        getScoreSheets: getScoreSheets,
+        minMaxScores: minMaxScores
     }
 
 }]);
