@@ -45,9 +45,6 @@ d3Module.directive('differencegraph', ['d3Service', function(d3Service) {
                     .scale(xScale)
                     .orient("bottom");
 
-                console.log("domain:", xDomain);
-                console.log("width: ", width);
-
                 svg.append("path")
                     .attr("d", d3.svg.line()
                         .x(function(d) {
@@ -64,8 +61,6 @@ d3Module.directive('differencegraph', ['d3Service', function(d3Service) {
                     .attr("transform", function(d, i) {
                         var height = (i * barHeight);
                         var location = xScale(0);
-
-                        console.log("transform", d.data.averageDifference, xScale(d.data.averageDifference));
 
                         if (d.data.averageDifference < 0) {
                             location = xScale(d.data.averageDifference);

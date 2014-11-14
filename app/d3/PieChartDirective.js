@@ -81,7 +81,6 @@ d3Module.directive('piechart', ['d3Service','$window', function(d3Service, $wind
         });
 
         scope.$watch('data', function (newVals, oldVals) {
-            console.log("data has been updated", newVals);
             return scope.render(newVals);
         }, true);
     }
