@@ -29,8 +29,6 @@ d3Module.directive('bargraph', ['d3Service', function(d3Service) {
                     return d.value;
                 });
 
-                console.log("Max Pins: ", maxPins);
-
                 var xScale = d3.scale.linear()
                     .domain([0, d3.max(scope.data, function(d) {
                         return d.value;
