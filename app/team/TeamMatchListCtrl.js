@@ -16,7 +16,7 @@ bowlingApp.controller('TeamMatchListController', ['$scope', 'dataService', 'Team
     function($scope, dataService, teamDetailService) {
 
         $scope.$on(bowling.events.team.found, function(event, data) {
-            teamDetailService.getMatchList(data).then(function (data) {
+            teamDetailService.getMatchList(data.team).then(function (data) {
                 $scope.matches = data;
 
                 var pointsFor = 0;

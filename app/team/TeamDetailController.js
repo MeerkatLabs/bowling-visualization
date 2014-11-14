@@ -9,22 +9,18 @@
 
 var bowlingApp = bowlingApp || angular.module('bowling');
 
-bowlingApp.controller('TeamDetailController', ['$scope', '$routeParams', 'dataService',
-    function ($scope, $routeParams, dataService) {
+bowlingApp.controller('TeamDetailController', ['$scope', '$routeParams', '$timeout', 'TeamFindService',
+    function ($scope, $routeParams, $timeout, TeamFindService) {
 
-        dataService.getData().then(function (league) {
-            var foundTeam = bowling.utils.findInArray(league.teams, function (element) {
-                return $routeParams.teamId == element.id;
+        TeamFindService.findTeam($routeParams.teamId).then(function (data) {
+
+            $timeout(function() {
+                $scope.$broadcast(bowling.events.team.found, data);
             });
 
-            if (foundTeam === null) {
-                console.error("Couldn't find team: " + $routeParams.teamId);
-                return;
-            }
+            $scope.team = data.team;
+            $scope.league = data.league;
 
-            $scope.team = foundTeam;
-
-            $scope.$broadcast(bowling.events.team.found, foundTeam);
         });
 
     }]);

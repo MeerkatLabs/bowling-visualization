@@ -16,7 +16,7 @@ bowlingApp.controller('TeamMembersController', ['$scope', 'dataService', 'TeamDe
     function($scope, dataService, teamDetailService) {
 
         $scope.$on(bowling.events.team.found, function(event, data) {
-            teamDetailService.getTeamList(data).then(function (data) {
+            teamDetailService.getTeamList(data.team).then(function (data) {
                 $scope.members = data;
             });
         });

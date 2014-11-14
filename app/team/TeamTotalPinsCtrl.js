@@ -14,7 +14,7 @@ bowlingApp.controller('TeamTotalPinsCtrl', ['$scope', 'TeamDetailService',
 
         $scope.$on(bowling.events.team.found, function(event, data) {
 
-            teamDetailService.getPinData(data).then(function (data) {
+            teamDetailService.getPinData(data.team).then(function (data) {
 
                 $scope.data = data;
 
