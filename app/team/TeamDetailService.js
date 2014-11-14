@@ -159,9 +159,25 @@ bowlingApp.factory('TeamDetailService', ['$q', 'dataService',
 
         };
 
+        var buildPinsPerWeekData = function(league, team) {
+            return $q(function(resolve, reject) {
+                var data = [];
+
+                team.series.forEach(function (series) {
+                    data.push({
+                        label: series.week.weekNumber,
+                        value: series.seriesScratch
+                    });
+                });
+
+                resolve(data);
+            });
+        };
+
         return {
 
             getHandicapPerWeek: buildHandicapData,
+            buildPinsPerWeekData: buildPinsPerWeekData,
 
             /**
              * Will asynchronously fetch the members of a team, and their statistics for the league.
