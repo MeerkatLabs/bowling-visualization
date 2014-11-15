@@ -29,11 +29,11 @@
     <svg numberrange data="seriesScratch" width="100%" height="60" maxValue="900" axis="bottom"></svg>
 </div>
 
-<div class="page-header" ng-if="matches.length">
+<div class="page-header" ng-controller="PlayerScoreSheetsCtrl">
     <h2>Score Sheets</h2>
 </div>
 
-<div class="row" ng-controller="PlayerScoreSheetsCtrl" ng-if="matches.length">
+<div class="row" ng-controller="PlayerScoreSheetsCtrl" >
     <div style="padding-bottom: 20px;" ng-repeat="match in matches"
          ng-init="label=match.label;game=match.games"
          ng-include="'common/partials/frame.html'">
@@ -46,5 +46,26 @@
 <div class="row">
     <div class="col-md-12" ng-controller="PlayerHandicapCtrl">
         <svg width="100%" horizbargraph data="data"></svg>
+    </div>
+</div>
+
+<div class="page-header">
+    <h2>First Ball Analysis</h2>
+</div>
+<div class="row" ng-controller="PlayerFirstBallAnalysis">
+    <div class="col-md-6">
+        <ul>
+            <li>Mean: {{ data.mean }}</li>
+            <li>Median: {{ data.median }}</li>
+            <li>Min: {{ data.min }}</li>
+            <li>Max: {{ data.max }}</li>
+            <li>1st: {{ data.firstQuartile}}</li>
+            <li>3rd: {{ data.thirdQuartile}}</li>
+        </ul>
+
+        <p>{{data.data}}</p>
+    </div>
+    <div class="col-md-6">
+        <svg boxgraph data="data" width="100%" height="100"></svg>
     </div>
 </div>

@@ -63,6 +63,13 @@
 
     };
 
+    /**
+     * Fetch all of the score sheets that are assigned to a player.
+     * @param {bowling.Player} player
+     */
+    bowling.League.prototype.getGamesForPlayer = function(player) {
+        return player.bowledGames;
+    };
 
     // Install the bowling namespace into the global scope.
     if (typeof this.bowling === 'undefined') {

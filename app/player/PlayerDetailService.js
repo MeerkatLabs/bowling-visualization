@@ -155,12 +155,72 @@ bowlingApp.factory('PlayerDetailService', ['$q', 'd3Service', 'dataService', fun
         });
     };
 
+    /**
+     * Fetch all of the games that the player has participated in.
+     * @param {bowling.League} league
+     * @param {bowling.Team} team
+     * @param {bowling.Player} player
+     * @returns {*} promise
+     */
+    var getAllGames = function(league, team, player) {
+        return $q(function (resolve, reject) {
+            resolve(league.getGamesForPlayer(player));
+        });
+    };
+
+    /**
+     * Fetch the total first ball analysis data set.
+     * @param {bowling.League} league
+     * @param {bowling.Team} team
+     * @param {bowling.Player} player
+     * @returns {*} promise
+     */
+    var firstBallAnalysis = function(league, team, player) {
+
+        var deferred = $q.defer();
+
+        getAllGames(league, team, player).then(function(games) {
+
+            var firstBalls = [];
+            games.forEach(function (game) {
+
+                game.frames.forEach(function (frame) {
+                    firstBalls.push(frame[0]);
+                });
+
+            });
+
+            d3Service.get().then(function(d3) {
+
+                firstBalls.sort(d3.ascending);
+
+                var results = {
+                    mean: d3.mean(firstBalls),
+                    median: d3.median(firstBalls),
+                    min: d3.min(firstBalls),
+                    max: d3.max(firstBalls),
+                    firstQuartile: d3.quantile(firstBalls, 0.25),
+                    thirdQuartile: d3.quantile(firstBalls, 0.75),
+                    data: firstBalls
+                };
+
+                deferred.resolve(results);
+
+            });
+
+        });
+
+        return deferred.promise;
+
+    };
+
     return {
         buildDataTable: buildDataTable,
         findPlayer: findPlayer,
         getScoreSheets: getScoreSheets,
         minMaxScores: minMaxScores,
-        handicapOverTime: handicapOverTime
+        handicapOverTime: handicapOverTime,
+        firstBallAnalysis: firstBallAnalysis
     };
 
 }]);
