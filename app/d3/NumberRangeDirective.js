@@ -15,14 +15,9 @@ var d3Module = d3Module || angular.module('d3');
 
 d3Module.directive('numberrange', ['d3Service', function (d3Service) {
 
-    console.log("Loading Directive");
-
     function link(scope, element, attrs) {
 
-        console.log("Running link");
-
         scope.render = function (data) {
-            console.log("Running Render");
 
             if (!scope.data) {
                 return;
