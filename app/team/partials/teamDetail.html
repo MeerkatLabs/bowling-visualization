@@ -36,3 +36,20 @@
         <svg width="100%" horizbargraph data="data"></svg>
     </div>
 </div>
+
+<div class="page-header">
+    <h2>Open Close Analysis</h2>
+</div>
+<div class="row" ng-controller="TeamOpenCloseCtrl">
+    <div class="col-md-6">
+        <ul>
+            <li>Strikes: {{ strikes }}</li>
+            <li>Spares: {{ spares }}</li>
+            <li>Open: {{ open }}</li>
+            <li>Total Frames: {{ total }}</li>
+        </ul>
+    </div>
+    <div class="col-md-6">
+        <svg width="100%" height="100" bargraph data="data"></svg>
+    </div>
+</div>

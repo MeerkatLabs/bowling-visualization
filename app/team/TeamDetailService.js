@@ -12,8 +12,8 @@
  */
 var bowlingApp = bowlingApp || angular.module('bowling');
 
-bowlingApp.factory('TeamDetailService', ['$q', 'dataService',
-    function($q, dataService) {
+bowlingApp.factory('TeamDetailService', ['$q', 'dataService', 'PlayerDetailService',
+    function($q, dataService, playerDetailService) {
 
         /**
          * Promise listener that will notify will build the team member table, and then notify the correct promise
@@ -174,6 +174,37 @@ bowlingApp.factory('TeamDetailService', ['$q', 'dataService',
             });
         };
 
+        var getTeamOpenCloseAnalysis = function(league, team) {
+
+            var deferred = $q.defer();
+
+            var promises = [];
+            team.players.forEach(function(player) {
+                promises.push(playerDetailService.getOpenCloseStatistics(league, team, player));
+            });
+
+            $q.all(promises).then(function (data) {
+                console.log(data);
+                var returnValue = {
+                    strikes: 0,
+                    spares: 0,
+                    open: 0,
+                    total: 0
+                };
+                data.forEach(function (result) {
+                    returnValue.strikes += result.strikes;
+                    returnValue.spares += result.spares;
+                    returnValue.open += result.open;
+                    returnValue.total += result.total;
+                });
+
+                deferred.resolve(returnValue);
+            });
+
+            return deferred.promise;
+
+        };
+
         return {
 
             getHandicapPerWeek: buildHandicapData,
@@ -251,7 +282,8 @@ bowlingApp.factory('TeamDetailService', ['$q', 'dataService',
                     });
                     return data;
                 });
-            }
+            },
+            getTeamOpenCloseAnalysis: getTeamOpenCloseAnalysis
         };
 
     }]);
