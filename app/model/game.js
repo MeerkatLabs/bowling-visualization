@@ -30,6 +30,7 @@
         this.gameNumber = configuration.gameNumber - 1;
         this.frameScore = [10];
         this.roller = null;
+        this.splits = configuration.splits || [];
 
         // Always override the score value if the frames are defined.
         if (this.frames !== null) {

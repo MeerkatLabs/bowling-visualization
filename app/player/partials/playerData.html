@@ -85,3 +85,19 @@
     </div>
 </div>
 
+<div class="page-header">
+    <h2>Split Analysis</h2>
+</div>
+<div class="row" ng-controller="PlayerSplitsCtrl">
+    <div class="col-md-6">
+        <ul>
+            <li>Splits: {{ splits }}</li>
+            <li>Converted: {{ converted }}</li>
+            <li>Open: {{ open }}</li>
+            <li>Total Frames: {{ total }}</li>
+        </ul>
+    </div>
+    <div class="col-md-6">
+        <svg width="100%" height="100" bargraph data="data"></svg>
+    </div>
+</div>

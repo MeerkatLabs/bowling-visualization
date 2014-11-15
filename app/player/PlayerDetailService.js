@@ -230,6 +230,60 @@ bowlingApp.factory('PlayerDetailService', ['$q', 'd3Service', 'dataService', fun
 
     };
 
+    var getSplitStatistics = function(league, team, player) {
+
+        var deferred = $q.defer();
+
+        getAllGames(league, team, player).then(function (games) {
+
+            var splits = 0;
+            var converted = 0;
+
+            games.forEach(function (game) {
+
+                if (game.frames.length > 0) {
+
+                    splits += game.splits.length;
+
+                    game.splits.forEach(function (split) {
+
+                        var frame = game.frames[split];
+
+                        if (split < 10) {
+                            if (frame.length == 2 && frame[0] + frame[1] == 10) {
+                                converted++;
+                            }
+                        } else if (split == 10) {
+                            // First ball of the 10th frame caused a split
+                            if (frame[0] + frame[1] == 10) {
+                                converted++;
+                            }
+                        } else if (split == 11 && frame.length == 3) {
+                            // Second ball of the 10th frame caused a split
+                            if (frame[1] + frame[2] == 10) {
+                                converted++;
+                            }
+                        }
+                        // Else don't care, wasn't possible to convert it.
+
+                    });
+
+                }
+
+            });
+
+            deferred.resolve({
+                splits: splits,
+                converted: converted,
+                open: splits - converted
+            });
+
+        });
+
+        return deferred.promise;
+
+    };
+
     /**
      * Fetch the total first ball analysis data set.
      * @param {bowling.League} league
@@ -283,7 +337,8 @@ bowlingApp.factory('PlayerDetailService', ['$q', 'd3Service', 'dataService', fun
         minMaxScores: minMaxScores,
         handicapOverTime: handicapOverTime,
         firstBallAnalysis: firstBallAnalysis,
-        getOpenCloseStatistics: getOpenCloseStatistics
+        getOpenCloseStatistics: getOpenCloseStatistics,
+        getSplitStatistics: getSplitStatistics
     };
 
 }]);
