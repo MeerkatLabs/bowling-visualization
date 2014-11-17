@@ -6,10 +6,7 @@
  * http://www.meerkatlabsllc.com/
  * Licensed under the MIT License
  */
-
-var d3Module = d3Module || angular.module('d3');
-
-d3Module.factory('d3Service', ['$document', '$q', '$rootScope', function($document, $q, $rootScope) {
+angular.module('d3').factory('d3Service', ['$document', '$q', '$rootScope', function($document, $q, $rootScope) {
 
     var deferred = $q.defer();
 

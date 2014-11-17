@@ -7,9 +7,7 @@
  * Licensed under the MIT License
  */
 
-var bowlingApp = bowlingApp || angular.module('bowling');
-
-bowlingApp.controller('MatchController', ['$scope', '$routeParams', 'dataService',
+angular.module('bowling').controller('MatchController', ['$scope', '$routeParams', 'dataService',
     function ($scope, $routeParams, dataService) {
         dataService.getData().then(function (league) {
             $scope.league = league;

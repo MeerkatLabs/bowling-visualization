@@ -10,10 +10,7 @@
 /**
  * Controller that will build a display for pins per week.
  */
-
-var bowlingApp = bowlingApp || angular.module('bowling');
-
-bowlingApp.controller('TeamPinsPerWeekCtrl', ['$scope', 'TeamDetailService',
+angular.module('bowling').controller('TeamPinsPerWeekCtrl', ['$scope', 'TeamDetailService',
     function($scope, TeamDetailService) {
 
         $scope.$on(bowling.events.team.found, function(event, data) {

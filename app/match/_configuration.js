@@ -7,10 +7,8 @@
  * Licensed under the MIT License
  */
 
-var bowlingApp = bowlingApp || angular.module('bowling');
-
 // Add the route information for the Match Controller.
-bowlingApp.config(['$routeProvider',
+angular.module('bowling').config(['$routeProvider',
     function($routeProvider) {
         $routeProvider.
             when('/matches/:matchId', {

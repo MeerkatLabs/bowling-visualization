@@ -10,10 +10,7 @@
 /**
  * Controller that will display the handicap vs. time graph.
  */
-
-var bowlingApp = bowlingApp || angular.module('bowling');
-
-bowlingApp.controller('TeamHandicapCtrl', ['$scope', 'TeamDetailService',
+angular.module('bowling').controller('TeamHandicapCtrl', ['$scope', 'TeamDetailService',
     function($scope, TeamDetailService) {
 
         $scope.$on(bowling.events.team.found, function(event, data) {

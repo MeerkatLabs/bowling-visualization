@@ -10,9 +10,7 @@
 /**
  * Loads the match statistics from the data model.
  */
-var bowlingApp = bowlingApp || angular.module('bowling');
-
-bowlingApp.controller('TeamMatchListController', ['$scope', 'dataService', 'TeamDetailService',
+angular.module('bowling').controller('TeamMatchListController', ['$scope', 'dataService', 'TeamDetailService',
     function($scope, dataService, teamDetailService) {
 
         $scope.$on(bowling.events.team.found, function(event, data) {

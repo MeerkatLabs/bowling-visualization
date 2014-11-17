@@ -10,10 +10,7 @@
 /**
  * Controller that will build the lines for the chart displaying the match data.
  */
-
-var bowlingApp = bowlingApp || angular.module('bowling');
-
-bowlingApp.controller('PlayerMatchLineGraphCtrl', ['$scope', 'd3Service', function ($scope, d3Service) {
+angular.module('bowling').controller('PlayerMatchLineGraphCtrl', ['$scope', 'd3Service', function ($scope, d3Service) {
 
     $scope.$on(bowling.events.player.found, function(event, data) {
         d3Service.get().then(function (d3) {

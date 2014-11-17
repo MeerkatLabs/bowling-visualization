@@ -10,10 +10,7 @@
 /**
  * Service that will find the team object.
  */
-
-var bowlingApp = bowlingApp || angular.module('bowling');
-
-bowlingApp.factory('TeamFindService', ['$q', 'dataService', function($q, dataService) {
+angular.module('bowling').factory('TeamFindService', ['$q', 'dataService', function($q, dataService) {
 
     var findTeam = function(teamId) {
 

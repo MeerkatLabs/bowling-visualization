@@ -10,10 +10,7 @@
 /**
  * Controller that fetches the handicap over time from the PlayerDataService and provides a bar graph showing that data.
  */
-
-var bowlingApp = bowlingApp || angular.module('bowling');
-
-bowlingApp.controller('PlayerHandicapCtrl', ['$scope', 'PlayerDetailService',
+angular.module('bowling').controller('PlayerHandicapCtrl', ['$scope', 'PlayerDetailService',
     function($scope, PlayerDetailService) {
 
         $scope.$on(bowling.events.player.found, function(event, data) {

@@ -7,9 +7,7 @@
  * Licensed under the MIT License
  */
 
-var bowlingApp = bowlingApp || angular.module('bowling');
-
-bowlingApp.controller('NavBarController', ['$scope', 'dataService',
+angular.module('bowling').controller('NavBarController', ['$scope', 'dataService',
     function ($scope, dataService) {
 
         dataService.getData().then(function (league) {

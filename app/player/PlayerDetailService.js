@@ -11,9 +11,7 @@
  * Service responsible for fetching the player data for the controllers to display.
  */
 
-var bowlingApp = bowlingApp || angular.module('bowling');
-
-bowlingApp.factory('PlayerDetailService', ['$q', 'd3Service', 'dataService', function($q, d3Service, dataService) {
+angular.module('bowling').factory('PlayerDetailService', ['$q', 'd3Service', 'dataService', function($q, d3Service, dataService) {
 
     /**
      * Fetches the player statistics and notifies the appropriate deferred when completed.

@@ -10,10 +10,7 @@
 /**
  * Controller that will display a graph that will show the range of values for the games and series values.
  */
-
-var bowlingApp = bowlingApp || angular.module('bowling');
-
-bowlingApp.controller('PlayerGameSeriesRangeCtrl', ['$scope', 'PlayerDetailService',
+angular.module('bowling').controller('PlayerGameSeriesRangeCtrl', ['$scope', 'PlayerDetailService',
     function($scope, PlayerDetailService) {
 
         $scope.$on(bowling.events.player.found, function (event, data) {

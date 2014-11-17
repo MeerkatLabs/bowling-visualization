@@ -6,5 +6,4 @@
  * http://www.meerkatlabsllc.com/
  * Licensed under the MIT License
  */
-
-var d3Module = angular.module('d3', []);
+angular.module('d3', []);

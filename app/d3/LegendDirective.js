@@ -6,10 +6,7 @@
  * http://www.meerkatlabsllc.com/
  * Licensed under the MIT License
  */
-
-var d3Module = d3Module || angular.module("d3");
-
-d3Module.directive('legend',  ['d3Service', function(d3Service) {
+angular.module('d3').directive('legend',  ['d3Service', function(d3Service) {
 
     function link(scope, element, attrs) {
 
@@ -19,20 +16,23 @@ d3Module.directive('legend',  ['d3Service', function(d3Service) {
                 return;
             }
 
-            var parent = d3.select(element[0]);
+            d3Service.get().then(function (d3) {
 
-            var colors = d3.scale.category10();
+                var parent = d3.select(element[0]);
 
-            parent.selectAll('div')
-                .data(scope.lines)
-                .enter()
-                .append('div')
-                .append('span')
-                .text(function(d) {
-                    return d.label;
-                }).style("color", function(d,i) {
-                    return colors(i);
-                }).style("font-weight", "bold");
+                var colors = d3.scale.category10();
+
+                parent.selectAll('div')
+                    .data(scope.lines)
+                    .enter()
+                    .append('div')
+                    .append('span')
+                    .text(function(d) {
+                        return d.label;
+                    }).style("color", function(d,i) {
+                        return colors(i);
+                    }).style("font-weight", "bold");
+            });
 
         };
 

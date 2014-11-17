@@ -6,10 +6,7 @@
  * http://www.meerkatlabsllc.com/
  * Licensed under the MIT License
  */
-
-var bowlingApp = bowlingApp || angular.module('bowling');
-
-bowlingApp.controller('LeagueController', ['$scope', 'dataService',
+angular.module('bowling').controller('LeagueController', ['$scope', 'dataService',
         function ($scope, dataService) {
 
             var splitSize = 3;

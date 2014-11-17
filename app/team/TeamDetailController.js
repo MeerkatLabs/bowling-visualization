@@ -6,10 +6,7 @@
  * http://www.meerkatlabsllc.com/
  * Licensed under the MIT License
  */
-
-var bowlingApp = bowlingApp || angular.module('bowling');
-
-bowlingApp.controller('TeamDetailController', ['$scope', '$routeParams', '$timeout', 'TeamFindService',
+angular.module('bowling').controller('TeamDetailController', ['$scope', '$routeParams', '$timeout', 'TeamFindService',
     function ($scope, $routeParams, $timeout, TeamFindService) {
 
         TeamFindService.findTeam($routeParams.teamId).then(function (data) {

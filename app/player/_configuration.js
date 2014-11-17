@@ -7,9 +7,7 @@
  * Licensed under the MIT License
  */
 
-var bowlingApp = bowlingApp || angular.module('bowling');
-
-bowlingApp.config(['$routeProvider',
+angular.module('bowling').config(['$routeProvider',
     function($routeProvider) {
         $routeProvider.when('/team/:teamId/players/:playerId', {
                 templateUrl: 'player/partials/playerData.html',

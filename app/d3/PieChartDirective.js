@@ -6,10 +6,7 @@
  * http://www.meerkatlabsllc.com/
  * Licensed under the MIT License
  */
-
-var d3Module = d3Module || angular.module('d3');
-
-d3Module.directive('piechart', ['d3Service','$window', function(d3Service, $window) {
+angular.module('d3').directive('piechart', ['d3Service', function(d3Service) {
 
     function link(scope, element, attrs) {
 

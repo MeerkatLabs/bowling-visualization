@@ -6,10 +6,7 @@
  * http://www.meerkatlabsllc.com/
  * Licensed under the MIT License
  */
-
-var bowlingApp = bowlingApp || angular.module('bowling');
-
-bowlingApp.controller('TeamTotalPinsCtrl', ['$scope', 'TeamDetailService',
+angular.module('bowling').controller('TeamTotalPinsCtrl', ['$scope', 'TeamDetailService',
     function($scope, teamDetailService) {
 
         $scope.$on(bowling.events.team.found, function(event, data) {

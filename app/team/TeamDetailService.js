@@ -10,9 +10,7 @@
 /**
  * Service that will retrieve the data to be displayed in the team roster list.
  */
-var bowlingApp = bowlingApp || angular.module('bowling');
-
-bowlingApp.factory('TeamDetailService', ['$q', 'dataService', 'PlayerDetailService',
+angular.module('bowling').factory('TeamDetailService', ['$q', 'dataService', 'PlayerDetailService',
     function($q, dataService, playerDetailService) {
 
         /**

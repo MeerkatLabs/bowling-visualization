@@ -10,10 +10,7 @@
 /**
  * Created by rerobins on 11/14/14.
  */
-
-var d3Module = d3Module || angular.module('d3');
-
-d3Module.directive('horizbargraph', ['d3Service', function(d3Service) {
+angular.module('d3').directive('horizbargraph', ['d3Service', function(d3Service) {
 
     var link = function(scope, element, attrs) {
 

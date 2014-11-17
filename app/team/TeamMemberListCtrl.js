@@ -10,9 +10,7 @@
 /**
  * Controller that will gather the results and display them as a list of the team members in a table.
  */
-var bowlingApp = bowlingApp || angular.module('bowling');
-
-bowlingApp.controller('TeamMembersController', ['$scope', 'dataService', 'TeamDetailService',
+angular.module('bowling').controller('TeamMembersController', ['$scope', 'dataService', 'TeamDetailService',
     function($scope, dataService, teamDetailService) {
 
         $scope.$on(bowling.events.team.found, function(event, data) {

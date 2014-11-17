@@ -7,9 +7,7 @@
  * Licensed under the MIT License
  */
 
-var bowlingApp = bowlingApp || angular.module('bowling');
-
-bowlingApp.controller('PlayerDetailController', ['$scope', '$routeParams', '$timeout', 'PlayerDetailService',
+angular.module('bowling').controller('PlayerDetailController', ['$scope', '$routeParams', '$timeout', 'PlayerDetailService',
     function ($scope, $routeParams, $timeout, PlayerDetailService) {
 
         PlayerDetailService.findPlayer($routeParams.teamId, $routeParams.playerId).then(function(data) {

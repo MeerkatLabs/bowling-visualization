@@ -8,15 +8,17 @@
  */
 
 // Core application for the bowling functionality.
-var bowlingApp = angular.module('bowling', ['ngRoute', 'd3']);
+angular.module('bowling', ['ngRoute', 'd3']);
 
 // Configure the default view for the application.
-bowlingApp.config(['$routeProvider',
-    function($routeProvider) {
-        $routeProvider.otherwise({
-            redirectTo: '/main'
-        });
-    }]);
+angular.module('bowling')
+    .config(['$routeProvider',
+        function($routeProvider) {
+            $routeProvider.otherwise({
+                redirectTo: '/main'
+            });
+        }
+    ]);
 
 /**
  * Data Service is responsible for retrieving the data from the data store directory.
@@ -49,7 +51,7 @@ function DataService(configuration, $q) {
 /**
  * Provider that allows for configuration of the bowling data model.
  */
-bowlingApp.provider("dataService", function DataProvider() {
+angular.module('bowling').provider("dataService", function DataProvider() {
     // Default configuration object.
     var configuration = {
         // data root directory.

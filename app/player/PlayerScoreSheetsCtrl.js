@@ -10,10 +10,7 @@
 /**
  * Control which will fetch the score sheets for the player if they exist.
  */
-
-var bowlingApp = bowlingApp || angular.module('bowling');
-
-bowlingApp.controller("PlayerScoreSheetsCtrl", ['$scope', 'PlayerDetailService',
+angular.module('bowling').controller("PlayerScoreSheetsCtrl", ['$scope', 'PlayerDetailService',
     function($scope, PlayerDetailService) {
 
         console.log("Subscribing to player found event");

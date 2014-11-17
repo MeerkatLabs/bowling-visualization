@@ -11,10 +11,7 @@
  * Controller that will find the data associated with building a table to display the statistics for the player
  * for each of the matches that the player participated in.
  */
-
-var bowlingApp = bowlingApp || angular.module('bowling');
-
-bowlingApp.controller('PlayerMatchDataCtrl', ['$scope', 'PlayerDetailService', function ($scope, PlayerDetailService) {
+angular.module('bowling').controller('PlayerMatchDataCtrl', ['$scope', 'PlayerDetailService', function ($scope, PlayerDetailService) {
 
     $scope.$on(bowling.events.player.found, function(event, data) {
         PlayerDetailService.buildDataTable(data.player).then(function (data) {

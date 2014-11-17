@@ -10,10 +10,7 @@
 /**
  * Directive that will render a graph that will show a collection of number ranges.
  */
-
-var d3Module = d3Module || angular.module('d3');
-
-d3Module.directive('numberrange', ['d3Service', function (d3Service) {
+angular.module('d3').directive('numberrange', ['d3Service', function (d3Service) {
 
     function link(scope, element, attrs) {
 
