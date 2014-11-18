@@ -66,7 +66,7 @@ angular.module('d3').directive('horizbargraph', ['d3Service', function(d3Service
 
     return {
         link: link,
-        watch: {
+        scope: {
             data: '='
         }
     };
