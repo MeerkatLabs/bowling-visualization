@@ -6,23 +6,26 @@
  * http://www.meerkatlabsllc.com/
  * Licensed under the MIT License
  */
-angular.module('bowling').controller('LeagueController', ['$scope', 'dataService',
-        function ($scope, dataService) {
 
-            var splitSize = 3;
+(function() {
 
-            dataService.getData().then(function (league) {
-                $scope.league = league;
+    var WeekController = function($scope, DataService) {
+        var splitSize = 3;
 
-                var leagueWeeks = league.weeks.concat();
-                var split = [];
-                while (leagueWeeks.length > 0) {
-                    split.push(leagueWeeks.splice(0,splitSize));
-                }
+        DataService.getData().then(function (league) {
+            $scope.league = league;
 
-                $scope.splits = split;
+            var leagueWeeks = league.weeks.concat();
+            var split = [];
+            while (leagueWeeks.length > 0) {
+                split.push(leagueWeeks.splice(0,splitSize));
+            }
 
-            });
+            $scope.splits = split;
 
-        }
-    ]);
+        });
+    };
+
+    angular.module('bowling').controller('WeekController', ['$scope', 'DataService', WeekController]);
+
+}());

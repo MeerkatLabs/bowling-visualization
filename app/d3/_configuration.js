@@ -6,4 +6,6 @@
  * http://www.meerkatlabsllc.com/
  * Licensed under the MIT License
  */
-angular.module('d3', []);
+(function() {
+    angular.module('d3', []);
+}());

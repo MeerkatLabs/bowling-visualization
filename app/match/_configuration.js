@@ -7,12 +7,14 @@
  * Licensed under the MIT License
  */
 
-// Add the route information for the Match Controller.
-angular.module('bowling').config(['$routeProvider',
-    function($routeProvider) {
-        $routeProvider.
-            when('/matches/:matchId', {
-                templateUrl: 'match/partials/matchDetail.html',
-                controller: 'MatchController'
-            });
-    }]);
+(function() {
+    // Add the route information for the Match Controller.
+    angular.module('bowling')
+        .config(['$routeProvider', function($routeProvider) {
+            $routeProvider.
+                when('/matches/:matchId', {
+                    templateUrl: 'match/partials/matchDetail.html',
+                    controller: 'MatchDetailCtrl'
+                });
+        }]);
+}());

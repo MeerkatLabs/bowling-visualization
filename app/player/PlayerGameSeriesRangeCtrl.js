@@ -10,20 +10,24 @@
 /**
  * Controller that will display a graph that will show the range of values for the games and series values.
  */
-angular.module('bowling').controller('PlayerGameSeriesRangeCtrl', ['$scope', 'PlayerDetailService',
-    function($scope, PlayerDetailService) {
+(function() {
 
-        $scope.$on(bowling.events.player.found, function (event, data) {
+    function PlayerGameSeriesRangeCtrl($scope, PlayerDetailService, playerEvents) {
+
+        var controller = this;
+
+        $scope.$on(playerEvents.found, function (event, data) {
 
             PlayerDetailService.minMaxScores(data.player).then(function (data) {
-
-                console.log('range data', data);
-
-                $scope.gameScratch = [data.gameMinimum, data.gameMaximum];
-                $scope.seriesScratch = [data.seriesMinimum, data.seriesMaximum];
+                controller.gameScratch = [data.gameMinimum, data.gameMaximum];
+                controller.seriesScratch = [data.seriesMinimum, data.seriesMaximum];
 
             });
 
         });
+    }
 
-    }]);
+    angular.module('bowling')
+        .controller('PlayerGameSeriesRangeCtrl',
+                    ['$scope', 'PlayerDetailService', 'playerEvents', PlayerGameSeriesRangeCtrl]);
+}());

@@ -6,18 +6,20 @@
  * http://www.meerkatlabsllc.com/
  * Licensed under the MIT License
  */
-angular.module('bowling').config(['$routeProvider',
-    function($routeProvider) {
-        $routeProvider.when('/team/:teamId', {
-            templateUrl: 'team/partials/teamDetail.html',
-            controller: 'TeamDetailController'
-        });
-    }]);
 
-bowling.events = bowling.events || {};
+(function() {
 
-bowling.events.team = {
+    angular.module('bowling')
+        .constant('teamEvents', {
+            found: 'team::found'
+        }).config(['$routeProvider',
+            function($routeProvider) {
+                $routeProvider.when('/team/:teamId', {
+                    templateUrl: 'team/partials/teamDetail.html',
+                    controller: 'TeamDetailCtrl',
+                    controllerAs: 'teamdetail'
+                });
+            }
+        ]);
 
-    found: "team::found"
-
-};
+}());

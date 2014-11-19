@@ -10,12 +10,15 @@
 /**
  * Loads the match statistics from the data model.
  */
-angular.module('bowling').controller('TeamMatchListController', ['$scope', 'dataService', 'TeamDetailService',
-    function($scope, dataService, teamDetailService) {
+(function() {
 
-        $scope.$on(bowling.events.team.found, function(event, data) {
-            teamDetailService.getMatchList(data.team).then(function (data) {
-                $scope.matches = data;
+    var TeamMatchListCtrl = function($scope, DataService, TeamDetailService, teamEvents) {
+
+        var controller = this;
+
+        $scope.$on(teamEvents.found, function(event, data) {
+            TeamDetailService.getMatchList(data.team).then(function (data) {
+                controller.matches = data;
 
                 var pointsFor = 0;
                 var pointsAgainst = 0;
@@ -24,9 +27,15 @@ angular.module('bowling').controller('TeamMatchListController', ['$scope', 'data
                     pointsAgainst += match.pointsAgainst;
                 });
 
-                $scope.totalPointsFor = pointsFor;
-                $scope.totalPointsAgainst = pointsAgainst;
+                controller.totalPointsFor = pointsFor;
+                controller.totalPointsAgainst = pointsAgainst;
             });
         });
 
-    }]);
+    };
+
+    angular.module('bowling')
+        .controller('TeamMatchListCtrl',
+                    ['$scope', 'DataService', 'TeamDetailService', 'teamEvents', TeamMatchListCtrl]);
+
+}());

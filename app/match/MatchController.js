@@ -6,10 +6,10 @@
  * http://www.meerkatlabsllc.com/
  * Licensed under the MIT License
  */
+(function() {
 
-angular.module('bowling').controller('MatchController', ['$scope', '$routeParams', 'dataService',
-    function ($scope, $routeParams, dataService) {
-        dataService.getData().then(function (league) {
+    var MatchDetailCtrl = function($scope, $routeParams, DataService) {
+        DataService.getData().then(function (league) {
             $scope.league = league;
             $scope.matchId = $routeParams.matchId;
 
@@ -23,24 +23,24 @@ angular.module('bowling').controller('MatchController', ['$scope', '$routeParams
                     });
                 }
             });
-            console.log(foundMatch);
+
             $scope.match = foundMatch;
             $scope.hasScores = false;
 
-            foundMatch.scores.forEach(function(teamSeries) {
-               if (!$scope.hasScores) {
-                   teamSeries.playerSeries.forEach(function(playerSeries) {
-                      if (!$scope.hasScores) {
-                          playerSeries.games.forEach(function(game) {
-                             if (!$scope.hasScores) {
-                                 if (Array.isArray(game.frames) && game.frames.length == 10) {
-                                     $scope.hasScores = true;
-                                 }
-                             }
-                          });
-                      }
-                   });
-               }
+            foundMatch.scores.forEach(function (teamSeries) {
+                if (!$scope.hasScores) {
+                    teamSeries.playerSeries.forEach(function (playerSeries) {
+                        if (!$scope.hasScores) {
+                            playerSeries.games.forEach(function (game) {
+                                if (!$scope.hasScores) {
+                                    if (Array.isArray(game.frames) && game.frames.length == 10) {
+                                        $scope.hasScores = true;
+                                    }
+                                }
+                            });
+                        }
+                    });
+                }
             });
 
             var gameCharts = [];
@@ -70,8 +70,9 @@ angular.module('bowling').controller('MatchController', ['$scope', '$routeParams
 
             $scope.gameCharts = gameCharts;
             $scope.totalData = totalData;
-
-            console.log($scope);
-
         });
-    }]);
+    };
+
+    angular.module('bowling')
+        .controller('MatchDetailCtrl', ['$scope', '$routeParams', 'DataService', MatchDetailCtrl]);
+}());

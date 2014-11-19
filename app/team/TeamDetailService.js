@@ -10,8 +10,8 @@
 /**
  * Service that will retrieve the data to be displayed in the team roster list.
  */
-angular.module('bowling').factory('TeamDetailService', ['$q', 'dataService', 'PlayerDetailService',
-    function($q, dataService, playerDetailService) {
+angular.module('bowling').factory('TeamDetailService', ['$q', 'DataService', 'PlayerDetailService',
+    function($q, DataService, PlayerDetailService) {
 
         /**
          * Promise listener that will notify will build the team member table, and then notify the correct promise
@@ -178,7 +178,7 @@ angular.module('bowling').factory('TeamDetailService', ['$q', 'dataService', 'Pl
 
             var promises = [];
             team.players.forEach(function(player) {
-                promises.push(playerDetailService.getOpenCloseStatistics(league, team, player));
+                promises.push(PlayerDetailService.getOpenCloseStatistics(league, team, player));
             });
 
             $q.all(promises).then(function (data) {
@@ -230,7 +230,7 @@ angular.module('bowling').factory('TeamDetailService', ['$q', 'dataService', 'Pl
 
                 var deferred = $q.defer();
 
-                dataService.getData().then(function(league) {
+                DataService.getData().then(function(league) {
                     buildTeamList(league, team, deferred);
                 });
 
@@ -254,7 +254,7 @@ angular.module('bowling').factory('TeamDetailService', ['$q', 'dataService', 'Pl
             getMatchList: function(team) {
                 var deferred = $q.defer();
 
-                dataService.getData().then(function(league) {
+                DataService.getData().then(function(league) {
                     buildMatchData(league, team, deferred);
                 });
 
@@ -264,7 +264,7 @@ angular.module('bowling').factory('TeamDetailService', ['$q', 'dataService', 'Pl
             getPinData: function(team) {
                 var deferred = $q.defer();
 
-                dataService.getData().then(function(league) {
+                DataService.getData().then(function(league) {
                     buildTeamList(league, team, deferred);
                 });
 

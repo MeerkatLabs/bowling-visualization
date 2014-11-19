@@ -10,15 +10,23 @@
 /**
  * Controller that will display the handicap vs. time graph.
  */
-angular.module('bowling').controller('TeamHandicapCtrl', ['$scope', 'TeamDetailService',
-    function($scope, TeamDetailService) {
+(function() {
 
-        $scope.$on(bowling.events.team.found, function(event, data) {
+    var TeamHandicapCtrl = function($scope, TeamDetailService, teamEvents) {
+
+        var controller = this;
+
+        $scope.$on(teamEvents.found, function(event, data) {
 
             TeamDetailService.getHandicapPerWeek(data.league, data.team).then(function(data) {
-               $scope.data = data;
+                controller.data = data;
             });
 
         });
 
-    }]);
+    };
+
+    angular.module('bowling')
+        .controller('TeamHandicapCtrl', ['$scope', 'TeamDetailService', 'teamEvents', TeamHandicapCtrl]);
+
+}());

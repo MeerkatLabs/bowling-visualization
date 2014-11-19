@@ -10,33 +10,44 @@
 /**
  * Service that will find the team object.
  */
-angular.module('bowling').factory('TeamFindService', ['$q', 'dataService', function($q, dataService) {
+(function() {
 
-    var findTeam = function(teamId) {
+    var TeamFindService = function($q, DataService) {
 
-        var deferred = $q.defer();
+        var TeamFindService = {};
 
-        dataService.getData().then(function (league) {
-            var foundTeam = bowling.utils.findInArray(league.teams, function (element) {
-                return teamId == element.id;
+        /**
+         * Find the team with the identifier provided.
+         * @param {string} teamId
+         * @returns {*} promise
+         */
+        TeamFindService.findTeam = function(teamId) {
+            var deferred = $q.defer();
+
+            DataService.getData().then(function (league) {
+                var foundTeam = bowling.utils.findInArray(league.teams, function (element) {
+                    return teamId == element.id;
+                });
+
+                if (foundTeam === null) {
+                    console.error("Couldn't find team: " + teamId);
+                    return;
+                }
+
+                deferred.resolve({
+                    league: league,
+                    team: foundTeam
+                });
             });
 
-            if (foundTeam === null) {
-                console.error("Couldn't find team: " + teamId);
-                return;
-            }
+            return deferred.promise;
+        };
 
-            deferred.resolve({
-                league: league,
-                team: foundTeam
-            });
-        });
+        return TeamFindService;
 
-        return deferred.promise;
     };
 
-    return {
-        findTeam: findTeam
-    };
+    angular.module('bowling')
+        .factory('TeamFindService', ['$q', 'DataService', TeamFindService]);
 
-}]);
+}());

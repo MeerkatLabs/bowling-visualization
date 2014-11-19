@@ -7,17 +7,21 @@
  * Licensed under the MIT License
  */
 
-angular.module('bowling').config(['$routeProvider',
-    function($routeProvider) {
-        $routeProvider.when('/team/:teamId/players/:playerId', {
-                templateUrl: 'player/partials/playerData.html',
-                controller: 'PlayerDetailController'
-            });
-    }]);
+/**
+ * Configuration for the player components.
+ */
+(function() {
+    angular.module('bowling')
+        .constant('playerEvents', {
+            found: "player::found"
+        }).config(['$routeProvider',
+            function ($routeProvider) {
+                $routeProvider.when('/team/:teamId/players/:playerId', {
+                    templateUrl: 'player/partials/playerData.html',
+                    controller: 'PlayerDetailCtrl',
+                    controllerAs: 'playerMain'
+                });
+            }
+        ]);
 
-bowling.events = bowling.events || {};
-bowling.events.player = {
-
-    found: "player::found"
-
-};
+}());

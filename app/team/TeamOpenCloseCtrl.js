@@ -10,10 +10,14 @@
 /**
  * Controller to display the strikes spares open data for the team.
  */
-angular.module('bowling')
-    .controller('TeamOpenCloseCtrl', ['$scope', 'TeamDetailService', function ($scope, TeamDetailService) {
+(function() {
 
-        $scope.$on(bowling.events.team.found, function(event, data) {
+    var TeamOpenCloseCtrl = function($scope, TeamDetailService, teamEvents) {
+
+        var controller = this;
+
+        $scope.$on(teamEvents.found, function(event, data) {
+
             TeamDetailService.getTeamOpenCloseAnalysis(data.league, data.team).then(function(result) {
                 var data = [];
 
@@ -30,13 +34,19 @@ angular.module('bowling')
                     value: result.open
                 });
 
-                $scope.data = data;
+                controller.data = data;
 
-                $scope.strikes = result.strikes;
-                $scope.spares = result.spares;
-                $scope.open = result.open;
-                $scope.total = result.total;
+                controller.strikes = result.strikes;
+                controller.spares = result.spares;
+                controller.open = result.open;
+                controller.total = result.total;
             });
+
         });
 
-    }]);
+    };
+
+    angular.module('bowling')
+        .controller('TeamOpenCloseCtrl', ['$scope', 'TeamDetailService', 'teamEvents', TeamOpenCloseCtrl]);
+
+}());

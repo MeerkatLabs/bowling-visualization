@@ -7,13 +7,25 @@
  * Licensed under the MIT License
  */
 
-angular.module('bowling').controller('NavBarController', ['$scope', 'dataService',
-    function ($scope, dataService) {
+(function() {
+    /**
+     * Controller that is responsible for maintaining the navigation bar content.
+     * @param DataService bowling league data loading service.
+     * @constructor
+     */
+    var NavBarController = function(DataService) {
+        var controller = this;
 
-        dataService.getData().then(function (league) {
-            $scope.teams = league.teams;
-            $scope.name = league.name;
+        controller.teams = [];
+        controller.name = 'Loading';
+
+        DataService.getData().then(function(league) {
+            controller.teams = league.teams;
+            controller.name = league.name;
         });
+    };
 
-    }
-]);
+    // Load the navigation bar controller.
+    angular.module('bowling')
+        .controller('NavBarController', ['DataService', NavBarController]);
+}());

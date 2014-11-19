@@ -10,14 +10,19 @@
 /**
  * Controller that will determine the first ball analysis data.
  */
+(function() {
 
-angular.module('bowling')
-    .controller('PlayerFirstBallAnalysis', ['$scope', 'PlayerDetailService', function ($scope, PlayerDetailService) {
+    function PlayerFirstBallAnalysis($scope, PlayerDetailService, playerEvents) {
+        var controller = this;
 
-        $scope.$on(bowling.events.player.found, function(event, data) {
-           PlayerDetailService.firstBallAnalysis(data.league, data.team, data.player).then(function (results) {
-               $scope.data = results;
-           });
+        $scope.$on(playerEvents.found, function(event, data) {
+            PlayerDetailService.firstBallAnalysis(data.league, data.team, data.player).then(function (results) {
+                controller.data = results;
+            });
         });
+    }
 
-    }]);
+    angular.module('bowling')
+        .controller('PlayerFirstBallAnalysis',
+                    ['$scope', 'PlayerDetailService', 'playerEvents', PlayerFirstBallAnalysis]);
+}());

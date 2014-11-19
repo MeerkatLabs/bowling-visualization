@@ -10,11 +10,13 @@
 /**
  * Controller to show the split statistics.
  */
+(function() {
 
-angular.module('bowling')
-    .controller('PlayerSplitsCtrl', ['$scope', 'PlayerDetailService', function($scope, PlayerDetailService) {
+    function PlayerSplitsCtrl($scope, PlayerDetailService, playerEvents) {
 
-        $scope.$on(bowling.events.player.found, function(event, data) {
+        var controller = this;
+
+        $scope.$on(playerEvents.found, function(event, data) {
 
             PlayerDetailService.getSplitStatistics(data.league, data.team, data.player).then(function (results) {
 
@@ -28,13 +30,17 @@ angular.module('bowling')
                     value: results.converted
                 });
 
-                $scope.data = data;
-                $scope.splits = results.splits;
-                $scope.converted = results.converted;
-                $scope.open = results.open;
+                controller.data = data;
+                controller.splits = results.splits;
+                controller.converted = results.converted;
+                controller.open = results.open;
 
             });
 
         });
+    }
 
-    }]);
+    angular.module('bowling')
+        .controller('PlayerSplitsCtrl', ['$scope', 'PlayerDetailService', 'playerEvents', PlayerSplitsCtrl]);
+
+}());

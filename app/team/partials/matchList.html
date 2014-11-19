@@ -6,7 +6,7 @@
         <th class="text-center">Points For</th>
         <th class="text-center">Points Against</th>
     </tr>
-    <tr ng-repeat="match in matches">
+    <tr ng-repeat="match in matches.matches">
         <td class="text-center"><a href="#/matches/{{match.matchId}}">{{match.weekNumber}}</a></td>
         <td class="text-center"><a href="#/matches/{{match.matchId}}">{{match.date}}</a></td>
         <td class="text-center">{{match.opponent}}</td>

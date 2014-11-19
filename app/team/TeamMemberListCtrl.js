@@ -10,13 +10,21 @@
 /**
  * Controller that will gather the results and display them as a list of the team members in a table.
  */
-angular.module('bowling').controller('TeamMembersController', ['$scope', 'dataService', 'TeamDetailService',
-    function($scope, dataService, teamDetailService) {
+(function() {
 
-        $scope.$on(bowling.events.team.found, function(event, data) {
-            teamDetailService.getTeamList(data.team).then(function (data) {
-                $scope.members = data;
+    var TeamMembersCtrl = function($scope, TeamDetailService, teamEvents) {
+
+        var controller = this;
+
+        $scope.$on(teamEvents.found, function(event, data) {
+            TeamDetailService.getTeamList(data.team).then(function (data) {
+                controller.members = data;
             });
         });
 
-    }]);
+    };
+
+    angular.module('bowling')
+        .controller('TeamMembersListCtrl', ['$scope', 'TeamDetailService', 'teamEvents', TeamMembersCtrl]);
+
+}());

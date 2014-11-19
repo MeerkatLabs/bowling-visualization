@@ -11,12 +11,29 @@
  * Controller that will find the data associated with building a table to display the statistics for the player
  * for each of the matches that the player participated in.
  */
-angular.module('bowling').controller('PlayerMatchDataCtrl', ['$scope', 'PlayerDetailService', function ($scope, PlayerDetailService) {
+(function() {
 
-    $scope.$on(bowling.events.player.found, function(event, data) {
-        PlayerDetailService.buildDataTable(data.player).then(function (data) {
-            $scope.data = data;
+    /**
+     * Controller that will display the match data for a player.
+     * @param $scope
+     * @param PlayerDetailService
+     * @param playerEvents
+     * @constructor
+     */
+    function PlayerMatchDataCtrl($scope, PlayerDetailService, playerEvents) {
+
+        this.data = [];
+        var controller = this;
+
+        $scope.$on(playerEvents.found, function(event, data) {
+
+            PlayerDetailService.buildDataTable(data.player).then(function (data) {
+                controller.data = data;
+            });
+
         });
-    });
+    }
 
-}]);
+    angular.module('bowling')
+        .controller('PlayerMatchDataCtrl', ['$scope', 'PlayerDetailService', 'playerEvents', PlayerMatchDataCtrl]);
+}());

@@ -10,59 +10,65 @@
 /**
  * Controller that will build the lines for the chart displaying the match data.
  */
-angular.module('bowling').controller('PlayerMatchLineGraphCtrl', ['$scope', 'd3Service', function ($scope, d3Service) {
+(function() {
 
-    $scope.$on(bowling.events.player.found, function(event, data) {
-        d3Service.get().then(function (d3) {
+    function PlayerMatchLineGraphCtrl($scope, d3Service, playerEvents) {
 
-            var lines = [];
+        var controller = this;
 
-            data.league.gameLabels.forEach(function(element, index) {
-                var gameLine = d3.svg.line()
+        $scope.$on(playerEvents.found, function(event, data) {
+            d3Service.get().then(function (d3) {
+
+                var lines = [];
+
+                data.league.gameLabels.forEach(function(element, index) {
+                    var gameLine = d3.svg.line()
+                        .x(function (d) {
+                            return d.weekNumber;
+                        }).y(function (d) {
+                            return d.data.games[index];
+                        })
+                        .interpolate("linear");
+
+                    lines.push({
+                        line: gameLine,
+                        label: "Game " + element
+                    });
+                });
+
+                var incomingAverageLine = d3.svg.line()
                     .x(function (d) {
                         return d.weekNumber;
-                    }).y(function (d) {
-                        return d.data.games[index];
+                    })
+                    .y(function (d) {
+                        return d.data.incomingAverage;
                     })
                     .interpolate("linear");
 
                 lines.push({
-                    line: gameLine,
-                    label: "Game " + element
-                });
-            });
-
-            var incomingAverageLine = d3.svg.line()
-                .x(function (d) {
-                    return d.weekNumber;
-                })
-                .y(function (d) {
-                    return d.data.incomingAverage;
-                })
-                .interpolate("linear");
-
-            lines.push({
-
-                line: incomingAverageLine,
+                    line: incomingAverageLine,
                     label: 'Incoming Average'
+                });
 
+                var average = d3.svg.line()
+                    .x(function (d) {
+                        return d.weekNumber;
+                    }).y(function (d) {
+                        return d.data.average;
+                    })
+                    .interpolate("linear");
+
+                lines.push({
+                    line: average,
+                    label: 'Series Average'
+                });
+
+                controller.lines = lines;
             });
-
-            var average = d3.svg.line()
-                .x(function (d) {
-                    return d.weekNumber;
-                }).y(function (d) {
-                    return d.data.average;
-                })
-                .interpolate("linear");
-
-            lines.push({
-                line: average,
-                label: 'Series Average'
-            });
-
-            $scope.lines = lines;
         });
-    });
 
-}]);
+    }
+
+    angular.module('bowling')
+        .controller('PlayerMatchLineGraphCtrl', ['$scope', 'd3Service', 'playerEvents', PlayerMatchLineGraphCtrl]);
+}());

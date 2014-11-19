@@ -6,18 +6,29 @@
  * http://www.meerkatlabsllc.com/
  * Licensed under the MIT License
  */
-angular.module('bowling').controller('TeamDetailController', ['$scope', '$routeParams', '$timeout', 'TeamFindService',
-    function ($scope, $routeParams, $timeout, TeamFindService) {
+
+(function() {
+
+    var TeamDetailCtrl = function($scope, $routeParams, $timeout, TeamFindService, teamEvents) {
+
+        var controller = this;
 
         TeamFindService.findTeam($routeParams.teamId).then(function (data) {
 
             $timeout(function() {
-                $scope.$broadcast(bowling.events.team.found, data);
+                $scope.$broadcast(teamEvents.found, data);
             });
 
-            $scope.team = data.team;
-            $scope.league = data.league;
+            controller.team = data.team;
+            controller.league = data.league;
 
         });
+    };
 
-    }]);
+    console.log('TeamDetailController');
+
+    angular.module('bowling')
+        .controller('TeamDetailCtrl',
+                    ['$scope', '$routeParams', '$timeout', 'TeamFindService', 'teamEvents', TeamDetailCtrl]);
+
+}());

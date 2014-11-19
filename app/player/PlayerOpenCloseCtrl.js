@@ -10,11 +10,14 @@
 /**
  * Controller that will display the bowling open/close statistics.
  */
+(function() {
 
-angular.module('bowling')
-    .controller('PlayerOpenCloseCtrl', ['$scope', 'PlayerDetailService', function ($scope, PlayerDetailService) {
+    function PlayerOpenCloseCtrl($scope, PlayerDetailService, playerEvents) {
 
-        $scope.$on(bowling.events.player.found, function(event, data) {
+        var controller = this;
+
+        $scope.$on(playerEvents.found, function(event, data) {
+
             PlayerDetailService.getOpenCloseStatistics(data.league, data.team, data.player).then(function(result) {
                 var data = [];
 
@@ -31,13 +34,17 @@ angular.module('bowling')
                     value: result.open
                 });
 
-                $scope.data = data;
+                controller.data = data;
 
-                $scope.strikes = result.strikes;
-                $scope.spares = result.spares;
-                $scope.open = result.open;
-                $scope.total = result.total;
+                controller.strikes = result.strikes;
+                controller.spares = result.spares;
+                controller.open = result.open;
+                controller.total = result.total;
             });
         });
+    }
 
-    }]);
+    angular.module('bowling')
+        .controller('PlayerOpenCloseCtrl', ['$scope', 'PlayerDetailService', 'playerEvents', PlayerOpenCloseCtrl]);
+
+}());

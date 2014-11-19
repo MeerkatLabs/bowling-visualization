@@ -1,21 +1,33 @@
 <div class="page-header">
-    <h1>{{ roller.name }} <small>{{team.name}}</small></h1>
+    <h1>{{ playerMain.roller.name }} <small>{{ playerMain.team.name}}</small></h1>
 </div>
 
 
-<div class="row" ng-controller="PlayerMatchDataCtrl">
+<div class="row" ng-controller="PlayerMatchDataCtrl as matchList">
     <div ng-include="'player/partials/scoreDetails.html'" class="col-md-6"></div>
 
     <div id="mainGraph"  class="col-md-6" style="padding: 0">
-        <div ng-controller="PlayerMatchLineGraphCtrl">
-            <svg style="float: left" linegraph data="data" lines="lines" width="75%" height="300" ydomain="[0,300]" margin="50">
+        <div ng-controller="PlayerMatchLineGraphCtrl as matchLines">
+            <svg style="float: left"
+                 linegraph
+                 data="matchList.data"
+                 lines="matchLines.lines"
+                 width="75%" height="300"
+                 ydomain="[0,300]" margin="50">
             </svg>
-            <div style="float: left" legend lines="lines" data="data"></div>
+            <div style="float: left"
+                 legend
+                 lines="matchLines.lines"
+                 data="matchList.data"></div>
         </div>
 
 
         <div>
-            <svg differencegraph data="data" width="100%" height="300" margin="50"></svg>
+            <svg differencegraph
+                 data="matchList.data"
+                 width="100%"
+                 height="300"
+                 margin="50"></svg>
         </div>
     </div>
 </div>
@@ -24,17 +36,17 @@
     <h2>Score Ranges</h2>
 </div>
 
-<div class="row" ng-controller="PlayerGameSeriesRangeCtrl">
-    <svg numberrange data="gameScratch" width="100%" height="60" maxValue="300" axis="top"></svg>
-    <svg numberrange data="seriesScratch" width="100%" height="60" maxValue="900" axis="bottom"></svg>
+<div class="row" ng-controller="PlayerGameSeriesRangeCtrl as range">
+    <svg numberrange data="range.gameScratch" width="100%" height="60" maxValue="300" axis="top"></svg>
+    <svg numberrange data="range.seriesScratch" width="100%" height="60" maxValue="900" axis="bottom"></svg>
 </div>
 
-<div class="page-header" ng-controller="PlayerScoreSheetsCtrl">
+<div class="page-header" ng-controller="PlayerScoreSheetsCtrl as scoresheet">
     <h2>Score Sheets</h2>
 </div>
 
-<div class="row" ng-controller="PlayerScoreSheetsCtrl" >
-    <div style="padding-bottom: 20px;" ng-repeat="match in matches"
+<div class="row" ng-controller="PlayerScoreSheetsCtrl as scoresheet" >
+    <div style="padding-bottom: 20px;" ng-repeat="match in scoresheet.matches"
          ng-init="label=match.label;game=match.games"
          ng-include="'common/partials/frame.html'">
     </div>
@@ -44,60 +56,62 @@
     <h2>Handicap Over Time</h2>
 </div>
 <div class="row">
-    <div class="col-md-12" ng-controller="PlayerHandicapCtrl">
-        <svg width="100%" horizbargraph data="data"></svg>
+    <div class="col-md-12" ng-controller="PlayerHandicapCtrl as handicap">
+        <svg width="100%"
+             horizbargraph
+             data="handicap.data"></svg>
     </div>
 </div>
 
 <div class="page-header">
     <h2>First Ball Analysis</h2>
 </div>
-<div class="row" ng-controller="PlayerFirstBallAnalysis">
+<div class="row" ng-controller="PlayerFirstBallAnalysis as firstballanalysis">
     <div class="col-md-6">
         <ul>
-            <li>Mean: {{ data.mean }}</li>
-            <li>Median: {{ data.median }}</li>
-            <li>Min: {{ data.min }}</li>
-            <li>Max: {{ data.max }}</li>
-            <li>1st: {{ data.firstQuartile}}</li>
-            <li>3rd: {{ data.thirdQuartile}}</li>
+            <li>Mean: {{ firstballanalysis.data.mean }}</li>
+            <li>Median: {{ firstballanalysis.data.median }}</li>
+            <li>Min: {{ firstballanalysis.data.min }}</li>
+            <li>Max: {{ firstballanalysis.data.max }}</li>
+            <li>1st: {{ firstballanalysis.data.firstQuartile}}</li>
+            <li>3rd: {{ firstballanalysis.data.thirdQuartile}}</li>
         </ul>
     </div>
     <div class="col-md-6">
-        <svg boxgraph data="data" width="100%" height="100"></svg>
+        <svg boxgraph data="firstballanalysis.data" width="100%" height="100"></svg>
     </div>
 </div>
 
 <div class="page-header">
     <h2>Open Close Analysis</h2>
 </div>
-<div class="row" ng-controller="PlayerOpenCloseCtrl">
+<div class="row" ng-controller="PlayerOpenCloseCtrl as openclose">
     <div class="col-md-6">
         <ul>
-            <li>Strikes: {{ strikes }}</li>
-            <li>Spares: {{ spares }}</li>
-            <li>Open: {{ open }}</li>
-            <li>Total Frames: {{ total }}</li>
+            <li>Strikes: {{ openclose.strikes }}</li>
+            <li>Spares: {{ openclose.spares }}</li>
+            <li>Open: {{ openclose.open }}</li>
+            <li>Total Frames: {{ openclose.total }}</li>
         </ul>
     </div>
     <div class="col-md-6">
-        <svg width="100%" height="100" bargraph data="data"></svg>
+        <svg width="100%" height="100" bargraph data="openclose.data"></svg>
     </div>
 </div>
 
 <div class="page-header">
     <h2>Split Analysis</h2>
 </div>
-<div class="row" ng-controller="PlayerSplitsCtrl">
+<div class="row" ng-controller="PlayerSplitsCtrl as splits">
     <div class="col-md-6">
         <ul>
-            <li>Splits: {{ splits }}</li>
-            <li>Converted: {{ converted }}</li>
-            <li>Open: {{ open }}</li>
-            <li>Total Frames: {{ total }}</li>
+            <li>Splits: {{ splits.splits }}</li>
+            <li>Converted: {{ splits.converted }}</li>
+            <li>Open: {{ splits.open }}</li>
+            <li>Total Frames: {{ splits.total }}</li>
         </ul>
     </div>
     <div class="col-md-6">
-        <svg width="100%" height="100" bargraph data="data"></svg>
+        <svg width="100%" height="100" bargraph data="splits.data"></svg>
     </div>
 </div>

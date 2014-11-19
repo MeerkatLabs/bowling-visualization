@@ -7,16 +7,22 @@
  * Licensed under the MIT License
  */
 
-angular.module('bowling').controller('main', ['$scope',
-    function ($scope) {
+(function(){
 
-    }
-]);
+    var Main = function($scope) {
 
-angular.module('bowling').config(['$routeProvider',
-    function($routeProvider) {
-        $routeProvider.when('/main',  {
-            templateUrl: 'core/partials/main.html',
-            controller: 'main'
-        });
-    }]);
+    };
+
+    // Configure the application.
+    angular.module('bowling')
+        .controller('main', Main)
+        .config(['$routeProvider',
+            function($routeProvider) {
+                $routeProvider.when('/main',  {
+                    templateUrl: 'core/partials/main.html',
+                    controller: 'main'
+                });
+            }
+        ]);
+
+}());

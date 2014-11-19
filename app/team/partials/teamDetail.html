@@ -1,21 +1,21 @@
 <div class="page-header">
-    <h1>{{ team.name }}</h1>
+    <h1>{{ teamdetail.team.name }}</h1>
 </div>
 
-<ng-include src="'team/partials/playerList.html'" ng-controller="TeamMembersController"></ng-include>
+<ng-include src="'team/partials/playerList.html'" ng-controller="TeamMembersListCtrl as members"></ng-include>
 
 <div class="page-header">
     <h2>Matches</h2>
 </div>
 
-<ng-include src="'team/partials/matchList.html'" ng-controller="TeamMatchListController"></ng-include>
+<ng-include src="'team/partials/matchList.html'" ng-controller="TeamMatchListCtrl as matches"></ng-include>
 
 <div class="page-header">
     <h2>Player Contribution</h2>
 </div>
 <div class="row">
-    <div class="col-md-12" ng-controller="TeamTotalPinsCtrl">
-        <svg width="100%" bargraph data="data"></svg>
+    <div class="col-md-12" ng-controller="TeamTotalPinsCtrl as totalpins">
+        <svg width="100%" bargraph data="totalpins.data"></svg>
     </div>
 </div>
 
@@ -23,8 +23,8 @@
     <h2>Team Handicap Over Time</h2>
 </div>
 <div class="row">
-    <div class="col-md-12" ng-controller="TeamHandicapCtrl">
-        <svg width="100%" horizbargraph data="data"></svg>
+    <div class="col-md-12" ng-controller="TeamHandicapCtrl as handicap">
+        <svg width="100%" horizbargraph data="handicap.data"></svg>
     </div>
 </div>
 
@@ -32,15 +32,15 @@
     <h2>Pins per Week Over Time</h2>
 </div>
 <div class="row">
-    <div class="col-md-12" ng-controller="TeamPinsPerWeekCtrl">
-        <svg width="100%" horizbargraph data="data"></svg>
+    <div class="col-md-12" ng-controller="TeamPinsPerWeekCtrl as pinsperweek">
+        <svg width="100%" horizbargraph data="pinsperweek.data"></svg>
     </div>
 </div>
 
 <div class="page-header">
     <h2>Open Close Analysis</h2>
 </div>
-<div class="row" ng-controller="TeamOpenCloseCtrl">
+<div class="row" ng-controller="TeamOpenCloseCtrl as openclose">
     <div class="col-md-6">
         <ul>
             <li>Strikes: {{ strikes }}</li>
@@ -50,6 +50,6 @@
         </ul>
     </div>
     <div class="col-md-6">
-        <svg width="100%" height="100" bargraph data="data"></svg>
+        <svg width="100%" height="100" bargraph data="openclose.data"></svg>
     </div>
 </div>

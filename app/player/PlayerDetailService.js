@@ -11,7 +11,7 @@
  * Service responsible for fetching the player data for the controllers to display.
  */
 
-angular.module('bowling').factory('PlayerDetailService', ['$q', 'd3Service', 'dataService', function($q, d3Service, dataService) {
+angular.module('bowling').factory('PlayerDetailService', ['$q', 'd3Service', 'DataService', function($q, d3Service, DataService) {
 
     /**
      * Fetches the player statistics and notifies the appropriate deferred when completed.
@@ -51,7 +51,7 @@ angular.module('bowling').factory('PlayerDetailService', ['$q', 'd3Service', 'da
     var findPlayer = function(teamId, playerId) {
         var deferred = $q.defer();
 
-        dataService.getData().then(function (league) {
+        DataService.getData().then(function (league) {
             var foundTeam = bowling.utils.findInArray(league.teams, function (element) {
                 return teamId == element.id;
             });

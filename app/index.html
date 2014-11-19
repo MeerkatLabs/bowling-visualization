@@ -18,7 +18,7 @@
 </head>
 <body>
     <!-- Place header here -->
-    <ng-include src="'core/partials/navbar.html'" ng-controller="NavBarController"></ng-include>
+    <ng-include src="'core/partials/navbar.html'" ng-controller="NavBarController as ctrl"></ng-include>
 
     <!-- Main content page -->
     <div class="container" ng-view></div>
@@ -49,8 +49,8 @@
 
 <script language="JavaScript">
     var bowlingApp = bowlingApp || angular.module('bowling');
-    bowlingApp.config(['dataServiceProvider', function(dataServiceProvider) {
-        dataServiceProvider.configure(
+    bowlingApp.config(['DataServiceProvider', function(DataServiceProvider) {
+        DataServiceProvider.configure(
                 {
                     root: 'polarbowler'
                 }

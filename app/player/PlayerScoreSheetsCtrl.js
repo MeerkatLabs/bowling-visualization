@@ -10,19 +10,23 @@
 /**
  * Control which will fetch the score sheets for the player if they exist.
  */
-angular.module('bowling').controller("PlayerScoreSheetsCtrl", ['$scope', 'PlayerDetailService',
-    function($scope, PlayerDetailService) {
+(function() {
 
-        console.log("Subscribing to player found event");
-        $scope.$on(bowling.events.player.found, function(event, data) {
+    function PlayerScoreSheetsCtrl($scope, PlayerDetailService, playerEvents) {
 
-          PlayerDetailService.getScoreSheets(data.player).then(function(data) {
-              $scope.matches = data;
-              $scope.hasMatches = data.length > 0;
+        var controller = this;
 
-              console.log("Matches", data);
-          });
+        $scope.$on(playerEvents.found, function(event, data) {
+
+            PlayerDetailService.getScoreSheets(data.player).then(function(data) {
+                controller.matches = data;
+                controller.hasMatches = data.length > 0;
+            });
 
         });
+    }
 
-    }]);
+    angular.module('bowling')
+        .controller("PlayerScoreSheetsCtrl", ['$scope', 'PlayerDetailService', 'playerEvents', PlayerScoreSheetsCtrl]);
+
+}());

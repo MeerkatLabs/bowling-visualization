@@ -10,8 +10,8 @@
         <th><span title="High Scratch Game">HSG</span></th>
         <th><span title="High Scratch Series">HSS</span></th>
     </tr>
-    <tr ng-repeat="roller in members">
-        <td><a href="#/team/{{team.id}}/players/{{roller.id}}">{{ roller.name }}</a></td>
+    <tr ng-repeat="roller in members.members">
+        <td><a href="#/team/{{teamdetail.team.id}}/players/{{roller.id}}">{{ roller.name }}</a></td>
         <td>{{roller.handicap}}</td>
         <td>{{roller.games}}</td>
         <td>{{roller.pins}}</td>

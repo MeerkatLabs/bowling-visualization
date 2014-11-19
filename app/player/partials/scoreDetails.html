@@ -3,15 +3,15 @@
         <th class="text-center">Week</th>
         <th class="text-center">Date</th>
         <th class="text-center">Incoming Avg</th>
-        <th class="text-center" ng-repeat="label in league.gameLabels">{{label}}</th>
+        <th class="text-center" ng-repeat="label in playerMain.league.gameLabels">{{label}}</th>
         <th class="text-center">Series Avg</th>
         <th class="text-center">Diff</th>
     </tr>
-    <tr ng-repeat="series in roller.serieses" class="text-center">
+    <tr ng-repeat="series in playerMain.roller.serieses" class="text-center">
         <td style="padding: 4px;">{{series.week.weekNumber}}</td>
         <td style="padding: 4px;">{{series.week.date}}</td>
         <td style="padding: 4px;">{{series.playerAverage}}</td>
-        <td style="padding: 4px;" ng-repeat="label in league.gameLabels">{{series.games[$index].score}}</td>
+        <td style="padding: 4px;" ng-repeat="label in playerMain.league.gameLabels">{{series.games[$index].score}}</td>
         <td style="padding: 4px;" >{{series.seriesAverage}}</td>
         <td style="padding: 4px;">{{series.seriesAverage - series.playerAverage}}</td>
     </tr>
