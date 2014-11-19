@@ -1,22 +1,22 @@
-<div class="row">
-    <div ng-repeat="label in league.gameLabels" class="col-md-{{ (12 / (league.gamesPerSeries + 1)) }}">
-        <svg width="100%" height="300" piechart data="gameCharts[$index]"></svg>
+<div class="row" ng-controller="MatchScoreVisualizationCtrl as scorechart">
+    <div ng-repeat="label in detail.league.gameLabels" class="col-md-{{ (12 / (detail.league.gamesPerSeries + 1)) }}">
+        <svg width="100%" height="300" piechart data="scorechart.gameCharts[$index]"></svg>
     </div>
-    <div class="col-md-{{ (12 / (league.gamesPerSeries + 1)) }}">
-        <svg width="100%" height="300" piechart data="totalData"></svg>
+    <div class="col-md-{{ (12 / (detail.league.gamesPerSeries + 1)) }}">
+        <svg width="100%" height="300" piechart data="scorechart.totalData"></svg>
     </div>
 </div>
 
 <div class="row">
     <div class="col-md-6"
-         ng-repeat="team in match.teams"
-         ng-init="score = match.scores[$index]"
+         ng-repeat="team in detail.match.teams"
+         ng-init="score = detail.match.scores[$index]"
          ng-include="'match/partials/cumulativeScoreSheet.html'">
     </div>
 </div>
 
-<div class="row" ng-if="hasScores">
-    <div ng-repeat="score in match.scores" class="col-md-6">
+<div class="row" ng-if="detail.hasScores">
+    <div ng-repeat="score in detail.match.scores" class="col-md-6">
         <div style="padding-bottom: 20px; float: left" ng-repeat="game in score.scoresByGame"
              ng-init="label = 'Game ' + ($index + 1)"
              ng-include="'common/partials/frame.html'">

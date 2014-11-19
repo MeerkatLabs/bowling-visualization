@@ -10,11 +10,14 @@
 (function() {
     // Add the route information for the Match Controller.
     angular.module('bowling')
-        .config(['$routeProvider', function($routeProvider) {
+        .constant('matchEvents', {
+            found: "match::found"
+        }).config(['$routeProvider', function($routeProvider) {
             $routeProvider.
                 when('/matches/:matchId', {
                     templateUrl: 'match/partials/matchDetail.html',
-                    controller: 'MatchDetailCtrl'
+                    controller: 'MatchDetailCtrl',
+                    controllerAs: 'detail'
                 });
         }]);
 }());
