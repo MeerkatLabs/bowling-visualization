@@ -6,3 +6,5 @@
 /app/build/
 /app/dist/
 /.sass-cache
+/coverage
+/test_out
