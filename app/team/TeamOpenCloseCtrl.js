@@ -12,6 +12,13 @@
  */
 (function() {
 
+    /**
+     * Constroller that will provide the open close statistics to the template for visualization.
+     * @param $scope
+     * @param TeamDetailService
+     * @param teamEvents
+     * @constructor
+     */
     var TeamOpenCloseCtrl = function($scope, TeamDetailService, teamEvents) {
 
         var controller = this;

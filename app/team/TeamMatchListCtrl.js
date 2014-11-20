@@ -12,12 +12,19 @@
  */
 (function() {
 
-    var TeamMatchListCtrl = function($scope, DataService, TeamDetailService, teamEvents) {
+    /**
+     * Controller that will provide the details for the team match results.
+     * @param $scope
+     * @param TeamMatchDetailService
+     * @param teamEvents
+     * @constructor
+     */
+    var TeamMatchListCtrl = function($scope, TeamMatchDetailService, teamEvents) {
 
         var controller = this;
 
         $scope.$on(teamEvents.found, function(event, data) {
-            TeamDetailService.getMatchList(data.team).then(function (data) {
+            TeamMatchDetailService.buildMatchData(data.league, data.team).then(function (data) {
                 controller.matches = data;
 
                 var pointsFor = 0;
@@ -36,6 +43,6 @@
 
     angular.module('bowling')
         .controller('TeamMatchListCtrl',
-                    ['$scope', 'DataService', 'TeamDetailService', 'teamEvents', TeamMatchListCtrl]);
+                    ['$scope', 'TeamMatchDetailService', 'teamEvents', TeamMatchListCtrl]);
 
 }());

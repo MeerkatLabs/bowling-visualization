@@ -12,12 +12,20 @@
  */
 (function() {
 
-    var TeamMembersCtrl = function($scope, TeamDetailService, teamEvents) {
+    /**
+     * Controller that will provide the details for the team members and their data contributions to the overall
+     * team picture.
+     * @param $scope
+     * @param TeamMemberDetailService
+     * @param teamEvents
+     * @constructor
+     */
+    var TeamMembersCtrl = function($scope, TeamMemberDetailService, teamEvents) {
 
         var controller = this;
 
         $scope.$on(teamEvents.found, function(event, data) {
-            TeamDetailService.getTeamList(data.team).then(function (data) {
+            TeamMemberDetailService.getMemberDetails(data.league, data.team).then(function (data) {
                 controller.members = data;
             });
         });
@@ -25,6 +33,6 @@
     };
 
     angular.module('bowling')
-        .controller('TeamMembersListCtrl', ['$scope', 'TeamDetailService', 'teamEvents', TeamMembersCtrl]);
+        .controller('TeamMembersListCtrl', ['$scope', 'TeamMemberDetailService', 'teamEvents', TeamMembersCtrl]);
 
 }());

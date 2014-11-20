@@ -12,13 +12,20 @@
  */
 (function() {
 
-    var TeamPinsPerWeekCtrl = function($scope, TeamDetailService, teamEvents) {
+    /**
+     * Controller that will provide the template content for the pins per week section.
+     * @param $scope
+     * @param TeamMatchDetailService
+     * @param teamEvents
+     * @constructor
+     */
+    var TeamPinsPerWeekCtrl = function($scope, TeamMatchDetailService, teamEvents) {
 
         var controller = this;
 
         $scope.$on(teamEvents.found, function(event, data) {
 
-            TeamDetailService.buildPinsPerWeekData(data.league, data.team).then(function (data) {
+            TeamMatchDetailService.buildPinsPerMatchData(data.league, data.team).then(function (data) {
                 controller.data = data;
             });
 
@@ -27,5 +34,5 @@
     };
 
     angular.module('bowling')
-        .controller('TeamPinsPerWeekCtrl', ['$scope', 'TeamDetailService', 'teamEvents', TeamPinsPerWeekCtrl]);
+        .controller('TeamPinsPerWeekCtrl', ['$scope', 'TeamMatchDetailService', 'teamEvents', TeamPinsPerWeekCtrl]);
 }());

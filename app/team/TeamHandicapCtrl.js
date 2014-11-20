@@ -12,13 +12,20 @@
  */
 (function() {
 
-    var TeamHandicapCtrl = function($scope, TeamDetailService, teamEvents) {
+    /**
+     * Controller that will provide the template data for the TeamHandicap section.
+     * @param $scope
+     * @param TeamMatchDetailService
+     * @param teamEvents
+     * @constructor
+     */
+    var TeamHandicapCtrl = function($scope, TeamMatchDetailService, teamEvents) {
 
         var controller = this;
 
         $scope.$on(teamEvents.found, function(event, data) {
 
-            TeamDetailService.getHandicapPerWeek(data.league, data.team).then(function(data) {
+            TeamMatchDetailService.buildHandicapData(data.league, data.team).then(function(data) {
                 controller.data = data;
             });
 
@@ -27,6 +34,6 @@
     };
 
     angular.module('bowling')
-        .controller('TeamHandicapCtrl', ['$scope', 'TeamDetailService', 'teamEvents', TeamHandicapCtrl]);
+        .controller('TeamHandicapCtrl', ['$scope', 'TeamMatchDetailService', 'teamEvents', TeamHandicapCtrl]);
 
 }());
