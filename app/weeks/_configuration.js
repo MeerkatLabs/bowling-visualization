@@ -10,6 +10,7 @@ angular.module('bowling').config(['$routeProvider',
     function($routeProvider) {
         $routeProvider.when('/weeks', {
             templateUrl: 'weeks/partials/weeklist.html',
-            controller: 'WeekController'
+            controller: 'WeekCtrl',
+            controllerAs: 'weekCtrl'
         });
     }]);
