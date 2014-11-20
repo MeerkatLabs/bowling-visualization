@@ -247,6 +247,12 @@ angular.module('bowling').factory('PlayerDetailService', ['$q', 'd3Service', 'Da
 
                         var frame = game.frames[split];
 
+                        // If the split value is greater than  or equal to 10, then we need to check the split against
+                        // the values that are in the 10th frame.
+                        if (split >= 10) {
+                            frame = game.frames[9];
+                        }
+
                         if (split < 10) {
                             if (frame.length == 2 && frame[0] + frame[1] == 10) {
                                 converted++;
