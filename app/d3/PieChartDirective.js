@@ -23,9 +23,6 @@
                      *
                      * [{label: 'Some label', value: 100},..]
                      */
-
-                    console.log(scope.data);
-
                     var svg = d3.select(element[0]);
 
                     var width = parseInt(svg.style('width')),
@@ -35,13 +32,12 @@
                     var color = d3.scale.category10();
 
                     var graphic = svg.append('g')
-                        .data([scope.data])
                         .attr('transform', 'translate('+ (width/2) + ', ' + (height/2) + ')');
 
                     var pie = d3.layout.pie()
                         .value(function(d) { return d.value; })
                         .sort(null)
-                        .endAngle(Math.PI * -2);
+                        .endAngle(Math.PI * -2)(scope.data);
 
                     var arc = d3.svg.arc()
                         .outerRadius(radius * 0.8)
@@ -58,6 +54,7 @@
                         }).attr('d', function(d) {
                            return arc(d);
                         });
+
                     // add the text
                     arcs.append("svg:text")
                         .attr("transform", function(d){
