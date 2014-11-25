@@ -17,17 +17,20 @@
             <td class="text-center">{{ series.total }}</td>
         </tr>
         <tr>
-            <td colspan="4" style="background: lightgray"></td>
+            <td colspan="2" style="background: lightgray"></td>
+            <th colspan="2">Scratch Subtotal</th>
             <td class="text-center" ng-repeat="label in detail.league.gameLabels">{{score.gameScratchTotal[$index]}}</td>
             <td class="text-center">{{ score.seriesScratch }}</td>
         </tr>
         <tr>
-            <td colspan="4" style="background: lightgray"></td>
+            <td colspan="2" style="background: lightgray"></td>
+            <th colspan="2">Team Handicap</th>
             <td class="text-center" ng-repeat="label in detail.league.gameLabels">{{ score.seriesHandicap }}</td>
             <td class="text-center">{{ score.seriesHandicap * detail.league.gamesPerSeries}}</td>
         </tr>
         <tr>
-            <td colspan="4" style="background: lightgray"></td>
+            <td colspan="2" style="background: lightgray"></td>
+            <th colspan="2">Totals</th>
             <td class="text-center" ng-repeat="label in detail.league.gameLabels">{{ score.gameTotal[$index] }}</td>
             <td class="text-center">{{ score.seriesTotal }}</td>
         </tr>
