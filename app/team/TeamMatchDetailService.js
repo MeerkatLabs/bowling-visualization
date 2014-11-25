@@ -12,7 +12,7 @@
  */
 (function() {
 
-    var TeamMatchDetailService = function($q) {
+    var TeamMatchDetailService = function($q, d3Service) {
 
         var TeamMatchDetailService = {};
 
@@ -94,20 +94,30 @@
          */
         TeamMatchDetailService.buildHandicapData = function(league, team) {
 
-            return $q(function (resolve, reject) {
+            var deferred = $q.defer();
+
+            d3Service.get().then(function(d3) {
                 var data = [];
+                var color = d3Service.baseColor();
 
                 team.series.forEach(function (series) {
 
-                    data.push({
+                    var s = {
                         label: series.week.weekNumber,
-                        value: series.seriesHandicap
-                    });
+                        value: series.seriesHandicap,
+                        color: color
+                    };
+
+                    console.log(s);
+
+                    data.push(s);
 
                 });
 
-                resolve(data);
+                deferred.resolve(data);
             });
+
+            return deferred.promise;
 
         };
 
@@ -118,18 +128,25 @@
          * @returns {*}
          */
         TeamMatchDetailService.buildPinsPerMatchData = function(league, team) {
-            return $q(function(resolve, reject) {
+
+            var deferred = $q.defer();
+
+            d3Service.get().then(function(d3) {
                 var data = [];
+                var color = d3Service.baseColor();
 
                 team.series.forEach(function (series) {
                     data.push({
                         label: series.week.weekNumber,
-                        value: series.seriesScratch
+                        value: series.seriesScratch,
+                        color: color
                     });
                 });
 
-                resolve(data);
+                deferred.resolve(data);
             });
+
+            return deferred.promise;
         };
 
         return TeamMatchDetailService;
@@ -137,7 +154,7 @@
     };
 
     angular.module('bowling')
-        .service('TeamMatchDetailService', ['$q', TeamMatchDetailService]);
+        .service('TeamMatchDetailService', ['$q', 'd3Service', TeamMatchDetailService]);
 
 
 }());

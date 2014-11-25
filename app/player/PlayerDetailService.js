@@ -137,20 +137,27 @@ angular.module('bowling').factory('PlayerDetailService', ['$q', 'd3Service', 'Da
      * @returns {*}
      */
     var handicapOverTime = function(player) {
-        return $q(function(resolve, reject) {
+
+        var deferred = $q.defer();
+
+        d3Service.get().then(function (d3) {
 
             var data = [];
+            var color = d3Service.baseColor();
 
             player.serieses.forEach(function(series) {
                 data.push({
                     label: series.week.weekNumber,
-                    value: series.total
+                    value: series.total,
+                    color: color
                 });
             });
 
-            resolve(data);
+            deferred.resolve(data);
 
         });
+
+        return deferred.promise;
     };
 
     /**
