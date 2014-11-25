@@ -24,6 +24,7 @@
 
                     var svg = d3.select(element[0]);
                     var colors = d3Service.colorScale();
+                    var property;
 
                     // Determine the domain and range for scaling the data.
                     var xDomain = [Number.MAX_VALUE, 0];
@@ -84,7 +85,9 @@
                                 return yScale(element.line.y()(d));
                             });
 
-                        var path = svg.append("path")
+                        var pathContainer = svg.append("g");
+
+                        var path = pathContainer.append("path")
                             .attr("d", scaledLine(scope.data));
 
                         // Basic Attributes.
@@ -93,12 +96,35 @@
                             .attr("fill", "none");
 
                         // Assign style as appropriate.
-                        for (var property in element.style) {
-                            if (element.style.hasOwnProperty(property)) {
-                                path.attr(property, element.style[property]);
+                        if (element.line !== undefined && element.line.style !== undefined) {
+                            for (property in element.line.style) {
+                                if (element.line.style.hasOwnProperty(property)) {
+                                    path.attr(property, element.line.style[property]);
+                                }
                             }
                         }
 
+                        // Dots for the data points
+                        var dots = pathContainer.selectAll("circle")
+                            .data(scope.data)
+                            .enter()
+                                .append("circle")
+                                    .attr("cx", function (d) { return scaledLine.x()(d); })
+                                    .attr("cy", function (d) { return scaledLine.y()(d); })
+                                    .attr("r", function (d) { return 3; });
+
+                        dots.attr("stroke", d3.rgb(colors(index)).brighter())
+                            .attr("stroke-width", 1)
+                            .attr("fill", colors(index));
+
+                        // Assign style as appropriate.
+                        if (element.dot !== undefined && element.dot.style !== undefined) {
+                            for (property in element.dot.style) {
+                                if (element.dot.style.hasOwnProperty(property)) {
+                                    path.attr(property, element.dot.style[property]);
+                                }
+                            }
+                        }
                     });
                 });
 
