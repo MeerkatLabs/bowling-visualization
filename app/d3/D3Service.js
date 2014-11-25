@@ -10,7 +10,6 @@
 
     var D3Service = function(configuration, $document, $q, $rootScope) {
         var deferred = $q.defer();
-        var colorScale = null;
         var d3 = null;
 
         function onScriptLoad() {
@@ -41,6 +40,9 @@
             get: function() { return deferred.promise; },
             colorScale: function() {
                 return configuration.colorScale(d3);
+            },
+            baseColor: function() {
+                return configuration.baseColor(d3);
             }
         };
     };
@@ -52,6 +54,9 @@
             src: 'http://d3js.org/d3.v3.min.js',
             colorScale: function(d3) {
                 return d3.scale.category10();
+            },
+            baseColor: function(d3) {
+                return d3.scale.category10().range()[0];
             }
         };
 

@@ -55,6 +55,10 @@
         configuration.colorScale = function (d) {
           return d.scale.category20();
         };
+
+        configuration.baseColor = function(d) {
+            return d.scale.category20c().range()[10];
+        };
     }]);
 
     var bowlingApp = bowlingApp || angular.module('bowling');
