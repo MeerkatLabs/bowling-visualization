@@ -28,7 +28,7 @@
                             return d.value;
                         })]).range([0, width]);
 
-                    var colors = d3.scale.category10();
+                    var colors = d3Service.colorScale();
 
                     var bar = svg.selectAll('g')
                         .data(scope.data)
@@ -45,7 +45,12 @@
                         })
                         .attr("height", barHeight - 1)
                         .style("fill", function(d,i) {
-                            return colors(i);
+                            console.log("Index", i);
+                            if (d.color === undefined) {
+                                return colors(i);
+                            } else {
+                                return d.color;
+                            }
                         });
 
                     bar.append("text")

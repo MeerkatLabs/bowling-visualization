@@ -21,7 +21,7 @@
 
                     var parent = d3.select(element[0]);
 
-                    var colors = d3.scale.category10();
+                    var colors = d3Service.colorScale();
 
                     parent.selectAll('div')
                         .data(scope.lines)

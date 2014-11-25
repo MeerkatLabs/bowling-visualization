@@ -65,12 +65,14 @@
                         barY = 5;
                     }
 
+                    var colors = d3Service.colorScale();
+
                     svg.append('g')
                         .attr("transform", "translate(" + gameScale(scope.data[0]) + "," + barY + ")")
                         .append('rect')
                         .attr('width', gameScale(scope.data[1]) - gameScale(scope.data[0]))
                         .attr('height', 20)
-                        .attr('fill', d3.scale.category10()(0));
+                        .attr('fill', colors(0));
 
                 });
 

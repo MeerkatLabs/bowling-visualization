@@ -23,7 +23,7 @@
                     }
 
                     var svg = d3.select(element[0]);
-                    var colors = d3.scale.category10();
+                    var colors = d3Service.colorScale();
 
                     // Determine the domain and range for scaling the data.
                     var xDomain = [Number.MAX_VALUE, 0];

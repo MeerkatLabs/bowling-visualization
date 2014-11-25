@@ -48,6 +48,15 @@
 <script language="JavaScript" src="build/bowling_components.js"></script>
 
 <script language="JavaScript">
+
+    var d3Service = angular.module('d3');
+    d3Service.config(['d3ServiceProvider', function(D3ServiceProvider) {
+        var configuration = D3ServiceProvider.getConfiguration();
+        configuration.colorScale = function (d) {
+          return d.scale.category20();
+        };
+    }]);
+
     var bowlingApp = bowlingApp || angular.module('bowling');
     bowlingApp.config(['DataServiceProvider', function(DataServiceProvider) {
         DataServiceProvider.configure(

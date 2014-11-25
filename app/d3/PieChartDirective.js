@@ -29,7 +29,7 @@
                         height = parseInt(svg.style('height')),
                         radius = Math.min(width/2, height/2);
 
-                    var color = d3.scale.category10();
+                    var color = d3Service.colorScale();
 
                     var graphic = svg.append('g')
                         .attr('transform', 'translate('+ (width/2) + ', ' + (height/2) + ')');
