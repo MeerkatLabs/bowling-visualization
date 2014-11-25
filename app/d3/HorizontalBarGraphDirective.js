@@ -29,8 +29,8 @@
 
                     console.log("MW", attrs.minimumbarwidth);
 
-                    if (attrs.minimumbarwidth !== undefined) {
-                        barWidth = Math.min(barWidth, parseInt(attrs.minimumbarwidth));
+                    if (attrs.maximumbarwidth !== undefined) {
+                        barWidth = Math.min(barWidth, parseInt(attrs.maximumbarwidth));
                     }
 
                     console.log('barWidth', barWidth);
