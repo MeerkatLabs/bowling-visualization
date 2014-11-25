@@ -8,6 +8,16 @@
  */
 (function() {
 
+    /**
+     * Provider that is responsible for providing all of the directives and other components with the d3service
+     * functionality.
+     * @param configuration configuration object for the service.
+     * @param $document the document that will be manipulated with the location of the d3 library js file.
+     * @param $q promise api
+     * @param $rootScope scope to be notified once the script has been loaded.
+     * @returns {{get: get, colorScale: colorScale, baseColor: baseColor}}
+     * @constructor
+     */
     var D3Service = function(configuration, $document, $q, $rootScope) {
         var deferred = $q.defer();
         var d3 = null;
@@ -37,16 +47,35 @@
         s.appendChild(scriptTag);
 
         return {
+            /**
+             * Returns the promise that will provide the d3 library.
+             * @returns {*}
+             */
             get: function() { return deferred.promise; },
+
+            /**
+             * Returns a common color scale for all of the directives and other services to use.
+             * @returns {*}
+             */
             colorScale: function() {
                 return configuration.colorScale(d3);
             },
+
+            /**
+             * Returns a common color for rendering all of the directives or other services to use for their
+             * data representations.
+             * @returns {*}
+             */
             baseColor: function() {
                 return configuration.baseColor(d3);
             }
         };
     };
 
+    /**
+     * Provider that will configure the d3 service.
+     * @constructor
+     */
     var D3Provider = function() {
         // Default configuration object.
         var configuration = {
@@ -60,11 +89,18 @@
             }
         };
 
+        /**
+         * Returns the current configuration object.
+         * @returns {{src: string, colorScale: colorScale, baseColor: baseColor}}
+         */
         this.getConfiguration = function() {
             return configuration;
         };
 
-        // Provide the configuration object for the data service.
+        /**
+         * Allows for the overriding of the current configuration object.
+         * @param value the new configuration to use.
+         */
         this.configure = function(value) {
             configuration = value;
         };
@@ -75,6 +111,7 @@
         }];
     };
 
-    angular.module('d3').provider('d3Service', D3Provider);
+    angular.module('d3')
+        .provider('d3Service', D3Provider);
 
 }());

@@ -7,9 +7,12 @@
  * Licensed under the MIT License
  */
 (function() {
-    angular.module('d3').directive('legend',  ['d3Service', function(d3Service) {
 
-        function link(scope, element, attrs) {
+    var LegendDirective = function(d3Service) {
+
+        var LegendDirective = {};
+
+        LegendDirective.link = function (scope, element, attrs) {
 
             scope.render = function() {
 
@@ -42,16 +45,16 @@
                 return scope.render(newVals);
             }, true);
 
-        }
-
-
-
-        return {
-            link: link,
-            scope: {
-                lines: '='
-            }
         };
 
-    }]);
+        LegendDirective.scope = {
+            lines: '='
+        };
+
+        return LegendDirective;
+
+    };
+
+    angular.module('d3')
+        .directive('legend',  ['d3Service', LegendDirective]);
 }());

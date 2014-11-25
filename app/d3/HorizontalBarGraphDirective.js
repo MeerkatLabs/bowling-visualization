@@ -11,9 +11,11 @@
  * Created by rerobins on 11/14/14.
  */
 (function() {
-    angular.module('d3').directive('horizbargraph', ['d3Service', function(d3Service) {
+    var HorizBarGraphDirective = function(d3Service) {
 
-        var link = function(scope, element, attrs) {
+        var HorizBarGraphDirective = {};
+
+        HorizBarGraphDirective.link = function(scope, element, attrs) {
 
             scope.render = function() {
                 if (!scope.data) {
@@ -27,13 +29,9 @@
 
                     var barWidth = width / scope.data.length;
 
-                    console.log("MW", attrs.minimumbarwidth);
-
                     if (attrs.maximumbarwidth !== undefined) {
                         barWidth = Math.min(barWidth, parseInt(attrs.maximumbarwidth));
                     }
-
-                    console.log('barWidth', barWidth);
 
                     var yScale = d3.scale.linear()
                         .domain([0, d3.max(scope.data, function(d) {
@@ -78,11 +76,14 @@
             }, true);
         };
 
-        return {
-            link: link,
-            scope: {
-                data: '='
-            }
+        HorizBarGraphDirective.scope = {
+            data: '='
         };
-    }]);
+
+        return HorizBarGraphDirective;
+
+    };
+
+    angular.module('d3')
+        .directive('horizbargraph', ['d3Service', HorizBarGraphDirective]);
 }());

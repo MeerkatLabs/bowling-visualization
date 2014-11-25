@@ -7,9 +7,11 @@
  * Licensed under the MIT License
  */
 (function() {
-    angular.module('d3').directive('bargraph', ['d3Service', function(d3Service) {
+    var BoxGraphDirective = function(d3Service) {
 
-        var link = function(scope, element, attrs) {
+        var BoxGraphDirective = {};
+
+        BoxGraphDirective.link = function(scope, element, attrs) {
 
             scope.render = function() {
                 if (!scope.data) {
@@ -77,12 +79,13 @@
 
         };
 
-        return {
-            link: link,
-            scope: {
-                data: '='
-            }
+        BoxGraphDirective.scope = {
+            data: '='
         };
 
-    }]);
+        return BoxGraphDirective;
+    };
+
+    angular.module('d3')
+        .directive('bargraph', ['d3Service', BoxGraphDirective]);
 }());

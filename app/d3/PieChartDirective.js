@@ -7,9 +7,12 @@
  * Licensed under the MIT License
  */
 (function() {
-    angular.module('d3').directive('piechart', ['d3Service', function(d3Service) {
 
-        function link(scope, element, attrs) {
+    var PieChartDirective = function(d3Service) {
+
+        var PieChartDirective = {};
+
+        PieChartDirective.link = function link(scope, element, attrs) {
 
             scope.render = function (data) {
                 if (!scope.data) {
@@ -52,7 +55,7 @@
                         .attr('fill', function(d, i) {
                             return color(i);
                         }).attr('d', function(d) {
-                           return arc(d);
+                            return arc(d);
                         });
 
                     // add the text
@@ -78,14 +81,17 @@
             scope.$watch('data', function (newVals, oldVals) {
                 return scope.render(newVals);
             }, true);
-        }
-
-        return {
-            link: link,
-            scope: {
-                data: '='
-            }
         };
 
-    }]);
+        PieChartDirective.scope = {
+            data: '='
+        };
+
+        return PieChartDirective;
+
+    };
+
+    angular.module('d3')
+        .directive('piechart', ['d3Service', PieChartDirective]);
+
 }());

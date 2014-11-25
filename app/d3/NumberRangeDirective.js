@@ -11,9 +11,12 @@
  * Directive that will render a graph that will show a collection of number ranges.
  */
 (function() {
-    angular.module('d3').directive('numberrange', ['d3Service', function (d3Service) {
 
-        function link(scope, element, attrs) {
+    var NumberRangeDirective = function(d3Service) {
+
+        var NumberRangeDirective = {};
+
+        NumberRangeDirective.link = function(scope, element, attrs) {
 
             scope.render = function (data) {
 
@@ -88,13 +91,16 @@
                 return scope.render(newVals);
             }, true);
 
-        }
-
-        return {
-            link: link,
-            scope: {
-                data: "="
-            }
         };
-    }]);
+
+        NumberRangeDirective.scope = {
+            data: '='
+        };
+
+        return NumberRangeDirective;
+
+    };
+
+    angular.module('d3')
+        .directive('numberrange', ['d3Service', NumberRangeDirective]);
 }());

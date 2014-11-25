@@ -8,8 +8,12 @@
  */
 
 (function() {
-    angular.module('d3').directive('differencegraph', ['d3Service', function(d3Service) {
-        function link(scope, element, attrs) {
+
+    var DifferenceGraphDirective = function(d3Service) {
+
+        var DifferenceGraphDirective = {};
+
+        DifferenceGraphDirective.link = function(scope, element, attrs) {
 
             scope.render = function (data) {
 
@@ -41,9 +45,9 @@
                     var xDomain = [0, 0, 0];
 
                     scope.data.forEach(function (element) {
-                       var x = Math.abs(element.data.averageDifference);
-                       xDomain[2] = Math.max(xDomain[2], x);
-                       xDomain[0] = -xDomain[2];
+                        var x = Math.abs(element.data.averageDifference);
+                        xDomain[2] = Math.max(xDomain[2], x);
+                        xDomain[0] = -xDomain[2];
                     });
 
                     var xScale = d3.scale.linear()
@@ -110,14 +114,16 @@
                 return scope.render(newVals);
             }, true);
 
-        }
-
-        return {
-            link: link,
-            scope: {
-                data: '=data'
-            }
         };
 
-    }]);
+        DifferenceGraphDirective.scope = {
+            data: '='
+        };
+
+        return DifferenceGraphDirective;
+
+    };
+
+    angular.module('d3')
+        .directive('differencegraph', ['d3Service', DifferenceGraphDirective]);
 }());

@@ -7,9 +7,12 @@
  * Licensed under the MIT License
  */
 (function() {
-    angular.module('d3').directive('linegraph', ['d3Service', function(d3Service) {
 
-        function link(scope, element, attrs) {
+    var LineGraphDirective = function(d3Service) {
+
+        var LineGraphDirective = {};
+
+        LineGraphDirective.link = function(scope, element, attrs) {
 
             scope.render = function (data) {
                 d3Service.get().then(function(d3) {
@@ -108,10 +111,10 @@
                         var dots = pathContainer.selectAll("circle")
                             .data(scope.data)
                             .enter()
-                                .append("circle")
-                                    .attr("cx", function (d) { return scaledLine.x()(d); })
-                                    .attr("cy", function (d) { return scaledLine.y()(d); })
-                                    .attr("r", function (d) { return 3; });
+                            .append("circle")
+                            .attr("cx", function (d) { return scaledLine.x()(d); })
+                            .attr("cy", function (d) { return scaledLine.y()(d); })
+                            .attr("r", 3);
 
                         dots.attr("stroke", d3.rgb(colors(index)).brighter())
                             .attr("stroke-width", 1)
@@ -140,17 +143,20 @@
                 return scope.render(newVals);
             }, true);
 
-        }
-
-        return {
-            link: link,
-            scope: {
-                data: '=',
-                lines: '=',
-                ydomain: '=',
-                xdomain: '=',
-                margin: '='
-            }
         };
-    }]);
+
+        LineGraphDirective.scope = {
+            data: '=',
+            lines: '=',
+            ydomain: '=',
+            xdomain: '=',
+            margin: '='
+        };
+
+        return LineGraphDirective;
+
+    };
+
+    angular.module('d3')
+        .directive('linegraph', ['d3Service', LineGraphDirective]);
 }());
