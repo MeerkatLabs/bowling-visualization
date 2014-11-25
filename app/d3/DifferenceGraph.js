@@ -19,15 +19,24 @@
 
                 d3Service.get().then(function (d3) {
 
-                    if (!scope.margin) {
-                        scope.margin = 10;
+                    var minimumBarCount = 0;
+
+                    if (attrs.minimumbarcount !== undefined) {
+                        minimumBarCount = parseInt(attrs.minimumbarcount);
+                    }
+
+                    var barCount = Math.max(minimumBarCount, scope.data.length);
+
+                    var margin = 20;
+                    if (attrs.margin !== undefined) {
+                        margin = parseInt(attrs.margin);
                     }
 
                     var svg = d3.select(element[0]);
 
                     var width = parseInt(svg.style("width")),
-                        height = parseInt(svg.style("height"))-scope.margin,
-                        barHeight = height / scope.data.length;
+                        height = parseInt(svg.style("height")) - (margin * 2),
+                        barHeight = height / barCount;
 
                     var xDomain = [0, 0, 0];
 
@@ -39,7 +48,9 @@
 
                     var xScale = d3.scale.linear()
                         .domain(xDomain)
-                        .range([0, (width/2), width]);
+                        .range([margin, (width/2), width-margin]);
+
+                    console.log('xScaleRange', xScale.range());
 
                     var xAxis = d3.svg.axis()
                         .scale(xScale)
@@ -48,10 +59,11 @@
                     svg.append("path")
                         .attr("d", d3.svg.line()
                             .x(function(d) {
+                                console.log('0 line:', xScale(0));
                                 return xScale(0);
                             }).y(function(d) {
                                 return d;
-                            })([0, height]))
+                            })([margin, height+margin]))
                         .attr("stroke", "black")
                         .attr("stroke-width", 1);
 
@@ -59,7 +71,7 @@
                         .data(scope.data)
                         .enter().append("g")
                         .attr("transform", function(d, i) {
-                            var height = (i * barHeight);
+                            var height = (i * barHeight + margin);
                             var location = xScale(0);
 
                             if (d.data.averageDifference < 0) {
@@ -82,7 +94,7 @@
                         });
 
                     svg.append("g").attr("class", "x axis")
-                        .attr("transform", "translate(0," + height + ")")
+                        .attr("transform", "translate(0," + (height+margin) + ")")
                         .call(xAxis);
 
                 });
@@ -103,8 +115,7 @@
         return {
             link: link,
             scope: {
-                data: '=data',
-                margin: '='
+                data: '=data'
             }
         };
 
