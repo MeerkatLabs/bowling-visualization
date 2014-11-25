@@ -27,6 +27,14 @@
 
                     var barWidth = width / scope.data.length;
 
+                    console.log("MW", attrs.minimumbarwidth);
+
+                    if (attrs.minimumbarwidth !== undefined) {
+                        barWidth = Math.min(barWidth, parseInt(attrs.minimumbarwidth));
+                    }
+
+                    console.log('barWidth', barWidth);
+
                     var yScale = d3.scale.linear()
                         .domain([0, d3.max(scope.data, function(d) {
                             return d.value;
