@@ -30,21 +30,27 @@
                     var width = parseInt(svg.style('width')),
                         height = parseInt(svg.style('height'));
 
+                    var margin = 10;
+
+                    if (attr.margin !== undefined) {
+                        margin = parseInt(attr.margin);
+                    }
+
                     var xScale = d3.scale.linear()
                         .domain([0,10])
-                        .range([0,width]);
+                        .range([margin,width-(2*margin)]);
 
                     var boxGraphic = svg.append('g');
 
-                    var boxTop = height*0.1;
-                    var boxBottom = height*0.9;
+                    var boxTop = height*0.4;
+                    var boxBottom = height*0.6;
 
                     boxGraphic.append('rect')
                         .attr('y', boxTop)
                         .attr('x', function() {
                             return xScale(data.firstQuartile);
                         }).attr('width', function() {
-                            return xScale(data.thirdQuartile - data.firstQuartile);
+                            return xScale(data.thirdQuartile) - xScale(data.firstQuartile);
                         }).attr('height', boxBottom - boxTop)
                         .attr('stroke', 'black')
                         .attr('fill', 'none');
@@ -63,7 +69,7 @@
                         .attr("d", d3.svg.line()
                             .x(function(d) {
                                 return xScale(d);
-                            }).y(height*0.5)([data.max, data.thirdQuartile]))
+                            }).y(height*0.5)([data.thirdQuartile, data.max]))
                         .attr("stroke", "black")
                         .attr("stroke-width", 1);
 
@@ -72,9 +78,27 @@
                         .attr("d", d3.svg.line()
                             .x(function(d) {
                                 return xScale(data.median);
-                            }).y(function(d) { return d; })([height*0.1, height*0.9]))
-                        .attr("stroke", "black")
-                        .attr("stroke-width", 1);
+                            }).y(function(d) { return d; })([height*0.35, height*0.65]))
+                        .attr("stroke", "blue")
+                        .attr("stroke-width", 2);
+
+                    // Axis creation for the box graph.
+                    var xAxis = d3.svg.axis()
+                        .scale(xScale)
+                        .orient("bottom");
+
+                    svg.append("g").attr("class", "x axis")
+                        .attr("transform", "translate(0," + (height-30) + ")")
+                        .call(xAxis);
+
+                    // Add the symbol.
+                    svg.append("path")
+                        .attr("transform", "translate(" + xScale(data.mean) + "," + (height*0.5) + ")")
+                        .attr("d", d3.svg.symbol().type('diamond')())
+                        .attr("stroke", "red")
+                        .attr("fill", "none");
+
+
                 });
 
             };

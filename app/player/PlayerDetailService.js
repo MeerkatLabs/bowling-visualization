@@ -317,6 +317,8 @@ angular.module('bowling').factory('PlayerDetailService', ['$q', 'd3Service', 'Da
 
             });
 
+            console.log("Number of FirstBalls", firstBalls.length);
+
             d3Service.get().then(function(d3) {
 
                 firstBalls.sort(d3.ascending);
