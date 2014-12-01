@@ -52,17 +52,17 @@
                         svg.append("g").attr("class", "x axis")
                             .attr("transform", function() {
 
-                                var y = 25;
+                                var y = 50;
 
                                 if (axisLocation === "bottom") {
-                                    y = height - 25;
+                                    y = height - 70;
                                 }
 
                                 return "translate(0," + y + ")";
                             }).call(xAxis);
                     }
 
-                    var barY = 30;
+                    var barY = 55;
 
                     if (axisLocation == "bottom") {
                         barY = 5;
@@ -76,6 +76,24 @@
                         .attr('width', gameScale(scope.data[1]) - gameScale(scope.data[0]))
                         .attr('height', 20)
                         .attr('fill', colors(0));
+
+                    if (attrs.caption !== undefined) {
+                        svg.append("g")
+                            .attr("transform", function() {
+
+                                var y = 25;
+
+                                if (axisLocation === "bottom") {
+                                    y = height - 25;
+                                }
+
+                                return "translate(" +(width/2) + "," + y + ")";
+                            })
+                            .append("text")
+                                .attr("text-anchor", "middle")
+                                .attr("fill", "black")
+                                .text(attrs.caption);
+                    }
 
                 });
 

@@ -51,8 +51,12 @@
 </div>
 
 <div class="row" ng-controller="PlayerGameSeriesRangeCtrl as range">
-    <svg numberrange data="range.gameScratch" width="100%" height="60" maxValue="300" axis="top"></svg>
-    <svg numberrange data="range.seriesScratch" width="100%" height="60" maxValue="900" axis="bottom"></svg>
+    <svg numberrange data="range.gameScratch" width="100%"
+         height="100" maxValue="300"
+         axis="top" caption="Game Scratch Score Range"></svg>
+    <svg numberrange data="range.seriesScratch" width="100%"
+         height="100" maxValue="900"
+         axis="bottom" caption="Series Scratch Score Range"></svg>
 </div>
 
 <div class="page-header" ng-controller="PlayerScoreSheetsCtrl as scoresheet">
