@@ -7,6 +7,11 @@
  * Licensed under the MIT License
  */
 
-@import "../core/sass/footer.scss";
-@import "../common/sass/frame.scss";
-@import "../d3/sass/d3.scss";
+.y.axis line,
+.y.axis path,
+.x.axis line,
+.x.axis path {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
