@@ -20,20 +20,20 @@
 </div>
 
 <div class="page-header">
-    <h2>Team Handicap Over Time</h2>
+    <h2>Team Handicap per Week</h2>
 </div>
 <div class="row">
     <div class="col-md-12" ng-controller="TeamHandicapCtrl as handicap">
-        <svg width="100%" horizbargraph maximumbarwidth="20" data="handicap.data"></svg>
+        <svg width="100%" horizbargraph maximumbarwidth="20" height="200" maximumrange="18" data="handicap.data"></svg>
     </div>
 </div>
 
 <div class="page-header">
-    <h2>Pins per Week Over Time</h2>
+    <h2>Pins per Week</h2>
 </div>
 <div class="row">
     <div class="col-md-12" ng-controller="TeamPinsPerWeekCtrl as pinsperweek">
-        <svg width="100%" horizbargraph maximumbarwidth="20" data="pinsperweek.data"></svg>
+        <svg width="100%" horizbargraph maximumbarwidth="20" height="200" maximumrange="18" data="pinsperweek.data"></svg>
     </div>
 </div>
 

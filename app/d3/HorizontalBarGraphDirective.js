@@ -33,10 +33,20 @@
                         barWidth = Math.min(barWidth, parseInt(attrs.maximumbarwidth));
                     }
 
+                    var maximumRange = scope.data.length;
+
+                    if (attrs.maximumrange !== undefined) {
+                        maximumRange = parseInt(attrs.maximumrange);
+                    }
+
+                    var xScale = d3.scale.linear()
+                        .domain([0, maximumRange])
+                        .range([50, (maximumRange * barWidth)]);
+
                     var yScale = d3.scale.linear()
                         .domain([0, d3.max(scope.data, function(d) {
                             return d.value;
-                        })]).range([0, height]);
+                        })]).range([height-40, 10]);
 
                     var colors = d3Service.colorScale();
 
@@ -44,14 +54,20 @@
                         .data(scope.data)
                         .enter().append("g")
                         .attr("transform", function(d, i) {
-                            var location = (i * barWidth);
-                            return "translate(" + location + "," + (height-yScale(d.value)) + ")";
+
+                            console.log("transform:", d);
+
+                            var location = xScale(d.label) - ((barWidth-5) / 2);
+
+                            console.log(" location:", location);
+
+                            return "translate(" + location + "," + (yScale(d.value)) + ")";
                         });
 
                     bar.append("rect")
-                        .attr("width", barWidth - 1)
+                        .attr("width", barWidth - 5)
                         .attr("height", function(d) {
-                            return yScale(d.value);
+                            return (height - 40) - yScale(d.value);
                         })
                         .style("fill", function(d,i) {
                             if (d.color === undefined) {
@@ -62,6 +78,21 @@
                             }
                         });
 
+                    var yAxis = d3.svg.axis()
+                        .scale(yScale)
+                        .orient("left");
+
+                    svg.append("g").attr("class", "y axis")
+                        .attr("transform", "translate(50,0)")
+                        .call(yAxis);
+
+                    var xAxis = d3.svg.axis()
+                        .scale(xScale)
+                        .orient("bottom");
+
+                    svg.append("g").attr("class", "x axis")
+                        .attr("transform", "translate(0" + "," + (height-40) +")")
+                        .call(xAxis);
                 });
             };
 
